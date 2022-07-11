@@ -46,4 +46,5 @@ mwi_tools/
 
 
  ## Some documentation
-To update documentation : 
+ 
+To see [documentation](https://hokuleadev.github.io/mwi_tools/mwi_tools/index.html) : 
