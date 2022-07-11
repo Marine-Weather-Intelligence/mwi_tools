@@ -1,1 +1,1 @@
-""" Usefull functions to use with google cloud storage"""
+""" This subpackage contains usefull tools for using, getting or plotting speed polars from sailing boats """

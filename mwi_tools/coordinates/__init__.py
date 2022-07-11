@@ -1,0 +1,1 @@
+""" This subpackage contains usefull tools for dealing with coordinates such as formatting it, getting distance between points etc... """
