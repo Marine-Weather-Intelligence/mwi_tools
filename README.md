@@ -1,12 +1,12 @@
 # Marine Weather Intelligence dev tools
 
-To install or get the latest release it just type : <br/>
+### To install or get the latest release it just type : <br/>
 ```
 pip install git+https://github.com/hokuleadev/mwi_tools.git
 ```
 
 
-## To use packages : 
+### To use packages : 
 ```
 from mwi_tools import wind
 from mwi_tools.polaire import *
@@ -14,7 +14,7 @@ from mwi_tools.polaire import polaire
 from mwi_tools.grib import extract_grib 
 ```
 
-## Structure 
+### Structure 
 
 ```
 mwi_tools/
@@ -45,11 +45,11 @@ mwi_tools/
  └── setup.py
 ```
 
- ## Some documentation
+ ### Some documentation
 
 [Documentation](https://hokuleadev.github.io/mwi_tools/mwi_tools/index.html)
 
-## To update package 
+### To update package 
 
 - Clone the directory <br>
   ```git clone https://github.com/hokuleadev/mwi_tools.git```
