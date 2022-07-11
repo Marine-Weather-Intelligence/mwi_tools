@@ -43,7 +43,7 @@ mwi_tools/<br>
 
  ## Some documentation
 
-To see [documentation](https://hokuleadev.github.io/mwi_tools/mwi_tools/index.html) : 
+[Documentation](https://hokuleadev.github.io/mwi_tools/mwi_tools/index.html)
 
 ## To update package 
 
@@ -51,13 +51,15 @@ To see [documentation](https://hokuleadev.github.io/mwi_tools/mwi_tools/index.ht
 - Add your modules / submodules 
 - Update the structure in readme file
 - Update documentation by using this command in the mwi_tools repository
-            pdoc --output-dir ./docs --html mwi_tools -f
+```
+pdoc --output-dir ./docs --html mwi_tools -f
+```
 - Update VERSION file
 - Update requirements if needed
 - git add . 
 - git commit -m "update"
 - git push
-- pip install git+https://github.com/hokuleadev/mwi_tools.git
+- ```pip install git+https://github.com/hokuleadev/mwi_tools.git```
 
 
 
