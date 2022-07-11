@@ -2,7 +2,7 @@
 
 ### To install or get the latest release it just type : <br/>
 ```
-pip install git+https://github.com/hokuleadev/mwi_tools.git
+pip install git+https://github.com/Marine-Weather-Intelligence/mwi_tools.git
 ```
 
 
@@ -47,12 +47,12 @@ mwi_tools/
 
  ### Some documentation
 
-[Documentation](https://hokuleadev.github.io/mwi_tools/mwi_tools/index.html)
+[Documentation](https://marine-weather-intelligence.github.io/mwi_tools/)
 
 ### To update package 
 
 - Clone the directory <br>
-  ```git clone https://github.com/hokuleadev/mwi_tools.git```
+  ```git clone https://github.com/Marine-Weather-Intelligence/mwi_tools.git```
 - Add your modules / submodules 
 - Update the structure in readme file
 - Update documentation by using this command in the mwi_tools repository <br>
@@ -62,7 +62,7 @@ mwi_tools/
 - ```git add . ```
 - ```git commit -m "update"```
 - ```git push```
-- ```pip install git+https://github.com/hokuleadev/mwi_tools.git```
+- ```pip install git+https://github.com/Marine-Weather-Intelligence/mwi_tools.git```
 
 
 
