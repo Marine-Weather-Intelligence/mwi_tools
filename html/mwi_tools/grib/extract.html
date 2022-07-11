@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>mwi_tools.grib.extract API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>mwi_tools.grib.extract</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import subprocess
+import pandas as pd
+import progressbar
+from datetime import timedelta
+from google.cloud import storage
+import datetime
+from mwi_tools.divers import *
+from mwi_tools.coordinates.format import *
+from mwi_tools.datetime.calculate import *
+
+storage_options = {&#34;project&#34;:&#39;stoked-folder-351109&#39;, &#34;token&#34;:&#39;/Users/basile/Desktop/SFE/projet_polaire/data/credentials_google_app.json&#39;}
+
+
+def get_values_from_position_grib(INPUT :str, lat_exp : float, lon_exp : float) -&gt; dict: 
+    &#34;&#34;&#34;Get a dictionnary with all parameters values from a grib_file at the specified location
+
+    Args:
+        INPUT (str): Path to the grib file
+        lat_exp (float): latitude in deg.dec
+        lon_exp (float): longitude in deg.dec
+
+    Returns:
+        dict: dict of values of parameters
+    &#34;&#34;&#34;
+
+    output = subprocess.check_output(&#39;grib_ls -l &#39;+str(lat_exp)+&#39;,&#39;+str(lon_exp)+&#39;,1 -p shortName &#39;+INPUT, shell=True)
+    
+    temp = str(output).split(&#34;\\n&#34;)
+    d = dict()
+    for i in range(2,28):
+        line = temp[i]
+        line = line.split()
+        d[line[0]] = line[1]
+    
+    return d
+
+
+def get_value_from_grib_dir (path:str, date:str, lat:float, lon:float) -&gt; dict:
+    &#34;&#34;&#34;Select the name of the grib file in the grib dir and get the values of all parameters for this location, time and date
+
+    Args:
+        path (str): Path to directory in which the grib files are stored
+        date (str): date of type &#39;20201203_0900&#39;
+        lat (float): latitude in deg.dec
+        lon (float): longitude in deg.dec
+
+    Returns:
+        dict: dict of values of parameters
+    &#34;&#34;&#34;
+    round_inf_lat = int((lat//10)*10)
+    round_sup_lat = round_inf_lat+10
+    if round_inf_lat == 0 : 
+        round_inf_lat = &#34;00&#34;
+    else : 
+        round_inf_lat = str(round_inf_lat)
+    if round_sup_lat == 0 : 
+        round_sup_lat = &#34;00&#34;
+    else : 
+        round_sup_lat = str(round_sup_lat)
+    round_left_lon = int((lon//10)*10)
+    round_right_lon = round_left_lon+10
+    if round_left_lon == 0 : 
+        round_left_lon = &#34;00&#34;
+    else : 
+        round_left_lon = str(round_left_lon)
+    if round_right_lon == 0 : 
+        round_right_lon = &#34;00&#34;
+    else : 
+        round_right_lon = str(round_right_lon)
+
+    dir_name = round_sup_lat+&#39;_&#39;+round_inf_lat+&#39;_&#39;+round_left_lon+&#39;_&#39;+round_right_lon
+    file = path+&#39;/&#39;+dir_name+&#39;/grib/&#39;+date+&#39;_&#39;+dir_name+&#39;.grib&#39;
+
+    return get_values_from_position_grib(file,lat,lon)
+
+def fill_track_df_with_weather_data_old(df : pd, dir_path : str, param_list : list[str]) -&gt; pd:
+    &#34;&#34;&#34;Fill the track dataframe with weather data from grib directory (era5)
+
+    Args:
+        df (pd): dataframe of track
+        dir_path (str): path to directory with all grib files
+        param_list (list): list of params that we want in the df
+
+    Returns:
+        pd: complete dataframe
+    &#34;&#34;&#34;
+    param_dict = {
+    &#39;temperature&#39;: &#39;2t&#39;,
+    &#39;wind_u&#39; : &#39;10u&#39;,
+    &#39;wind_v&#39; : &#39;10v&#39;,
+    &#39;gusts&#39; : &#39;i10fg&#39;,
+    &#39;pressure&#39; : &#39;msl&#39;,
+    &#39;air_density&#39; : &#39;rhoao&#39;,
+    &#39;sea_temperature&#39; : &#39;sst&#39;,
+    &#39;mer_max&#39; : &#39;hmax&#39;,
+    &#39;period_mer_max&#39; : &#39;tmax&#39;,
+    &#39;peak_wave_period&#39; : &#39;pp1d&#39;,
+    &#39;height_total_swell&#39; : &#39;shts&#39;,
+    &#39;dir_total_swell&#39; : &#39;mdts&#39;,
+    &#39;period_total_swell&#39; : &#39;mpts&#39;,
+    &#39;height_wind_waves&#39; : &#39;shww&#39;,
+    &#39;dir_wind_waves&#39; : &#39;mdww&#39;,
+    &#39;period_wind_waves&#39; : &#39;mpww&#39;,
+    &#39;wave_height&#39; : &#39;swh&#39;,
+    &#39;mean_wave_direction&#39; : &#39;mwd&#39;,
+    &#39;mean_wave_period&#39; : &#39;mwp&#39;,
+    &#39;height_swell1&#39; : &#39;swh1&#39;,
+    &#39;direction_swell1&#39; : &#39;mwd1&#39;,
+    &#39;period_swell1&#39; : &#39;mwp1&#39;,
+    &#39;height_swell2&#39; : &#39;swh2&#39;,
+    &#39;direction_swell2&#39; : &#39;mwd2&#39;,
+    &#39;period_swell2&#39; : &#39;mwp2&#39;,
+    &#39;precipitation&#39; : &#39;tp&#39;
+    }
+
+    atmo_list = [&#39;temperature&#39;,&#39;wind_u&#39;,&#39;wind_v&#39;,&#39;pressure&#39;,&#39;sea_temperature&#39;]
+
+    bar = progressbar.ProgressBar(maxval=len(df), \
+        widgets=[progressbar.Bar(&#39;=&#39;, &#39;[&#39;, &#39;]&#39;), &#39; &#39;, progressbar.Percentage()])
+    
+    bar.start()
+    for i in range(len(df)) : 
+        lat25 = df.loc[i, &#39;round_lat25&#39;]
+        lon25 = df.loc[i, &#39;round_lon25&#39;]
+        lat50 = df.loc[i, &#39;round_lat50&#39;]
+        lon50 = df.loc[i, &#39;round_lon50&#39;]
+        date = df.loc[i, &#39;round_datetime&#39;]
+        dt = date.strftime(&#34;%Y%m%d_%H%M&#34;)
+        for param in param_list : 
+            if param == &#34;precipitation&#34; or param==&#34;gusts&#34; : 
+                #Changer la date en arrondissant à 6h ou 18h
+                if date.hour &gt;= 18 : 
+                    stepRange = date.hour - 18 +1
+                    date6 = date.replace(hour=18)
+                elif date.hour &lt; 6: 
+                    stepRange = date.hour + 6 +1
+                    date6 = date.replace(hour=0) - timedelta(hours = 6)
+                else : 
+                    stepRange = date.hour -6 +1
+                    date6 = date.replace(hour=6)
+
+                dt6 = date6.strftime(&#34;%Y%m%d_%H%M&#34;) 
+                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt6,param_dict[param],lat25,lon25, stepRange)
+            elif param in atmo_list :
+                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt,param_dict[param],lat25,lon25)
+            else : 
+                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt,param_dict[param],lat50,lon50)
+        bar.update(i+1)
+    bar.finish()
+    return df
+
+def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict) -&gt; pd:
+    &#34;&#34;&#34;Fill the track dataframe with weather data from grib directory (era5)
+
+    Args:
+        df (pandas): dataframe of track
+        dir_path (str): path to directory with all grib files
+        param_list (list): list of params that we want in the df
+
+    Returns:
+        pandas: complete dataframe
+    &#34;&#34;&#34;
+    param_dict_in = {
+    &#39;temperature&#39;: &#39;2t&#39;,
+    &#39;wind_u&#39; : &#39;10u&#39;,
+    &#39;wind_v&#39; : &#39;10v&#39;,
+    &#39;gusts&#39; : &#39;i10fg&#39;,
+    &#39;pressure&#39; : &#39;msl&#39;,
+    &#39;air_density&#39; : &#39;rhoao&#39;,
+    &#39;sea_temperature&#39; : &#39;sst&#39;,
+    &#39;mer_max&#39; : &#39;hmax&#39;,
+    &#39;period_mer_max&#39; : &#39;tmax&#39;,
+    &#39;peak_wave_period&#39; : &#39;pp1d&#39;,
+    &#39;height_total_swell&#39; : &#39;shts&#39;,
+    &#39;dir_total_swell&#39; : &#39;mdts&#39;,
+    &#39;period_total_swell&#39; : &#39;mpts&#39;,
+    &#39;height_wind_waves&#39; : &#39;shww&#39;,
+    &#39;dir_wind_waves&#39; : &#39;mdww&#39;,
+    &#39;period_wind_waves&#39; : &#39;mpww&#39;,
+    &#39;wave_height&#39; : &#39;swh&#39;,
+    &#39;mean_wave_direction&#39; : &#39;mwd&#39;,
+    &#39;mean_wave_period&#39; : &#39;mwp&#39;,
+    &#39;height_swell1&#39; : &#39;swh1&#39;,
+    &#39;direction_swell1&#39; : &#39;mwd1&#39;,
+    &#39;period_swell1&#39; : &#39;mwp1&#39;,
+    &#39;height_swell2&#39; : &#39;swh2&#39;,
+    &#39;direction_swell2&#39; : &#39;mwd2&#39;,
+    &#39;period_swell2&#39; : &#39;mwp2&#39;,
+    &#39;precipitation&#39; : &#39;tp&#39;
+    }
+
+    param_dict_out = {
+    &#39;temperature&#39;: &#39;t2m&#39;,
+    &#39;wind_u&#39; : &#39;u10&#39;,
+    &#39;wind_v&#39; : &#39;v10&#39;,
+    &#39;gusts&#39; : &#39;i10fg&#39;,
+    &#39;pressure&#39; : &#39;msl&#39;,
+    &#39;air_density&#39; : &#39;p140209&#39;,
+    &#39;sea_temperature&#39; : &#39;sst&#39;,
+    &#39;mer_max&#39; : &#39;hmax&#39;,
+    &#39;period_mer_max&#39; : &#39;tmax&#39;,
+    &#39;peak_wave_period&#39; : &#39;pp1d&#39;,
+    &#39;height_total_swell&#39; : &#39;shts&#39;,
+    &#39;dir_total_swell&#39; : &#39;mdts&#39;,
+    &#39;period_total_swell&#39; : &#39;mpts&#39;,
+    &#39;height_wind_waves&#39; : &#39;shww&#39;,
+    &#39;dir_wind_waves&#39; : &#39;mdww&#39;,
+    &#39;period_wind_waves&#39; : &#39;mpww&#39;,
+    &#39;wave_height&#39; : &#39;swh&#39;,
+    &#39;mean_wave_direction&#39; : &#39;mwd&#39;,
+    &#39;mean_wave_period&#39; : &#39;mwp&#39;,
+    &#39;height_swell1&#39; : &#39;p140121&#39;,
+    &#39;direction_swell1&#39; : &#39;p140122&#39;,
+    &#39;period_swell1&#39; : &#39;p140123&#39;,
+    &#39;height_swell2&#39; : &#39;p140124&#39;,
+    &#39;direction_swell2&#39; : &#39;p140125&#39;,
+    &#39;period_swell2&#39; : &#39;p140126&#39;,
+    &#39;precipitation&#39; : &#39;tp&#39;
+    }
+
+    bar = progressbar.ProgressBar(maxval=len(df), \
+        widgets=[progressbar.Bar(&#39;=&#39;, &#39;[&#39;, &#39;]&#39;), &#39; &#39;, progressbar.Percentage()])
+    
+    bar.start()
+    for i in range(len(df)) : 
+        lon = df.loc[i, &#39;lon&#39;]
+        lat = df.loc[i, &#39;lat&#39;]
+        date = df.loc[i, &#39;round_datetime&#39;]
+        dt = date.strftime(&#34;%Y%m%d_%H%M&#34;)
+        dict_values = get_value_from_grib_dir(dir_path, dt,lat,lon)
+        for param in param_list :
+            if param_list[param] : 
+                df.loc[i, param_dict_out[param]] = float(dict_values[param_dict_in[param]])
+        bar.update(i+1)
+    bar.finish()
+    return df
+
+def get_df_from_posreport_list(pos_report_list:list[str], id :int, bucket: storage.Client.bucket) :
+    &#34;&#34;&#34;Create a dataframe of track for the boat with id from a list of posreport files 
+
+    Args:
+        pos_report_list (list[str]): list of path to posreport files
+        id (int): id of the boat on pos report files
+        bucket (storage.Client.Bucket): bucket for accessing posreport on cloud storage
+    &#34;&#34;&#34;
+
+    lat = []
+    lon = []
+    time = []
+
+    for path in pos_report_list : 
+        file = bucket.blob(path).download_as_string().decode(&#39;utf-8&#39;)
+        file = file.split(&#39;\r\n&#39;)
+        for line in file : 
+            line = line.split(&#34;;&#34;)
+            if len(line) != 6 : 
+                continue;
+            elif int(line[1]) == id : 
+                lat.append(line[2])
+                lon.append(line[3])
+                time.append(line[4])
+
+    d = {&#39;time&#39;:time, &#39;lat&#39;:lat, &#39;lon&#39;:lon}
+    return pd.DataFrame(data=d)
+
+def create_all_track_dataframes(id_dict: dict(), bucket: storage.Client.bucket, pos_report_list:list[str]) :
+    &#34;&#34;&#34;Create dataframe of track from posreport files for all id&#39;s in id_dict.
+
+    Args:
+        id_dict (dict()): dict of id&#39;s from name key
+        bucket (storage.Client.Bucket): bucket where the posreports are stored
+        pos_report_list (list[str]): list of path of posreport files
+    &#34;&#34;&#34;
+
+    for name in id_dict : 
+        id = id_dict[name]
+        create_track_dataframe(id, name, bucket, pos_report_list)
+
+def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos_report_list:list[str]) :  
+    &#34;&#34;&#34;Create dataframe of track from posreport files.
+
+    Args:
+        id (int): id of the boat in posreport files
+        name (str): Name of the boat for naming created file
+        bucket (storage.Client.Bucket): bucket where the posreports are stored
+        pos_report_list (list[str]): list of path of posreport files
+    &#34;&#34;&#34;
+    df = get_df_from_posreport_list(pos_report_list, id, bucket)
+    df[&#39;lon&#39;] = df[&#39;lon&#39;].apply(lambda x: convert_coord_to_degdec2(x))
+    df[&#39;lat&#39;] = df[&#39;lat&#39;].apply(lambda x: convert_coord_to_degdec2(x))
+    df[&#39;datetime&#39;] = df[&#39;time&#39;].apply(lambda x: datetime.datetime.strptime(x, &#34;%m/%d/%y %H:%M&#34;))
+    df.drop(&#39;time&#39;, axis=1, inplace=True)
+    
+    #Add rounded values, usefull for searching weather data when using netcdf technique for example
+    df[&#39;round_lon25&#39;] = df[&#39;lon&#39;].apply(x_round_25)
+    df[&#39;round_lat25&#39;] = df[&#39;lat&#39;].apply(x_round_25)
+    df[&#39;round_lon50&#39;] = df[&#39;lon&#39;].apply(x_round_50)
+    df[&#39;round_lat50&#39;] = df[&#39;lat&#39;].apply(x_round_50)
+    df[&#39;round_datetime&#39;] = df[&#39;datetime&#39;].apply(round_datetime)
+
+    ## TO LOCAL DIRECTORY
+    file_path = &#34;/Users/basile/Desktop/SFE/projet_polaire/data/dataframe/&#34;+name+&#34;_VG20_simple_track.pkl&#34; 
+    df.to_pickle(file_path) 
+
+    ## TO CLOUD STORAGE
+    filepath = &#34;gs://hokulea_data/tracks/&#34;+name+&#34;_VG20_simple_track.pkl&#34;
+    df.to_pickle(filepath, storage_options=storage_options) </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="mwi_tools.grib.extract.create_all_track_dataframes"><code class="name flex">
+<span>def <span class="ident">create_all_track_dataframes</span></span>(<span>id_dict: {}, bucket: <function Client.bucket at 0x10d8cec10>, pos_report_list: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create dataframe of track from posreport files for all id's in id_dict.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>id_dict (dict()): dict of id's from name key</dt>
+<dt><strong><code>bucket</code></strong> :&ensp;<code>storage.Client.Bucket</code></dt>
+<dd>bucket where the posreports are stored</dd>
+<dt><strong><code>pos_report_list</code></strong> :&ensp;<code>list[str]</code></dt>
+<dd>list of path of posreport files</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_all_track_dataframes(id_dict: dict(), bucket: storage.Client.bucket, pos_report_list:list[str]) :
+    &#34;&#34;&#34;Create dataframe of track from posreport files for all id&#39;s in id_dict.
+
+    Args:
+        id_dict (dict()): dict of id&#39;s from name key
+        bucket (storage.Client.Bucket): bucket where the posreports are stored
+        pos_report_list (list[str]): list of path of posreport files
+    &#34;&#34;&#34;
+
+    for name in id_dict : 
+        id = id_dict[name]
+        create_track_dataframe(id, name, bucket, pos_report_list)</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.extract.create_track_dataframe"><code class="name flex">
+<span>def <span class="ident">create_track_dataframe</span></span>(<span>id: int, name: str, bucket: <function Client.bucket at 0x10d8cec10>, pos_report_list: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create dataframe of track from posreport files.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
+<dd>id of the boat in posreport files</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the boat for naming created file</dd>
+<dt><strong><code>bucket</code></strong> :&ensp;<code>storage.Client.Bucket</code></dt>
+<dd>bucket where the posreports are stored</dd>
+<dt><strong><code>pos_report_list</code></strong> :&ensp;<code>list[str]</code></dt>
+<dd>list of path of posreport files</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos_report_list:list[str]) :  
+    &#34;&#34;&#34;Create dataframe of track from posreport files.
+
+    Args:
+        id (int): id of the boat in posreport files
+        name (str): Name of the boat for naming created file
+        bucket (storage.Client.Bucket): bucket where the posreports are stored
+        pos_report_list (list[str]): list of path of posreport files
+    &#34;&#34;&#34;
+    df = get_df_from_posreport_list(pos_report_list, id, bucket)
+    df[&#39;lon&#39;] = df[&#39;lon&#39;].apply(lambda x: convert_coord_to_degdec2(x))
+    df[&#39;lat&#39;] = df[&#39;lat&#39;].apply(lambda x: convert_coord_to_degdec2(x))
+    df[&#39;datetime&#39;] = df[&#39;time&#39;].apply(lambda x: datetime.datetime.strptime(x, &#34;%m/%d/%y %H:%M&#34;))
+    df.drop(&#39;time&#39;, axis=1, inplace=True)
+    
+    #Add rounded values, usefull for searching weather data when using netcdf technique for example
+    df[&#39;round_lon25&#39;] = df[&#39;lon&#39;].apply(x_round_25)
+    df[&#39;round_lat25&#39;] = df[&#39;lat&#39;].apply(x_round_25)
+    df[&#39;round_lon50&#39;] = df[&#39;lon&#39;].apply(x_round_50)
+    df[&#39;round_lat50&#39;] = df[&#39;lat&#39;].apply(x_round_50)
+    df[&#39;round_datetime&#39;] = df[&#39;datetime&#39;].apply(round_datetime)
+
+    ## TO LOCAL DIRECTORY
+    file_path = &#34;/Users/basile/Desktop/SFE/projet_polaire/data/dataframe/&#34;+name+&#34;_VG20_simple_track.pkl&#34; 
+    df.to_pickle(file_path) 
+
+    ## TO CLOUD STORAGE
+    filepath = &#34;gs://hokulea_data/tracks/&#34;+name+&#34;_VG20_simple_track.pkl&#34;
+    df.to_pickle(filepath, storage_options=storage_options) </code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.extract.fill_track_df_with_weather_data"><code class="name flex">
+<span>def <span class="ident">fill_track_df_with_weather_data</span></span>(<span>df: <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'>, dir_path: str, param_list: dict) ‑> <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Fill the track dataframe with weather data from grib directory (era5)</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pandas</code></dt>
+<dd>dataframe of track</dd>
+<dt><strong><code>dir_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to directory with all grib files</dd>
+<dt><strong><code>param_list</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of params that we want in the df</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>pandas</code></dt>
+<dd>complete dataframe</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict) -&gt; pd:
+    &#34;&#34;&#34;Fill the track dataframe with weather data from grib directory (era5)
+
+    Args:
+        df (pandas): dataframe of track
+        dir_path (str): path to directory with all grib files
+        param_list (list): list of params that we want in the df
+
+    Returns:
+        pandas: complete dataframe
+    &#34;&#34;&#34;
+    param_dict_in = {
+    &#39;temperature&#39;: &#39;2t&#39;,
+    &#39;wind_u&#39; : &#39;10u&#39;,
+    &#39;wind_v&#39; : &#39;10v&#39;,
+    &#39;gusts&#39; : &#39;i10fg&#39;,
+    &#39;pressure&#39; : &#39;msl&#39;,
+    &#39;air_density&#39; : &#39;rhoao&#39;,
+    &#39;sea_temperature&#39; : &#39;sst&#39;,
+    &#39;mer_max&#39; : &#39;hmax&#39;,
+    &#39;period_mer_max&#39; : &#39;tmax&#39;,
+    &#39;peak_wave_period&#39; : &#39;pp1d&#39;,
+    &#39;height_total_swell&#39; : &#39;shts&#39;,
+    &#39;dir_total_swell&#39; : &#39;mdts&#39;,
+    &#39;period_total_swell&#39; : &#39;mpts&#39;,
+    &#39;height_wind_waves&#39; : &#39;shww&#39;,
+    &#39;dir_wind_waves&#39; : &#39;mdww&#39;,
+    &#39;period_wind_waves&#39; : &#39;mpww&#39;,
+    &#39;wave_height&#39; : &#39;swh&#39;,
+    &#39;mean_wave_direction&#39; : &#39;mwd&#39;,
+    &#39;mean_wave_period&#39; : &#39;mwp&#39;,
+    &#39;height_swell1&#39; : &#39;swh1&#39;,
+    &#39;direction_swell1&#39; : &#39;mwd1&#39;,
+    &#39;period_swell1&#39; : &#39;mwp1&#39;,
+    &#39;height_swell2&#39; : &#39;swh2&#39;,
+    &#39;direction_swell2&#39; : &#39;mwd2&#39;,
+    &#39;period_swell2&#39; : &#39;mwp2&#39;,
+    &#39;precipitation&#39; : &#39;tp&#39;
+    }
+
+    param_dict_out = {
+    &#39;temperature&#39;: &#39;t2m&#39;,
+    &#39;wind_u&#39; : &#39;u10&#39;,
+    &#39;wind_v&#39; : &#39;v10&#39;,
+    &#39;gusts&#39; : &#39;i10fg&#39;,
+    &#39;pressure&#39; : &#39;msl&#39;,
+    &#39;air_density&#39; : &#39;p140209&#39;,
+    &#39;sea_temperature&#39; : &#39;sst&#39;,
+    &#39;mer_max&#39; : &#39;hmax&#39;,
+    &#39;period_mer_max&#39; : &#39;tmax&#39;,
+    &#39;peak_wave_period&#39; : &#39;pp1d&#39;,
+    &#39;height_total_swell&#39; : &#39;shts&#39;,
+    &#39;dir_total_swell&#39; : &#39;mdts&#39;,
+    &#39;period_total_swell&#39; : &#39;mpts&#39;,
+    &#39;height_wind_waves&#39; : &#39;shww&#39;,
+    &#39;dir_wind_waves&#39; : &#39;mdww&#39;,
+    &#39;period_wind_waves&#39; : &#39;mpww&#39;,
+    &#39;wave_height&#39; : &#39;swh&#39;,
+    &#39;mean_wave_direction&#39; : &#39;mwd&#39;,
+    &#39;mean_wave_period&#39; : &#39;mwp&#39;,
+    &#39;height_swell1&#39; : &#39;p140121&#39;,
+    &#39;direction_swell1&#39; : &#39;p140122&#39;,
+    &#39;period_swell1&#39; : &#39;p140123&#39;,
+    &#39;height_swell2&#39; : &#39;p140124&#39;,
+    &#39;direction_swell2&#39; : &#39;p140125&#39;,
+    &#39;period_swell2&#39; : &#39;p140126&#39;,
+    &#39;precipitation&#39; : &#39;tp&#39;
+    }
+
+    bar = progressbar.ProgressBar(maxval=len(df), \
+        widgets=[progressbar.Bar(&#39;=&#39;, &#39;[&#39;, &#39;]&#39;), &#39; &#39;, progressbar.Percentage()])
+    
+    bar.start()
+    for i in range(len(df)) : 
+        lon = df.loc[i, &#39;lon&#39;]
+        lat = df.loc[i, &#39;lat&#39;]
+        date = df.loc[i, &#39;round_datetime&#39;]
+        dt = date.strftime(&#34;%Y%m%d_%H%M&#34;)
+        dict_values = get_value_from_grib_dir(dir_path, dt,lat,lon)
+        for param in param_list :
+            if param_list[param] : 
+                df.loc[i, param_dict_out[param]] = float(dict_values[param_dict_in[param]])
+        bar.update(i+1)
+    bar.finish()
+    return df</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.extract.fill_track_df_with_weather_data_old"><code class="name flex">
+<span>def <span class="ident">fill_track_df_with_weather_data_old</span></span>(<span>df: <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'>, dir_path: str, param_list: list) ‑> <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Fill the track dataframe with weather data from grib directory (era5)</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pd</code></dt>
+<dd>dataframe of track</dd>
+<dt><strong><code>dir_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to directory with all grib files</dd>
+<dt><strong><code>param_list</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of params that we want in the df</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>pd</code></dt>
+<dd>complete dataframe</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fill_track_df_with_weather_data_old(df : pd, dir_path : str, param_list : list[str]) -&gt; pd:
+    &#34;&#34;&#34;Fill the track dataframe with weather data from grib directory (era5)
+
+    Args:
+        df (pd): dataframe of track
+        dir_path (str): path to directory with all grib files
+        param_list (list): list of params that we want in the df
+
+    Returns:
+        pd: complete dataframe
+    &#34;&#34;&#34;
+    param_dict = {
+    &#39;temperature&#39;: &#39;2t&#39;,
+    &#39;wind_u&#39; : &#39;10u&#39;,
+    &#39;wind_v&#39; : &#39;10v&#39;,
+    &#39;gusts&#39; : &#39;i10fg&#39;,
+    &#39;pressure&#39; : &#39;msl&#39;,
+    &#39;air_density&#39; : &#39;rhoao&#39;,
+    &#39;sea_temperature&#39; : &#39;sst&#39;,
+    &#39;mer_max&#39; : &#39;hmax&#39;,
+    &#39;period_mer_max&#39; : &#39;tmax&#39;,
+    &#39;peak_wave_period&#39; : &#39;pp1d&#39;,
+    &#39;height_total_swell&#39; : &#39;shts&#39;,
+    &#39;dir_total_swell&#39; : &#39;mdts&#39;,
+    &#39;period_total_swell&#39; : &#39;mpts&#39;,
+    &#39;height_wind_waves&#39; : &#39;shww&#39;,
+    &#39;dir_wind_waves&#39; : &#39;mdww&#39;,
+    &#39;period_wind_waves&#39; : &#39;mpww&#39;,
+    &#39;wave_height&#39; : &#39;swh&#39;,
+    &#39;mean_wave_direction&#39; : &#39;mwd&#39;,
+    &#39;mean_wave_period&#39; : &#39;mwp&#39;,
+    &#39;height_swell1&#39; : &#39;swh1&#39;,
+    &#39;direction_swell1&#39; : &#39;mwd1&#39;,
+    &#39;period_swell1&#39; : &#39;mwp1&#39;,
+    &#39;height_swell2&#39; : &#39;swh2&#39;,
+    &#39;direction_swell2&#39; : &#39;mwd2&#39;,
+    &#39;period_swell2&#39; : &#39;mwp2&#39;,
+    &#39;precipitation&#39; : &#39;tp&#39;
+    }
+
+    atmo_list = [&#39;temperature&#39;,&#39;wind_u&#39;,&#39;wind_v&#39;,&#39;pressure&#39;,&#39;sea_temperature&#39;]
+
+    bar = progressbar.ProgressBar(maxval=len(df), \
+        widgets=[progressbar.Bar(&#39;=&#39;, &#39;[&#39;, &#39;]&#39;), &#39; &#39;, progressbar.Percentage()])
+    
+    bar.start()
+    for i in range(len(df)) : 
+        lat25 = df.loc[i, &#39;round_lat25&#39;]
+        lon25 = df.loc[i, &#39;round_lon25&#39;]
+        lat50 = df.loc[i, &#39;round_lat50&#39;]
+        lon50 = df.loc[i, &#39;round_lon50&#39;]
+        date = df.loc[i, &#39;round_datetime&#39;]
+        dt = date.strftime(&#34;%Y%m%d_%H%M&#34;)
+        for param in param_list : 
+            if param == &#34;precipitation&#34; or param==&#34;gusts&#34; : 
+                #Changer la date en arrondissant à 6h ou 18h
+                if date.hour &gt;= 18 : 
+                    stepRange = date.hour - 18 +1
+                    date6 = date.replace(hour=18)
+                elif date.hour &lt; 6: 
+                    stepRange = date.hour + 6 +1
+                    date6 = date.replace(hour=0) - timedelta(hours = 6)
+                else : 
+                    stepRange = date.hour -6 +1
+                    date6 = date.replace(hour=6)
+
+                dt6 = date6.strftime(&#34;%Y%m%d_%H%M&#34;) 
+                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt6,param_dict[param],lat25,lon25, stepRange)
+            elif param in atmo_list :
+                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt,param_dict[param],lat25,lon25)
+            else : 
+                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt,param_dict[param],lat50,lon50)
+        bar.update(i+1)
+    bar.finish()
+    return df</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.extract.get_df_from_posreport_list"><code class="name flex">
+<span>def <span class="ident">get_df_from_posreport_list</span></span>(<span>pos_report_list: list, id: int, bucket: <function Client.bucket at 0x10d8cec10>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a dataframe of track for the boat with id from a list of posreport files </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>pos_report_list</code></strong> :&ensp;<code>list[str]</code></dt>
+<dd>list of path to posreport files</dd>
+<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
+<dd>id of the boat on pos report files</dd>
+<dt><strong><code>bucket</code></strong> :&ensp;<code>storage.Client.Bucket</code></dt>
+<dd>bucket for accessing posreport on cloud storage</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_df_from_posreport_list(pos_report_list:list[str], id :int, bucket: storage.Client.bucket) :
+    &#34;&#34;&#34;Create a dataframe of track for the boat with id from a list of posreport files 
+
+    Args:
+        pos_report_list (list[str]): list of path to posreport files
+        id (int): id of the boat on pos report files
+        bucket (storage.Client.Bucket): bucket for accessing posreport on cloud storage
+    &#34;&#34;&#34;
+
+    lat = []
+    lon = []
+    time = []
+
+    for path in pos_report_list : 
+        file = bucket.blob(path).download_as_string().decode(&#39;utf-8&#39;)
+        file = file.split(&#39;\r\n&#39;)
+        for line in file : 
+            line = line.split(&#34;;&#34;)
+            if len(line) != 6 : 
+                continue;
+            elif int(line[1]) == id : 
+                lat.append(line[2])
+                lon.append(line[3])
+                time.append(line[4])
+
+    d = {&#39;time&#39;:time, &#39;lat&#39;:lat, &#39;lon&#39;:lon}
+    return pd.DataFrame(data=d)</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.extract.get_value_from_grib_dir"><code class="name flex">
+<span>def <span class="ident">get_value_from_grib_dir</span></span>(<span>path: str, date: str, lat: float, lon: float) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Select the name of the grib file in the grib dir and get the values of all parameters for this location, time and date</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to directory in which the grib files are stored</dd>
+<dt><strong><code>date</code></strong> :&ensp;<code>str</code></dt>
+<dd>date of type '20201203_0900'</dd>
+<dt><strong><code>lat</code></strong> :&ensp;<code>float</code></dt>
+<dd>latitude in deg.dec</dd>
+<dt><strong><code>lon</code></strong> :&ensp;<code>float</code></dt>
+<dd>longitude in deg.dec</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>dict of values of parameters</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_value_from_grib_dir (path:str, date:str, lat:float, lon:float) -&gt; dict:
+    &#34;&#34;&#34;Select the name of the grib file in the grib dir and get the values of all parameters for this location, time and date
+
+    Args:
+        path (str): Path to directory in which the grib files are stored
+        date (str): date of type &#39;20201203_0900&#39;
+        lat (float): latitude in deg.dec
+        lon (float): longitude in deg.dec
+
+    Returns:
+        dict: dict of values of parameters
+    &#34;&#34;&#34;
+    round_inf_lat = int((lat//10)*10)
+    round_sup_lat = round_inf_lat+10
+    if round_inf_lat == 0 : 
+        round_inf_lat = &#34;00&#34;
+    else : 
+        round_inf_lat = str(round_inf_lat)
+    if round_sup_lat == 0 : 
+        round_sup_lat = &#34;00&#34;
+    else : 
+        round_sup_lat = str(round_sup_lat)
+    round_left_lon = int((lon//10)*10)
+    round_right_lon = round_left_lon+10
+    if round_left_lon == 0 : 
+        round_left_lon = &#34;00&#34;
+    else : 
+        round_left_lon = str(round_left_lon)
+    if round_right_lon == 0 : 
+        round_right_lon = &#34;00&#34;
+    else : 
+        round_right_lon = str(round_right_lon)
+
+    dir_name = round_sup_lat+&#39;_&#39;+round_inf_lat+&#39;_&#39;+round_left_lon+&#39;_&#39;+round_right_lon
+    file = path+&#39;/&#39;+dir_name+&#39;/grib/&#39;+date+&#39;_&#39;+dir_name+&#39;.grib&#39;
+
+    return get_values_from_position_grib(file,lat,lon)</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.extract.get_values_from_position_grib"><code class="name flex">
+<span>def <span class="ident">get_values_from_position_grib</span></span>(<span>INPUT: str, lat_exp: float, lon_exp: float) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get a dictionnary with all parameters values from a grib_file at the specified location</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>INPUT</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to the grib file</dd>
+<dt><strong><code>lat_exp</code></strong> :&ensp;<code>float</code></dt>
+<dd>latitude in deg.dec</dd>
+<dt><strong><code>lon_exp</code></strong> :&ensp;<code>float</code></dt>
+<dd>longitude in deg.dec</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>dict of values of parameters</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_values_from_position_grib(INPUT :str, lat_exp : float, lon_exp : float) -&gt; dict: 
+    &#34;&#34;&#34;Get a dictionnary with all parameters values from a grib_file at the specified location
+
+    Args:
+        INPUT (str): Path to the grib file
+        lat_exp (float): latitude in deg.dec
+        lon_exp (float): longitude in deg.dec
+
+    Returns:
+        dict: dict of values of parameters
+    &#34;&#34;&#34;
+
+    output = subprocess.check_output(&#39;grib_ls -l &#39;+str(lat_exp)+&#39;,&#39;+str(lon_exp)+&#39;,1 -p shortName &#39;+INPUT, shell=True)
+    
+    temp = str(output).split(&#34;\\n&#34;)
+    d = dict()
+    for i in range(2,28):
+        line = temp[i]
+        line = line.split()
+        d[line[0]] = line[1]
+    
+    return d</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="mwi_tools.grib" href="index.html">mwi_tools.grib</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="mwi_tools.grib.extract.create_all_track_dataframes" href="#mwi_tools.grib.extract.create_all_track_dataframes">create_all_track_dataframes</a></code></li>
+<li><code><a title="mwi_tools.grib.extract.create_track_dataframe" href="#mwi_tools.grib.extract.create_track_dataframe">create_track_dataframe</a></code></li>
+<li><code><a title="mwi_tools.grib.extract.fill_track_df_with_weather_data" href="#mwi_tools.grib.extract.fill_track_df_with_weather_data">fill_track_df_with_weather_data</a></code></li>
+<li><code><a title="mwi_tools.grib.extract.fill_track_df_with_weather_data_old" href="#mwi_tools.grib.extract.fill_track_df_with_weather_data_old">fill_track_df_with_weather_data_old</a></code></li>
+<li><code><a title="mwi_tools.grib.extract.get_df_from_posreport_list" href="#mwi_tools.grib.extract.get_df_from_posreport_list">get_df_from_posreport_list</a></code></li>
+<li><code><a title="mwi_tools.grib.extract.get_value_from_grib_dir" href="#mwi_tools.grib.extract.get_value_from_grib_dir">get_value_from_grib_dir</a></code></li>
+<li><code><a title="mwi_tools.grib.extract.get_values_from_position_grib" href="#mwi_tools.grib.extract.get_values_from_position_grib">get_values_from_position_grib</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
