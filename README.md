@@ -51,7 +51,7 @@ mwi_tools/
 - git clone the directory
 - Add your modules / submodules 
 - Update the structure in readme file
-- Update documentation by using this command in the mwi_tools repository
+- Update documentation by using this command in the mwi_tools repository <br>
   ```pdoc --output-dir ./docs --html mwi_tools -f```
 - Update VERSION file
 - Update requirements if needed
