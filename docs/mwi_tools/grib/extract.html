@@ -39,7 +39,7 @@ from mwi_tools.datetime.calculate import *
 storage_options = {&#34;project&#34;:&#39;stoked-folder-351109&#39;, &#34;token&#34;:&#39;/Users/basile/Desktop/SFE/projet_polaire/data/credentials_google_app.json&#39;}
 
 
-def get_values_from_position_grib(INPUT :str, lat_exp : float, lon_exp : float) -&gt; dict: 
+def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float) -&gt; dict: 
     &#34;&#34;&#34;Get a dictionnary with all parameters values from a grib_file at the specified location
 
     Args:
@@ -291,11 +291,11 @@ def get_df_from_posreport_list(pos_report_list:list[str], id :int, bucket: stora
     d = {&#39;time&#39;:time, &#39;lat&#39;:lat, &#39;lon&#39;:lon}
     return pd.DataFrame(data=d)
 
-def create_all_track_dataframes(id_dict: dict(), bucket: storage.Client.bucket, pos_report_list:list[str]) :
+def create_all_track_dataframes(id_dict: dict, bucket: storage.Client.bucket, pos_report_list:list[str]) :
     &#34;&#34;&#34;Create dataframe of track from posreport files for all id&#39;s in id_dict.
 
     Args:
-        id_dict (dict()): dict of id&#39;s from name key
+        id_dict (dict): dict of id&#39;s from name key
         bucket (storage.Client.Bucket): bucket where the posreports are stored
         pos_report_list (list[str]): list of path of posreport files
     &#34;&#34;&#34;
@@ -343,13 +343,14 @@ def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="mwi_tools.grib.extract.create_all_track_dataframes"><code class="name flex">
-<span>def <span class="ident">create_all_track_dataframes</span></span>(<span>id_dict: {}, bucket: <function Client.bucket at 0x10f28eaf0>, pos_report_list: list)</span>
+<span>def <span class="ident">create_all_track_dataframes</span></span>(<span>id_dict: dict, bucket: <function Client.bucket at 0x111d9fb80>, pos_report_list: list)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create dataframe of track from posreport files for all id's in id_dict.</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt>id_dict (dict()): dict of id's from name key</dt>
+<dt><strong><code>id_dict</code></strong> :&ensp;<code>dict</code></dt>
+<dd>dict of id's from name key</dd>
 <dt><strong><code>bucket</code></strong> :&ensp;<code>storage.Client.Bucket</code></dt>
 <dd>bucket where the posreports are stored</dd>
 <dt><strong><code>pos_report_list</code></strong> :&ensp;<code>list[str]</code></dt>
@@ -359,11 +360,11 @@ def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def create_all_track_dataframes(id_dict: dict(), bucket: storage.Client.bucket, pos_report_list:list[str]) :
+<pre><code class="python">def create_all_track_dataframes(id_dict: dict, bucket: storage.Client.bucket, pos_report_list:list[str]) :
     &#34;&#34;&#34;Create dataframe of track from posreport files for all id&#39;s in id_dict.
 
     Args:
-        id_dict (dict()): dict of id&#39;s from name key
+        id_dict (dict): dict of id&#39;s from name key
         bucket (storage.Client.Bucket): bucket where the posreports are stored
         pos_report_list (list[str]): list of path of posreport files
     &#34;&#34;&#34;
@@ -374,7 +375,7 @@ def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos
 </details>
 </dd>
 <dt id="mwi_tools.grib.extract.create_track_dataframe"><code class="name flex">
-<span>def <span class="ident">create_track_dataframe</span></span>(<span>id: int, name: str, bucket: <function Client.bucket at 0x10f28eaf0>, pos_report_list: list)</span>
+<span>def <span class="ident">create_track_dataframe</span></span>(<span>id: int, name: str, bucket: <function Client.bucket at 0x111d9fb80>, pos_report_list: list)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create dataframe of track from posreport files.</p>
@@ -635,7 +636,7 @@ def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos
 </details>
 </dd>
 <dt id="mwi_tools.grib.extract.get_df_from_posreport_list"><code class="name flex">
-<span>def <span class="ident">get_df_from_posreport_list</span></span>(<span>pos_report_list: list, id: int, bucket: <function Client.bucket at 0x10f28eaf0>)</span>
+<span>def <span class="ident">get_df_from_posreport_list</span></span>(<span>pos_report_list: list, id: int, bucket: <function Client.bucket at 0x111d9fb80>)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create a dataframe of track for the boat with id from a list of posreport files </p>
@@ -768,7 +769,7 @@ def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_values_from_position_grib(INPUT :str, lat_exp : float, lon_exp : float) -&gt; dict: 
+<pre><code class="python">def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float) -&gt; dict: 
     &#34;&#34;&#34;Get a dictionnary with all parameters values from a grib_file at the specified location
 
     Args:

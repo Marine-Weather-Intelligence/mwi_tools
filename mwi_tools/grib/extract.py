@@ -11,7 +11,7 @@ from mwi_tools.datetime.calculate import *
 storage_options = {"project":'stoked-folder-351109', "token":'/Users/basile/Desktop/SFE/projet_polaire/data/credentials_google_app.json'}
 
 
-def get_values_from_position_grib(INPUT :str, lat_exp : float, lon_exp : float) -> dict: 
+def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float) -> dict: 
     """Get a dictionnary with all parameters values from a grib_file at the specified location
 
     Args:
@@ -263,11 +263,11 @@ def get_df_from_posreport_list(pos_report_list:list[str], id :int, bucket: stora
     d = {'time':time, 'lat':lat, 'lon':lon}
     return pd.DataFrame(data=d)
 
-def create_all_track_dataframes(id_dict: dict(), bucket: storage.Client.bucket, pos_report_list:list[str]) :
+def create_all_track_dataframes(id_dict: dict, bucket: storage.Client.bucket, pos_report_list:list[str]) :
     """Create dataframe of track from posreport files for all id's in id_dict.
 
     Args:
-        id_dict (dict()): dict of id's from name key
+        id_dict (dict): dict of id's from name key
         bucket (storage.Client.Bucket): bucket where the posreports are stored
         pos_report_list (list[str]): list of path of posreport files
     """
