@@ -1,8 +1,12 @@
 # Marine Weather Intelligence dev tools
 
-### To install or get the latest release it just type : <br/>
+### To install type : <br/>
 ```
 pip install git+https://github.com/Marine-Weather-Intelligence/mwi_tools.git
+```
+### To upgrade to the latest release just type : <br/>
+```
+pip install git+https://github.com/Marine-Weather-Intelligence/mwi_tools.git --upgrade
 ```
 
 
@@ -11,7 +15,7 @@ pip install git+https://github.com/Marine-Weather-Intelligence/mwi_tools.git
 from mwi_tools import wind
 from mwi_tools.polaire import *
 from mwi_tools.polaire import polaire
-from mwi_tools.grib import extract_grib 
+from mwi_tools.grib import extract
 ```
 
 ### Structure 
