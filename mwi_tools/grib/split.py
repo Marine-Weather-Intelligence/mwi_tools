@@ -1,3 +1,9 @@
+"""
+    Splitting functions for grib files : 
+    - split_grib_per_hour(grib_path, dir_name) --> Function spliting a grib file into one per hour
+    - split_grib_directory_per_hour(path) --> Split per hour every grib from a directory containing subfolders of grib sorted geographically,
+"""
+
 import os
 
 def split_grib_per_hour(grib_path : str, dir_name:str): 

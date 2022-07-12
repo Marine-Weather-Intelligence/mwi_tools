@@ -1,4 +1,7 @@
-""" Usefull functions to use with google cloud storage"""
+""" Usefull functions to use with google cloud storage
+- list_blobs_with_prefix --> List all files with a specific prefix
+
+"""
 
 from google.oauth2 import service_account
 from google.cloud import storage

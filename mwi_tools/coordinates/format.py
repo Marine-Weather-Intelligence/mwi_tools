@@ -1,3 +1,7 @@
+"""
+    Formatting functions for coordinates:
+"""
+
 def format_longitude180(lon : float) -> float :
     """Format a longitude of type %deg.%decimal between 0 and 360 to a longitude of type %deg.%decimal between -180 and 180.
 

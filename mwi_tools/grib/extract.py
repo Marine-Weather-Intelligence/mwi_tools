@@ -1,3 +1,14 @@
+"""
+    Extractung functions for grib files:
+    - get_values_from_position_grib(INPUT, lat, lon) --> Get dict with all values from position for specific grib INPUT
+    - get_value_from_grib_dir(path, date, lat, lon) --> Select name of the grib file containing values we want
+    - fill_track_df_with_weather_data_old(df, dir_path, param_list) --> Fill track df with weather values from grib in dir_path
+    - fill_track_df_with_weather_data(df, dir_path, param_list) --> Fill track df with weather values from grib in dir_path
+    - get_df_from_posreport_list(pos_report_list, id, bucket) --> Create a raw dataframe of track for the boat with id from a list of posreport files 
+    - create_all_track_dataframes(id_dict, bucket, pos_report_list) --> Create dataframe of track from posreport files for all id's in id_dict
+    - create_track_dataframe(id, name, bucket, pos_report_list) --> Create complete dataframe of track from posreport files.
+"""
+
 import subprocess
 import pandas as pd
 import progressbar

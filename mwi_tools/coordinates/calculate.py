@@ -1,3 +1,10 @@
+"""
+    Calculation functions for coordinates
+    - get_dist_ortho(pos1, pos2)
+    - get_speed(pos1,pos2, dt)
+    - get_heading(pos1, pos2)
+    
+"""
 import math as m
 
 def get_dist_ortho(pos1:list[float], pos2:list[float]) -> float: 

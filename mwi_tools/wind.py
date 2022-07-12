@@ -1,3 +1,10 @@
+"""
+    Functions to deal with wind variables : 
+    - get_TWS(u,v)
+    - get_dir(u,v)
+    - set_TWA(TWD, heading)
+
+"""
 import math as m
 
 def get_TWS(u:float, v:float) -> float:

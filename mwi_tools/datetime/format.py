@@ -1,3 +1,7 @@
+"""
+    Formatting functions for datetime:
+"""
+
 import datetime
 
 def format_date1(date :float) -> datetime.date : 

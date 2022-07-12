@@ -1,3 +1,9 @@
+"""
+    Calculating functions for datetime:
+    - round_datetime(datetime)
+    - get_delta(datetime1, datetime2)
+"""
+
 import datetime
 from datetime import timedelta
 
