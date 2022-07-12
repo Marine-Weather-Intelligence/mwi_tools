@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>mwi_tools.wind API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Functions to deal with wind variables :
+- get_TWS(u,v)
+- get_dir(u,v)
+- set_TWA(TWD, heading)" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,11 +25,22 @@
 <h1 class="title">Module <code>mwi_tools.wind</code></h1>
 </header>
 <section id="section-intro">
+<p>Functions to deal with wind variables :
+- get_TWS(u,v)
+- get_dir(u,v)
+- set_TWA(TWD, heading)</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import math as m
+<pre><code class="python">&#34;&#34;&#34;
+    Functions to deal with wind variables : 
+    - get_TWS(u,v)
+    - get_dir(u,v)
+    - set_TWA(TWD, heading)
+
+&#34;&#34;&#34;
+import math as m
 
 def get_TWS(u:float, v:float) -&gt; float:
     &#34;&#34;&#34;Calculate True Wind Speed from u and v component of wind in m/s

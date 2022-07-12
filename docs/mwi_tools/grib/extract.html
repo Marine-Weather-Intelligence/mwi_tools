@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>mwi_tools.grib.extract API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="Extractung functions for grib files:
+- get_values_from_position_grib(INPUT, lat, lon) --&gt; Get dict with all values from position for specific grib …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,21 +23,27 @@
 <h1 class="title">Module <code>mwi_tools.grib.extract</code></h1>
 </header>
 <section id="section-intro">
+<p>Extractung functions for grib files:
+- get_values_from_position_grib(INPUT, lat, lon) &ndash;&gt; Get dict with all values from position for specific grib INPUT
+- get_value_from_grib_dir(path, date, lat, lon) &ndash;&gt; Select name of the grib file containing values we want
+- fill_track_df_with_weather_data_old(df, dir_path, param_list) &ndash;&gt; Fill track df with weather values from grib in dir_path
+- fill_track_df_with_weather_data(df, dir_path, param_list) &ndash;&gt; Fill track df with weather values from grib in dir_path</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import subprocess
+<pre><code class="python">&#34;&#34;&#34;
+    Extractung functions for grib files:
+    - get_values_from_position_grib(INPUT, lat, lon) --&gt; Get dict with all values from position for specific grib INPUT
+    - get_value_from_grib_dir(path, date, lat, lon) --&gt; Select name of the grib file containing values we want
+    - fill_track_df_with_weather_data_old(df, dir_path, param_list) --&gt; Fill track df with weather values from grib in dir_path
+    - fill_track_df_with_weather_data(df, dir_path, param_list) --&gt; Fill track df with weather values from grib in dir_path
+&#34;&#34;&#34;
+
+import subprocess
 import pandas as pd
 import progressbar
 from datetime import timedelta
-from google.cloud import storage
-import datetime
-from mwi_tools.divers import *
-from mwi_tools.coordinates.format import *
-from mwi_tools.datetime.calculate import *
-
-storage_options = {&#34;project&#34;:&#39;stoked-folder-351109&#39;, &#34;token&#34;:&#39;/Users/basile/Desktop/SFE/projet_polaire/data/credentials_google_app.json&#39;}
 
 
 def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float) -&gt; dict: 
@@ -261,78 +268,7 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
                 df.loc[i, param_dict_out[param]] = float(dict_values[param_dict_in[param]])
         bar.update(i+1)
     bar.finish()
-    return df
-
-def get_df_from_posreport_list(pos_report_list:list[str], id :int, bucket: storage.Client.bucket) :
-    &#34;&#34;&#34;Create a dataframe of track for the boat with id from a list of posreport files 
-
-    Args:
-        pos_report_list (list[str]): list of path to posreport files
-        id (int): id of the boat on pos report files
-        bucket (storage.Client.Bucket): bucket for accessing posreport on cloud storage
-    &#34;&#34;&#34;
-
-    lat = []
-    lon = []
-    time = []
-
-    for path in pos_report_list : 
-        file = bucket.blob(path).download_as_string().decode(&#39;utf-8&#39;)
-        file = file.split(&#39;\r\n&#39;)
-        for line in file : 
-            line = line.split(&#34;;&#34;)
-            if len(line) != 6 : 
-                continue;
-            elif int(line[1]) == id : 
-                lat.append(line[2])
-                lon.append(line[3])
-                time.append(line[4])
-
-    d = {&#39;time&#39;:time, &#39;lat&#39;:lat, &#39;lon&#39;:lon}
-    return pd.DataFrame(data=d)
-
-def create_all_track_dataframes(id_dict: dict, bucket: storage.Client.bucket, pos_report_list:list[str]) :
-    &#34;&#34;&#34;Create dataframe of track from posreport files for all id&#39;s in id_dict.
-
-    Args:
-        id_dict (dict): dict of id&#39;s from name key
-        bucket (storage.Client.Bucket): bucket where the posreports are stored
-        pos_report_list (list[str]): list of path of posreport files
-    &#34;&#34;&#34;
-
-    for name in id_dict : 
-        id = id_dict[name]
-        create_track_dataframe(id, name, bucket, pos_report_list)
-
-def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos_report_list:list[str]) :  
-    &#34;&#34;&#34;Create dataframe of track from posreport files.
-
-    Args:
-        id (int): id of the boat in posreport files
-        name (str): Name of the boat for naming created file
-        bucket (storage.Client.Bucket): bucket where the posreports are stored
-        pos_report_list (list[str]): list of path of posreport files
-    &#34;&#34;&#34;
-    df = get_df_from_posreport_list(pos_report_list, id, bucket)
-    df[&#39;lon&#39;] = df[&#39;lon&#39;].apply(lambda x: convert_coord_to_degdec2(x))
-    df[&#39;lat&#39;] = df[&#39;lat&#39;].apply(lambda x: convert_coord_to_degdec2(x))
-    df[&#39;datetime&#39;] = df[&#39;time&#39;].apply(lambda x: datetime.datetime.strptime(x, &#34;%m/%d/%y %H:%M&#34;))
-    df.drop(&#39;time&#39;, axis=1, inplace=True)
-    
-    #Add rounded values, usefull for searching weather data when using netcdf technique for example
-    df[&#39;round_lon25&#39;] = df[&#39;lon&#39;].apply(x_round_25)
-    df[&#39;round_lat25&#39;] = df[&#39;lat&#39;].apply(x_round_25)
-    df[&#39;round_lon50&#39;] = df[&#39;lon&#39;].apply(x_round_50)
-    df[&#39;round_lat50&#39;] = df[&#39;lat&#39;].apply(x_round_50)
-    df[&#39;round_datetime&#39;] = df[&#39;datetime&#39;].apply(round_datetime)
-
-    ## TO LOCAL DIRECTORY
-    file_path = &#34;/Users/basile/Desktop/SFE/projet_polaire/data/dataframe/&#34;+name+&#34;_VG20_simple_track.pkl&#34; 
-    df.to_pickle(file_path) 
-
-    ## TO CLOUD STORAGE
-    filepath = &#34;gs://hokulea_data/tracks/&#34;+name+&#34;_VG20_simple_track.pkl&#34;
-    df.to_pickle(filepath, storage_options=storage_options) </code></pre>
+    return df</code></pre>
 </details>
 </section>
 <section>
@@ -342,89 +278,6 @@ def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="mwi_tools.grib.extract.create_all_track_dataframes"><code class="name flex">
-<span>def <span class="ident">create_all_track_dataframes</span></span>(<span>id_dict: dict, bucket: <function Client.bucket at 0x111d9fb80>, pos_report_list: list)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Create dataframe of track from posreport files for all id's in id_dict.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>id_dict</code></strong> :&ensp;<code>dict</code></dt>
-<dd>dict of id's from name key</dd>
-<dt><strong><code>bucket</code></strong> :&ensp;<code>storage.Client.Bucket</code></dt>
-<dd>bucket where the posreports are stored</dd>
-<dt><strong><code>pos_report_list</code></strong> :&ensp;<code>list[str]</code></dt>
-<dd>list of path of posreport files</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def create_all_track_dataframes(id_dict: dict, bucket: storage.Client.bucket, pos_report_list:list[str]) :
-    &#34;&#34;&#34;Create dataframe of track from posreport files for all id&#39;s in id_dict.
-
-    Args:
-        id_dict (dict): dict of id&#39;s from name key
-        bucket (storage.Client.Bucket): bucket where the posreports are stored
-        pos_report_list (list[str]): list of path of posreport files
-    &#34;&#34;&#34;
-
-    for name in id_dict : 
-        id = id_dict[name]
-        create_track_dataframe(id, name, bucket, pos_report_list)</code></pre>
-</details>
-</dd>
-<dt id="mwi_tools.grib.extract.create_track_dataframe"><code class="name flex">
-<span>def <span class="ident">create_track_dataframe</span></span>(<span>id: int, name: str, bucket: <function Client.bucket at 0x111d9fb80>, pos_report_list: list)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Create dataframe of track from posreport files.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
-<dd>id of the boat in posreport files</dd>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>Name of the boat for naming created file</dd>
-<dt><strong><code>bucket</code></strong> :&ensp;<code>storage.Client.Bucket</code></dt>
-<dd>bucket where the posreports are stored</dd>
-<dt><strong><code>pos_report_list</code></strong> :&ensp;<code>list[str]</code></dt>
-<dd>list of path of posreport files</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos_report_list:list[str]) :  
-    &#34;&#34;&#34;Create dataframe of track from posreport files.
-
-    Args:
-        id (int): id of the boat in posreport files
-        name (str): Name of the boat for naming created file
-        bucket (storage.Client.Bucket): bucket where the posreports are stored
-        pos_report_list (list[str]): list of path of posreport files
-    &#34;&#34;&#34;
-    df = get_df_from_posreport_list(pos_report_list, id, bucket)
-    df[&#39;lon&#39;] = df[&#39;lon&#39;].apply(lambda x: convert_coord_to_degdec2(x))
-    df[&#39;lat&#39;] = df[&#39;lat&#39;].apply(lambda x: convert_coord_to_degdec2(x))
-    df[&#39;datetime&#39;] = df[&#39;time&#39;].apply(lambda x: datetime.datetime.strptime(x, &#34;%m/%d/%y %H:%M&#34;))
-    df.drop(&#39;time&#39;, axis=1, inplace=True)
-    
-    #Add rounded values, usefull for searching weather data when using netcdf technique for example
-    df[&#39;round_lon25&#39;] = df[&#39;lon&#39;].apply(x_round_25)
-    df[&#39;round_lat25&#39;] = df[&#39;lat&#39;].apply(x_round_25)
-    df[&#39;round_lon50&#39;] = df[&#39;lon&#39;].apply(x_round_50)
-    df[&#39;round_lat50&#39;] = df[&#39;lat&#39;].apply(x_round_50)
-    df[&#39;round_datetime&#39;] = df[&#39;datetime&#39;].apply(round_datetime)
-
-    ## TO LOCAL DIRECTORY
-    file_path = &#34;/Users/basile/Desktop/SFE/projet_polaire/data/dataframe/&#34;+name+&#34;_VG20_simple_track.pkl&#34; 
-    df.to_pickle(file_path) 
-
-    ## TO CLOUD STORAGE
-    filepath = &#34;gs://hokulea_data/tracks/&#34;+name+&#34;_VG20_simple_track.pkl&#34;
-    df.to_pickle(filepath, storage_options=storage_options) </code></pre>
-</details>
-</dd>
 <dt id="mwi_tools.grib.extract.fill_track_df_with_weather_data"><code class="name flex">
 <span>def <span class="ident">fill_track_df_with_weather_data</span></span>(<span>df: <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'>, dir_path: str, param_list: dict) ‑> <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'></span>
 </code></dt>
@@ -635,53 +488,6 @@ def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos
     return df</code></pre>
 </details>
 </dd>
-<dt id="mwi_tools.grib.extract.get_df_from_posreport_list"><code class="name flex">
-<span>def <span class="ident">get_df_from_posreport_list</span></span>(<span>pos_report_list: list, id: int, bucket: <function Client.bucket at 0x111d9fb80>)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Create a dataframe of track for the boat with id from a list of posreport files </p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>pos_report_list</code></strong> :&ensp;<code>list[str]</code></dt>
-<dd>list of path to posreport files</dd>
-<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
-<dd>id of the boat on pos report files</dd>
-<dt><strong><code>bucket</code></strong> :&ensp;<code>storage.Client.Bucket</code></dt>
-<dd>bucket for accessing posreport on cloud storage</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_df_from_posreport_list(pos_report_list:list[str], id :int, bucket: storage.Client.bucket) :
-    &#34;&#34;&#34;Create a dataframe of track for the boat with id from a list of posreport files 
-
-    Args:
-        pos_report_list (list[str]): list of path to posreport files
-        id (int): id of the boat on pos report files
-        bucket (storage.Client.Bucket): bucket for accessing posreport on cloud storage
-    &#34;&#34;&#34;
-
-    lat = []
-    lon = []
-    time = []
-
-    for path in pos_report_list : 
-        file = bucket.blob(path).download_as_string().decode(&#39;utf-8&#39;)
-        file = file.split(&#39;\r\n&#39;)
-        for line in file : 
-            line = line.split(&#34;;&#34;)
-            if len(line) != 6 : 
-                continue;
-            elif int(line[1]) == id : 
-                lat.append(line[2])
-                lon.append(line[3])
-                time.append(line[4])
-
-    d = {&#39;time&#39;:time, &#39;lat&#39;:lat, &#39;lon&#39;:lon}
-    return pd.DataFrame(data=d)</code></pre>
-</details>
-</dd>
 <dt id="mwi_tools.grib.extract.get_value_from_grib_dir"><code class="name flex">
 <span>def <span class="ident">get_value_from_grib_dir</span></span>(<span>path: str, date: str, lat: float, lon: float) ‑> dict</span>
 </code></dt>
@@ -811,11 +617,8 @@ def create_track_dataframe(id :int , name:str, bucket:storage.Client.bucket, pos
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="mwi_tools.grib.extract.create_all_track_dataframes" href="#mwi_tools.grib.extract.create_all_track_dataframes">create_all_track_dataframes</a></code></li>
-<li><code><a title="mwi_tools.grib.extract.create_track_dataframe" href="#mwi_tools.grib.extract.create_track_dataframe">create_track_dataframe</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.fill_track_df_with_weather_data" href="#mwi_tools.grib.extract.fill_track_df_with_weather_data">fill_track_df_with_weather_data</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.fill_track_df_with_weather_data_old" href="#mwi_tools.grib.extract.fill_track_df_with_weather_data_old">fill_track_df_with_weather_data_old</a></code></li>
-<li><code><a title="mwi_tools.grib.extract.get_df_from_posreport_list" href="#mwi_tools.grib.extract.get_df_from_posreport_list">get_df_from_posreport_list</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_value_from_grib_dir" href="#mwi_tools.grib.extract.get_value_from_grib_dir">get_value_from_grib_dir</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_values_from_position_grib" href="#mwi_tools.grib.extract.get_values_from_position_grib">get_values_from_position_grib</a></code></li>
 </ul>
