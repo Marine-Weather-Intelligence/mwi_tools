@@ -12,19 +12,20 @@ import progressbar
 from datetime import timedelta
 
 
-def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float) -> dict: 
+def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float, time : str) -> dict: 
     """Get a dictionnary with all parameters values from a grib_file at the specified location
 
     Args:
         INPUT (str): Path to the grib file
         lat_exp (float): latitude in deg.dec
         lon_exp (float): longitude in deg.dec
+        time (str) : time as a string, 23:00 --> '2300'
 
     Returns:
         dict: dict of values of parameters
     """
 
-    output = subprocess.check_output('grib_ls -l '+str(lat_exp)+','+str(lon_exp)+',1 -p shortName '+INPUT, shell=True)
+    output = subprocess.check_output('grib_ls -l '+str(lat_exp)+','+str(lon_exp)+',1 -p shortName, -w validityTime='+time+' '+INPUT, shell=True)
     
     temp = str(output).split("\\n")
     d = dict()
@@ -51,28 +52,31 @@ def get_value_from_grib_dir (path:str, date:str, lat:float, lon:float) -> dict:
     round_inf_lat = int((lat//10)*10)
     round_sup_lat = round_inf_lat+10
     if round_inf_lat == 0 : 
-        round_inf_lat = "00"
+        round_inf_lat = "0"
     else : 
         round_inf_lat = str(round_inf_lat)
     if round_sup_lat == 0 : 
-        round_sup_lat = "00"
+        round_sup_lat = "0"
     else : 
         round_sup_lat = str(round_sup_lat)
     round_left_lon = int((lon//10)*10)
     round_right_lon = round_left_lon+10
     if round_left_lon == 0 : 
-        round_left_lon = "00"
+        round_left_lon = "0"
     else : 
         round_left_lon = str(round_left_lon)
     if round_right_lon == 0 : 
-        round_right_lon = "00"
+        round_right_lon = "0"
     else : 
         round_right_lon = str(round_right_lon)
 
+    temp = date.split('_')
+    date = temp[0]
+    time = temp[1]
     dir_name = round_sup_lat+'_'+round_inf_lat+'_'+round_left_lon+'_'+round_right_lon
-    file = path+'/'+dir_name+'/grib/'+date+'_'+dir_name+'.grib'
+    file = path+'/'+date+'/'+date+'_'+dir_name+'.grib'
 
-    return get_values_from_position_grib(file,lat,lon)
+    return get_values_from_position_grib(file,lat,lon, time)
 
 def fill_track_df_with_weather_data_old(df : pd, dir_path : str, param_list : list[str]) -> pd:
     """Fill the track dataframe with weather data from grib directory (era5)
