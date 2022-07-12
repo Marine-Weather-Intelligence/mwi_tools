@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>mwi_tools.grib.extract API documentation</title>
-<meta name="description" content="Extractung functions for grib files:
-- get_values_from_position_grib(INPUT, lat, lon) --&gt; Get dict with all values from position for specific grib …" />
+<meta name="description" content="Extracting functions for grib files:
+- get_values_from_position_grib(INPUT, lat, lon) --&gt; Get dict with all values from position and time in a …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,20 +23,18 @@
 <h1 class="title">Module <code>mwi_tools.grib.extract</code></h1>
 </header>
 <section id="section-intro">
-<p>Extractung functions for grib files:
-- get_values_from_position_grib(INPUT, lat, lon) &ndash;&gt; Get dict with all values from position for specific grib INPUT
+<p>Extracting functions for grib files:
+- get_values_from_position_grib(INPUT, lat, lon) &ndash;&gt; Get dict with all values from position and time in a specific daily grib INPUT
 - get_value_from_grib_dir(path, date, lat, lon) &ndash;&gt; Select name of the grib file containing values we want
-- fill_track_df_with_weather_data_old(df, dir_path, param_list) &ndash;&gt; Fill track df with weather values from grib in dir_path
 - fill_track_df_with_weather_data(df, dir_path, param_list) &ndash;&gt; Fill track df with weather values from grib in dir_path</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
-    Extractung functions for grib files:
-    - get_values_from_position_grib(INPUT, lat, lon) --&gt; Get dict with all values from position for specific grib INPUT
+    Extracting functions for grib files:
+    - get_values_from_position_grib(INPUT, lat, lon) --&gt; Get dict with all values from position and time in a specific daily grib INPUT
     - get_value_from_grib_dir(path, date, lat, lon) --&gt; Select name of the grib file containing values we want
-    - fill_track_df_with_weather_data_old(df, dir_path, param_list) --&gt; Fill track df with weather values from grib in dir_path
     - fill_track_df_with_weather_data(df, dir_path, param_list) --&gt; Fill track df with weather values from grib in dir_path
 &#34;&#34;&#34;
 
@@ -46,19 +44,20 @@ import progressbar
 from datetime import timedelta
 
 
-def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float) -&gt; dict: 
-    &#34;&#34;&#34;Get a dictionnary with all parameters values from a grib_file at the specified location
+def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float, time : str) -&gt; dict: 
+    &#34;&#34;&#34;Get a dictionnary with all parameters values from a daily grib_file at the specified location and time
 
     Args:
         INPUT (str): Path to the grib file
         lat_exp (float): latitude in deg.dec
         lon_exp (float): longitude in deg.dec
+        time (str) : time as a string, 23:00 --&gt; &#39;2300&#39;
 
     Returns:
         dict: dict of values of parameters
     &#34;&#34;&#34;
 
-    output = subprocess.check_output(&#39;grib_ls -l &#39;+str(lat_exp)+&#39;,&#39;+str(lon_exp)+&#39;,1 -p shortName &#39;+INPUT, shell=True)
+    output = subprocess.check_output(&#39;grib_ls -l &#39;+str(lat_exp)+&#39;,&#39;+str(lon_exp)+&#39;,1 -p shortName, -w validityTime=&#39;+time+&#39; &#39;+INPUT, shell=True)
     
     temp = str(output).split(&#34;\\n&#34;)
     d = dict()
@@ -72,6 +71,23 @@ def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float)
 
 def get_value_from_grib_dir (path:str, date:str, lat:float, lon:float) -&gt; dict:
     &#34;&#34;&#34;Select the name of the grib file in the grib dir and get the values of all parameters for this location, time and date
+    The grib directory must be ordered this way : 
+    grib_dir/
+    ├── 20201203/
+    │   ├── 20201203_-10_-20_-100_-90.grib
+    │   ├── 20201203_-10_-20_-110_-100.grib
+    │   ├── 20201203_-10_-20_-120_-110.grib
+    │   └── 20201203_-10_-20_-130_-120.grib
+    ├── 20201204/
+    │   ├── 20201204_-10_-20_-100_-90.grib
+    │   ├── 20201204_-10_-20_-110_-100.grib
+    │   ├── 20201204_-10_-20_-120_-110.grib
+    │   └── 20201204_-10_-20_-130_-120.grib
+    └── 20201205/
+        ├── 20201205_-10_-20_-100_-90.grib
+        ├── 20201205_-10_-20_-110_-100.grib
+        ├── 20201205_-10_-20_-120_-110.grib
+        └── 20201205_-10_-20_-130_-120.grib
 
     Args:
         path (str): Path to directory in which the grib files are stored
@@ -85,107 +101,36 @@ def get_value_from_grib_dir (path:str, date:str, lat:float, lon:float) -&gt; dic
     round_inf_lat = int((lat//10)*10)
     round_sup_lat = round_inf_lat+10
     if round_inf_lat == 0 : 
-        round_inf_lat = &#34;00&#34;
+        round_inf_lat = &#34;0&#34;
     else : 
         round_inf_lat = str(round_inf_lat)
     if round_sup_lat == 0 : 
-        round_sup_lat = &#34;00&#34;
+        round_sup_lat = &#34;0&#34;
     else : 
         round_sup_lat = str(round_sup_lat)
     round_left_lon = int((lon//10)*10)
     round_right_lon = round_left_lon+10
     if round_left_lon == 0 : 
-        round_left_lon = &#34;00&#34;
+        round_left_lon = &#34;0&#34;
     else : 
         round_left_lon = str(round_left_lon)
     if round_right_lon == 0 : 
-        round_right_lon = &#34;00&#34;
+        round_right_lon = &#34;0&#34;
     else : 
         round_right_lon = str(round_right_lon)
 
+    temp = date.split(&#39;_&#39;)
+    date = temp[0]
+    time = temp[1]
     dir_name = round_sup_lat+&#39;_&#39;+round_inf_lat+&#39;_&#39;+round_left_lon+&#39;_&#39;+round_right_lon
-    file = path+&#39;/&#39;+dir_name+&#39;/grib/&#39;+date+&#39;_&#39;+dir_name+&#39;.grib&#39;
+    file = path+&#39;/&#39;+date+&#39;/&#39;+date+&#39;_&#39;+dir_name+&#39;.grib&#39;
 
-    return get_values_from_position_grib(file,lat,lon)
+    return get_values_from_position_grib(file,lat,lon, time)
 
-def fill_track_df_with_weather_data_old(df : pd, dir_path : str, param_list : list[str]) -&gt; pd:
-    &#34;&#34;&#34;Fill the track dataframe with weather data from grib directory (era5)
-
-    Args:
-        df (pd): dataframe of track
-        dir_path (str): path to directory with all grib files
-        param_list (list): list of params that we want in the df
-
-    Returns:
-        pd: complete dataframe
-    &#34;&#34;&#34;
-    param_dict = {
-    &#39;temperature&#39;: &#39;2t&#39;,
-    &#39;wind_u&#39; : &#39;10u&#39;,
-    &#39;wind_v&#39; : &#39;10v&#39;,
-    &#39;gusts&#39; : &#39;i10fg&#39;,
-    &#39;pressure&#39; : &#39;msl&#39;,
-    &#39;air_density&#39; : &#39;rhoao&#39;,
-    &#39;sea_temperature&#39; : &#39;sst&#39;,
-    &#39;mer_max&#39; : &#39;hmax&#39;,
-    &#39;period_mer_max&#39; : &#39;tmax&#39;,
-    &#39;peak_wave_period&#39; : &#39;pp1d&#39;,
-    &#39;height_total_swell&#39; : &#39;shts&#39;,
-    &#39;dir_total_swell&#39; : &#39;mdts&#39;,
-    &#39;period_total_swell&#39; : &#39;mpts&#39;,
-    &#39;height_wind_waves&#39; : &#39;shww&#39;,
-    &#39;dir_wind_waves&#39; : &#39;mdww&#39;,
-    &#39;period_wind_waves&#39; : &#39;mpww&#39;,
-    &#39;wave_height&#39; : &#39;swh&#39;,
-    &#39;mean_wave_direction&#39; : &#39;mwd&#39;,
-    &#39;mean_wave_period&#39; : &#39;mwp&#39;,
-    &#39;height_swell1&#39; : &#39;swh1&#39;,
-    &#39;direction_swell1&#39; : &#39;mwd1&#39;,
-    &#39;period_swell1&#39; : &#39;mwp1&#39;,
-    &#39;height_swell2&#39; : &#39;swh2&#39;,
-    &#39;direction_swell2&#39; : &#39;mwd2&#39;,
-    &#39;period_swell2&#39; : &#39;mwp2&#39;,
-    &#39;precipitation&#39; : &#39;tp&#39;
-    }
-
-    atmo_list = [&#39;temperature&#39;,&#39;wind_u&#39;,&#39;wind_v&#39;,&#39;pressure&#39;,&#39;sea_temperature&#39;]
-
-    bar = progressbar.ProgressBar(maxval=len(df), \
-        widgets=[progressbar.Bar(&#39;=&#39;, &#39;[&#39;, &#39;]&#39;), &#39; &#39;, progressbar.Percentage()])
-    
-    bar.start()
-    for i in range(len(df)) : 
-        lat25 = df.loc[i, &#39;round_lat25&#39;]
-        lon25 = df.loc[i, &#39;round_lon25&#39;]
-        lat50 = df.loc[i, &#39;round_lat50&#39;]
-        lon50 = df.loc[i, &#39;round_lon50&#39;]
-        date = df.loc[i, &#39;round_datetime&#39;]
-        dt = date.strftime(&#34;%Y%m%d_%H%M&#34;)
-        for param in param_list : 
-            if param == &#34;precipitation&#34; or param==&#34;gusts&#34; : 
-                #Changer la date en arrondissant à 6h ou 18h
-                if date.hour &gt;= 18 : 
-                    stepRange = date.hour - 18 +1
-                    date6 = date.replace(hour=18)
-                elif date.hour &lt; 6: 
-                    stepRange = date.hour + 6 +1
-                    date6 = date.replace(hour=0) - timedelta(hours = 6)
-                else : 
-                    stepRange = date.hour -6 +1
-                    date6 = date.replace(hour=6)
-
-                dt6 = date6.strftime(&#34;%Y%m%d_%H%M&#34;) 
-                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt6,param_dict[param],lat25,lon25, stepRange)
-            elif param in atmo_list :
-                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt,param_dict[param],lat25,lon25)
-            else : 
-                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt,param_dict[param],lat50,lon50)
-        bar.update(i+1)
-    bar.finish()
-    return df
 
 def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict) -&gt; pd:
     &#34;&#34;&#34;Fill the track dataframe with weather data from grib directory (era5)
+    This function takes every position in the track dataframe and look for the corresponding weather data in the grib directory
 
     Args:
         df (pandas): dataframe of track
@@ -282,7 +227,8 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
 <span>def <span class="ident">fill_track_df_with_weather_data</span></span>(<span>df: <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'>, dir_path: str, param_list: dict) ‑> <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'></span>
 </code></dt>
 <dd>
-<div class="desc"><p>Fill the track dataframe with weather data from grib directory (era5)</p>
+<div class="desc"><p>Fill the track dataframe with weather data from grib directory (era5)
+This function takes every position in the track dataframe and look for the corresponding weather data in the grib directory</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>df</code></strong> :&ensp;<code>pandas</code></dt>
@@ -303,6 +249,7 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
 </summary>
 <pre><code class="python">def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict) -&gt; pd:
     &#34;&#34;&#34;Fill the track dataframe with weather data from grib directory (era5)
+    This function takes every position in the track dataframe and look for the corresponding weather data in the grib directory
 
     Args:
         df (pandas): dataframe of track
@@ -388,111 +335,36 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
     return df</code></pre>
 </details>
 </dd>
-<dt id="mwi_tools.grib.extract.fill_track_df_with_weather_data_old"><code class="name flex">
-<span>def <span class="ident">fill_track_df_with_weather_data_old</span></span>(<span>df: <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'>, dir_path: str, param_list: list) ‑> <module 'pandas' from '/Users/basile/opt/anaconda3/envs/pyseminar/lib/python3.9/site-packages/pandas/__init__.py'></span>
-</code></dt>
-<dd>
-<div class="desc"><p>Fill the track dataframe with weather data from grib directory (era5)</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>df</code></strong> :&ensp;<code>pd</code></dt>
-<dd>dataframe of track</dd>
-<dt><strong><code>dir_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>path to directory with all grib files</dd>
-<dt><strong><code>param_list</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of params that we want in the df</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>pd</code></dt>
-<dd>complete dataframe</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def fill_track_df_with_weather_data_old(df : pd, dir_path : str, param_list : list[str]) -&gt; pd:
-    &#34;&#34;&#34;Fill the track dataframe with weather data from grib directory (era5)
-
-    Args:
-        df (pd): dataframe of track
-        dir_path (str): path to directory with all grib files
-        param_list (list): list of params that we want in the df
-
-    Returns:
-        pd: complete dataframe
-    &#34;&#34;&#34;
-    param_dict = {
-    &#39;temperature&#39;: &#39;2t&#39;,
-    &#39;wind_u&#39; : &#39;10u&#39;,
-    &#39;wind_v&#39; : &#39;10v&#39;,
-    &#39;gusts&#39; : &#39;i10fg&#39;,
-    &#39;pressure&#39; : &#39;msl&#39;,
-    &#39;air_density&#39; : &#39;rhoao&#39;,
-    &#39;sea_temperature&#39; : &#39;sst&#39;,
-    &#39;mer_max&#39; : &#39;hmax&#39;,
-    &#39;period_mer_max&#39; : &#39;tmax&#39;,
-    &#39;peak_wave_period&#39; : &#39;pp1d&#39;,
-    &#39;height_total_swell&#39; : &#39;shts&#39;,
-    &#39;dir_total_swell&#39; : &#39;mdts&#39;,
-    &#39;period_total_swell&#39; : &#39;mpts&#39;,
-    &#39;height_wind_waves&#39; : &#39;shww&#39;,
-    &#39;dir_wind_waves&#39; : &#39;mdww&#39;,
-    &#39;period_wind_waves&#39; : &#39;mpww&#39;,
-    &#39;wave_height&#39; : &#39;swh&#39;,
-    &#39;mean_wave_direction&#39; : &#39;mwd&#39;,
-    &#39;mean_wave_period&#39; : &#39;mwp&#39;,
-    &#39;height_swell1&#39; : &#39;swh1&#39;,
-    &#39;direction_swell1&#39; : &#39;mwd1&#39;,
-    &#39;period_swell1&#39; : &#39;mwp1&#39;,
-    &#39;height_swell2&#39; : &#39;swh2&#39;,
-    &#39;direction_swell2&#39; : &#39;mwd2&#39;,
-    &#39;period_swell2&#39; : &#39;mwp2&#39;,
-    &#39;precipitation&#39; : &#39;tp&#39;
-    }
-
-    atmo_list = [&#39;temperature&#39;,&#39;wind_u&#39;,&#39;wind_v&#39;,&#39;pressure&#39;,&#39;sea_temperature&#39;]
-
-    bar = progressbar.ProgressBar(maxval=len(df), \
-        widgets=[progressbar.Bar(&#39;=&#39;, &#39;[&#39;, &#39;]&#39;), &#39; &#39;, progressbar.Percentage()])
-    
-    bar.start()
-    for i in range(len(df)) : 
-        lat25 = df.loc[i, &#39;round_lat25&#39;]
-        lon25 = df.loc[i, &#39;round_lon25&#39;]
-        lat50 = df.loc[i, &#39;round_lat50&#39;]
-        lon50 = df.loc[i, &#39;round_lon50&#39;]
-        date = df.loc[i, &#39;round_datetime&#39;]
-        dt = date.strftime(&#34;%Y%m%d_%H%M&#34;)
-        for param in param_list : 
-            if param == &#34;precipitation&#34; or param==&#34;gusts&#34; : 
-                #Changer la date en arrondissant à 6h ou 18h
-                if date.hour &gt;= 18 : 
-                    stepRange = date.hour - 18 +1
-                    date6 = date.replace(hour=18)
-                elif date.hour &lt; 6: 
-                    stepRange = date.hour + 6 +1
-                    date6 = date.replace(hour=0) - timedelta(hours = 6)
-                else : 
-                    stepRange = date.hour -6 +1
-                    date6 = date.replace(hour=6)
-
-                dt6 = date6.strftime(&#34;%Y%m%d_%H%M&#34;) 
-                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt6,param_dict[param],lat25,lon25, stepRange)
-            elif param in atmo_list :
-                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt,param_dict[param],lat25,lon25)
-            else : 
-                df.loc[i, param] = get_value_from_grib_dir(dir_path, dt,param_dict[param],lat50,lon50)
-        bar.update(i+1)
-    bar.finish()
-    return df</code></pre>
-</details>
-</dd>
 <dt id="mwi_tools.grib.extract.get_value_from_grib_dir"><code class="name flex">
 <span>def <span class="ident">get_value_from_grib_dir</span></span>(<span>path: str, date: str, lat: float, lon: float) ‑> dict</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Select the name of the grib file in the grib dir and get the values of all parameters for this location, time and date</p>
+<div class="desc"><p>Select the name of the grib file in the grib dir and get the values of all parameters for this location, time and date
+The grib directory must be ordered this way :
+grib_dir/
+├── 20201203/
+│
+├── 20201203_-10_-20_-100_-90.grib
+│
+├── 20201203_-10_-20_-110_-100.grib
+│
+├── 20201203_-10_-20_-120_-110.grib
+│
+└── 20201203_-10_-20_-130_-120.grib
+├── 20201204/
+│
+├── 20201204_-10_-20_-100_-90.grib
+│
+├── 20201204_-10_-20_-110_-100.grib
+│
+├── 20201204_-10_-20_-120_-110.grib
+│
+└── 20201204_-10_-20_-130_-120.grib
+└── 20201205/
+├── 20201205_-10_-20_-100_-90.grib
+├── 20201205_-10_-20_-110_-100.grib
+├── 20201205_-10_-20_-120_-110.grib
+└── 20201205_-10_-20_-130_-120.grib</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
@@ -515,6 +387,23 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
 </summary>
 <pre><code class="python">def get_value_from_grib_dir (path:str, date:str, lat:float, lon:float) -&gt; dict:
     &#34;&#34;&#34;Select the name of the grib file in the grib dir and get the values of all parameters for this location, time and date
+    The grib directory must be ordered this way : 
+    grib_dir/
+    ├── 20201203/
+    │   ├── 20201203_-10_-20_-100_-90.grib
+    │   ├── 20201203_-10_-20_-110_-100.grib
+    │   ├── 20201203_-10_-20_-120_-110.grib
+    │   └── 20201203_-10_-20_-130_-120.grib
+    ├── 20201204/
+    │   ├── 20201204_-10_-20_-100_-90.grib
+    │   ├── 20201204_-10_-20_-110_-100.grib
+    │   ├── 20201204_-10_-20_-120_-110.grib
+    │   └── 20201204_-10_-20_-130_-120.grib
+    └── 20201205/
+        ├── 20201205_-10_-20_-100_-90.grib
+        ├── 20201205_-10_-20_-110_-100.grib
+        ├── 20201205_-10_-20_-120_-110.grib
+        └── 20201205_-10_-20_-130_-120.grib
 
     Args:
         path (str): Path to directory in which the grib files are stored
@@ -528,35 +417,38 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
     round_inf_lat = int((lat//10)*10)
     round_sup_lat = round_inf_lat+10
     if round_inf_lat == 0 : 
-        round_inf_lat = &#34;00&#34;
+        round_inf_lat = &#34;0&#34;
     else : 
         round_inf_lat = str(round_inf_lat)
     if round_sup_lat == 0 : 
-        round_sup_lat = &#34;00&#34;
+        round_sup_lat = &#34;0&#34;
     else : 
         round_sup_lat = str(round_sup_lat)
     round_left_lon = int((lon//10)*10)
     round_right_lon = round_left_lon+10
     if round_left_lon == 0 : 
-        round_left_lon = &#34;00&#34;
+        round_left_lon = &#34;0&#34;
     else : 
         round_left_lon = str(round_left_lon)
     if round_right_lon == 0 : 
-        round_right_lon = &#34;00&#34;
+        round_right_lon = &#34;0&#34;
     else : 
         round_right_lon = str(round_right_lon)
 
+    temp = date.split(&#39;_&#39;)
+    date = temp[0]
+    time = temp[1]
     dir_name = round_sup_lat+&#39;_&#39;+round_inf_lat+&#39;_&#39;+round_left_lon+&#39;_&#39;+round_right_lon
-    file = path+&#39;/&#39;+dir_name+&#39;/grib/&#39;+date+&#39;_&#39;+dir_name+&#39;.grib&#39;
+    file = path+&#39;/&#39;+date+&#39;/&#39;+date+&#39;_&#39;+dir_name+&#39;.grib&#39;
 
-    return get_values_from_position_grib(file,lat,lon)</code></pre>
+    return get_values_from_position_grib(file,lat,lon, time)</code></pre>
 </details>
 </dd>
 <dt id="mwi_tools.grib.extract.get_values_from_position_grib"><code class="name flex">
-<span>def <span class="ident">get_values_from_position_grib</span></span>(<span>INPUT: str, lat_exp: float, lon_exp: float) ‑> dict</span>
+<span>def <span class="ident">get_values_from_position_grib</span></span>(<span>INPUT: str, lat_exp: float, lon_exp: float, time: str) ‑> dict</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Get a dictionnary with all parameters values from a grib_file at the specified location</p>
+<div class="desc"><p>Get a dictionnary with all parameters values from a daily grib_file at the specified location and time</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>INPUT</code></strong> :&ensp;<code>str</code></dt>
@@ -566,6 +458,7 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
 <dt><strong><code>lon_exp</code></strong> :&ensp;<code>float</code></dt>
 <dd>longitude in deg.dec</dd>
 </dl>
+<p>time (str) : time as a string, 23:00 &ndash;&gt; '2300'</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>dict</code></dt>
@@ -575,19 +468,20 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float) -&gt; dict: 
-    &#34;&#34;&#34;Get a dictionnary with all parameters values from a grib_file at the specified location
+<pre><code class="python">def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float, time : str) -&gt; dict: 
+    &#34;&#34;&#34;Get a dictionnary with all parameters values from a daily grib_file at the specified location and time
 
     Args:
         INPUT (str): Path to the grib file
         lat_exp (float): latitude in deg.dec
         lon_exp (float): longitude in deg.dec
+        time (str) : time as a string, 23:00 --&gt; &#39;2300&#39;
 
     Returns:
         dict: dict of values of parameters
     &#34;&#34;&#34;
 
-    output = subprocess.check_output(&#39;grib_ls -l &#39;+str(lat_exp)+&#39;,&#39;+str(lon_exp)+&#39;,1 -p shortName &#39;+INPUT, shell=True)
+    output = subprocess.check_output(&#39;grib_ls -l &#39;+str(lat_exp)+&#39;,&#39;+str(lon_exp)+&#39;,1 -p shortName, -w validityTime=&#39;+time+&#39; &#39;+INPUT, shell=True)
     
     temp = str(output).split(&#34;\\n&#34;)
     d = dict()
@@ -618,7 +512,6 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="mwi_tools.grib.extract.fill_track_df_with_weather_data" href="#mwi_tools.grib.extract.fill_track_df_with_weather_data">fill_track_df_with_weather_data</a></code></li>
-<li><code><a title="mwi_tools.grib.extract.fill_track_df_with_weather_data_old" href="#mwi_tools.grib.extract.fill_track_df_with_weather_data_old">fill_track_df_with_weather_data_old</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_value_from_grib_dir" href="#mwi_tools.grib.extract.get_value_from_grib_dir">get_value_from_grib_dir</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_values_from_position_grib" href="#mwi_tools.grib.extract.get_values_from_position_grib">get_values_from_position_grib</a></code></li>
 </ul>
