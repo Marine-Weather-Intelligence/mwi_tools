@@ -65,11 +65,13 @@ def get_value_from_grib_dir (path:str, date:str, lat:float, lon:float) -> dict:
     Returns:
         dict: dict of values of parameters
     """
-    round_inf_lat = int((lat//10)*10)
+    round_inf_lat = int((lat//10)*10) 
+    if round_inf_lat == 180 : 
+        round_inf_lat = -180
     round_sup_lat = round_inf_lat+10
     if round_inf_lat == 0 : 
         round_inf_lat = "0"
-    else : 
+    else :
         round_inf_lat = str(round_inf_lat)
     if round_sup_lat == 0 : 
         round_sup_lat = "0"
