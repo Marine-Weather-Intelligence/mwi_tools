@@ -57,7 +57,7 @@ def calculate_features_df_weather(df) :
         diff = x['i10fg']-x['TWS']
         if (diff < 0) : 
             diff = 0
-        return diff
+        return diff/x['TWS']
 
     df['gust_diff'] = df.apply(lambda x: set_diff_gust(x), axis=1)
 
