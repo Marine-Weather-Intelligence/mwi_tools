@@ -85,21 +85,21 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
         lat2 = lat1 - lat_step
         for lon1 in range(lon_left, lon_right, lon_step) : 
             lon2 = lon1 + lon_step
-            if(lat1 == 0) :
+            if(int(lat1) == 0) :
                 lat1 = '00'
             else : 
                 lat1 = str(int(lat1))
-            if(lat2 == 0) :
+            if(int(lat2) == 0) :
                 lat2 = '00'
             else : 
                 lat2 = str(int(lat2))
-            if(lon1 == 0) :
+            if(int(lon1) == 0) :
                 lon1 = '00'
             elif lon1 == -180 : 
                 lon1 = '180'
             else : 
                 lon1 = str(int(lon1))
-            if(lon2 == 0) :
+            if(int(lon2) == 0) :
                 lon2 = '00'
             elif lon2 == -180 : 
                 lon2 = '180'
