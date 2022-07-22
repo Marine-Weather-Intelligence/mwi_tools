@@ -69,7 +69,7 @@ mwi_tools/
 - ```git add . ```
 - ```git commit -m "update"```
 - ```git push```
-- ```pip install git+https://github.com/Marine-Weather-Intelligence/mwi_tools.git```
+- ```pip install git+https://github.com/Marine-Weather-Intelligence/mwi_tools.git --upgrade```
 
 
 

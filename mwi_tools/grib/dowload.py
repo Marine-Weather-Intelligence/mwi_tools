@@ -1,7 +1,7 @@
 import requests
 from datetime import datetime
 
-def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -> None: 
+def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -> None :
     """Download grib from API GRIB SQUID
 
     Args:
@@ -10,13 +10,16 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         lon_left (float): longitude left
         lon_right (float): longitude right
         model (str): model to choose between --> ['gfs1','gfs05','gfs025','arome0025','arome001','arpege05','arpege01','iconEU','iconGlobal','ecmwf', 'ww3','mfwam01','mfwam0025']
-        variables (str): variables separated by a coma in a string ex : "10u,10v,prmsl,2t,gust,apcp"
+        variables (str): variables separated by a coma in a string ex : "10u,10v,prmsl,2t,gust,apcp" or "swper,mpww,swdir,dirpw,perpw,swell,shww,swh,wvdir"
         step_from (int): Either a validityTime to start with or 'now' to get the first available timestep
         step_to (int): last timestep, must be a multiple of step_dt, ex : 384 for 16 days
         step_dt (int): 1,3,... timestep between forecast
         out_path (str): path of the directory where the grib file will be downloaded ie '/data'
-        credentials (list) : [email, password, id, pwd] Credentials to access the squid API
-    """
+        credentials (list): [email, password, id, pwd] Credentials to access the squid API
+
+    Returns:
+        None: None
+    """    
 
     modeldict = {
         'gfs1' : 'gfs_1_0',
@@ -33,6 +36,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         'mfwam01' : 'mfwam_arpege_0_1',
         'mfwam0025' : 'mfwam_arome_0_025'
     }
+   
 
     model = modeldict[model]
     
@@ -78,3 +82,4 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         out_file.write(r.content)
 
     print(status)
+    return None
