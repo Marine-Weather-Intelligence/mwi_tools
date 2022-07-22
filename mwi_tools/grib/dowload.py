@@ -38,7 +38,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
     }
    
 
-    model = modeldict[model]
+    model_req = modeldict[model]
     
     if(lat_sup == 0) :
         lat_sup = '00'
@@ -63,7 +63,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
     
     area = lat_sup+' '+lon_left+' '+lat_inf+' '+lon_right
 
-    xml = '<grib_request version="1" model="'+model+'" step_from="'+str(step_from)+'" step_to="'+str(step_to)+'" step_dt="'+str(step_dt)+'" var="'+variables+'" ll="'+area+'" compress="no" grib_version="2" />'
+    xml = '<grib_request version="1" model="'+model_req+'" step_from="'+str(step_from)+'" step_to="'+str(step_to)+'" step_dt="'+str(step_dt)+'" var="'+variables+'" ll="'+area+'" compress="no" grib_version="2" />'
 
     URL = "https://grib-server.greatcircle.be/v4/grib-requests"
 

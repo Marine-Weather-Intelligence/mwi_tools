@@ -66,7 +66,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
     }
    
 
-    model = modeldict[model]
+    model_req = modeldict[model]
     
     if(lat_sup == 0) :
         lat_sup = &#39;00&#39;
@@ -91,7 +91,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
     
     area = lat_sup+&#39; &#39;+lon_left+&#39; &#39;+lat_inf+&#39; &#39;+lon_right
 
-    xml = &#39;&lt;grib_request version=&#34;1&#34; model=&#34;&#39;+model+&#39;&#34; step_from=&#34;&#39;+str(step_from)+&#39;&#34; step_to=&#34;&#39;+str(step_to)+&#39;&#34; step_dt=&#34;&#39;+str(step_dt)+&#39;&#34; var=&#34;&#39;+variables+&#39;&#34; ll=&#34;&#39;+area+&#39;&#34; compress=&#34;no&#34; grib_version=&#34;2&#34; /&gt;&#39;
+    xml = &#39;&lt;grib_request version=&#34;1&#34; model=&#34;&#39;+model_req+&#39;&#34; step_from=&#34;&#39;+str(step_from)+&#39;&#34; step_to=&#34;&#39;+str(step_to)+&#39;&#34; step_dt=&#34;&#39;+str(step_dt)+&#39;&#34; var=&#34;&#39;+variables+&#39;&#34; ll=&#34;&#39;+area+&#39;&#34; compress=&#34;no&#34; grib_version=&#34;2&#34; /&gt;&#39;
 
     URL = &#34;https://grib-server.greatcircle.be/v4/grib-requests&#34;
 
@@ -196,7 +196,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
     }
    
 
-    model = modeldict[model]
+    model_req = modeldict[model]
     
     if(lat_sup == 0) :
         lat_sup = &#39;00&#39;
@@ -221,7 +221,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
     
     area = lat_sup+&#39; &#39;+lon_left+&#39; &#39;+lat_inf+&#39; &#39;+lon_right
 
-    xml = &#39;&lt;grib_request version=&#34;1&#34; model=&#34;&#39;+model+&#39;&#34; step_from=&#34;&#39;+str(step_from)+&#39;&#34; step_to=&#34;&#39;+str(step_to)+&#39;&#34; step_dt=&#34;&#39;+str(step_dt)+&#39;&#34; var=&#34;&#39;+variables+&#39;&#34; ll=&#34;&#39;+area+&#39;&#34; compress=&#34;no&#34; grib_version=&#34;2&#34; /&gt;&#39;
+    xml = &#39;&lt;grib_request version=&#34;1&#34; model=&#34;&#39;+model_req+&#39;&#34; step_from=&#34;&#39;+str(step_from)+&#39;&#34; step_to=&#34;&#39;+str(step_to)+&#39;&#34; step_dt=&#34;&#39;+str(step_dt)+&#39;&#34; var=&#34;&#39;+variables+&#39;&#34; ll=&#34;&#39;+area+&#39;&#34; compress=&#34;no&#34; grib_version=&#34;2&#34; /&gt;&#39;
 
     URL = &#34;https://grib-server.greatcircle.be/v4/grib-requests&#34;
 

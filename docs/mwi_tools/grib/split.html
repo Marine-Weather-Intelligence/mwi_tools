@@ -38,6 +38,7 @@
 &#34;&#34;&#34;
 
 import os
+import metview as mv
 
 def split_grib_per_hour(grib_path : str, dir_name:str): 
     &#34;&#34;&#34;Function spliting a grib file into many small ones
@@ -91,7 +92,34 @@ def split_grib_directory_per_hour(path : str) -&gt; None :
                         new_filename += temp[i]
                     else : 
                         new_filename+=&#39;_&#39;+temp[i]
-                os.rename(dir_path+&#39;/&#39;+file, dir_path+&#39;/&#39;+new_filename)</code></pre>
+                os.rename(dir_path+&#39;/&#39;+file, dir_path+&#39;/&#39;+new_filename)
+
+
+def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :float, lon_right :float, lat_step:int, lon_step :int, outpath:str) -&gt; None :
+    &#34;&#34;&#34;Split a grib file into many small grib files of size lat_step*lon_step
+
+    Args:
+        inpath (str): path of the first grib file, file is supposed to be named like this : model_date_latsup_latinf_lonleft_lonright.grib
+        lat_sup (float): highest latitude of the split
+        lat_inf (float): lowest latitude of the split
+        lon_left (float): leftest latitude of the split
+        lon_right (float): rightest latitude of the split
+        lat_step (int): size of the split in latitude
+        lon_step (int): size of the split in longitude
+        outpath (str): path of the directory in which small grib files are saved
+    &#34;&#34;&#34;
+
+    filename = inpath.split(&#39;/&#39;)[-1]
+    temp = filename.split(&#39;_&#39;)
+    model = temp[0]
+    date = temp[1]
+    for lat1 in range(lat_sup, lat_inf, -lat_step) : 
+        lat2 = lat1 - lat_step
+        for lon1 in range(lon_left, lon_right, lon_step) : 
+            lon2 = lon1 + lon_step
+            area = [lat2, lon1, lat1, lon2]
+            regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
+            mv.write(outpath+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+str(area[2])+&#39;_&#39;+str(area[0])+&#39;_&#39;+str(area[1])+&#39;_&#39;+str(area[3])+&#39;.grib&#39;, regrided)</code></pre>
 </details>
 </section>
 <section>
@@ -101,6 +129,61 @@ def split_grib_directory_per_hour(path : str) -&gt; None :
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="mwi_tools.grib.split.split_grib_by_area"><code class="name flex">
+<span>def <span class="ident">split_grib_by_area</span></span>(<span>inpath: str, lat_sup: float, lat_inf: float, lon_left: float, lon_right: float, lat_step: int, lon_step: int, outpath: str) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Split a grib file into many small grib files of size lat_step*lon_step</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>inpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>path of the first grib file, file is supposed to be named like this : model_date_latsup_latinf_lonleft_lonright.grib</dd>
+<dt><strong><code>lat_sup</code></strong> :&ensp;<code>float</code></dt>
+<dd>highest latitude of the split</dd>
+<dt><strong><code>lat_inf</code></strong> :&ensp;<code>float</code></dt>
+<dd>lowest latitude of the split</dd>
+<dt><strong><code>lon_left</code></strong> :&ensp;<code>float</code></dt>
+<dd>leftest latitude of the split</dd>
+<dt><strong><code>lon_right</code></strong> :&ensp;<code>float</code></dt>
+<dd>rightest latitude of the split</dd>
+<dt><strong><code>lat_step</code></strong> :&ensp;<code>int</code></dt>
+<dd>size of the split in latitude</dd>
+<dt><strong><code>lon_step</code></strong> :&ensp;<code>int</code></dt>
+<dd>size of the split in longitude</dd>
+<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>path of the directory in which small grib files are saved</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :float, lon_right :float, lat_step:int, lon_step :int, outpath:str) -&gt; None :
+    &#34;&#34;&#34;Split a grib file into many small grib files of size lat_step*lon_step
+
+    Args:
+        inpath (str): path of the first grib file, file is supposed to be named like this : model_date_latsup_latinf_lonleft_lonright.grib
+        lat_sup (float): highest latitude of the split
+        lat_inf (float): lowest latitude of the split
+        lon_left (float): leftest latitude of the split
+        lon_right (float): rightest latitude of the split
+        lat_step (int): size of the split in latitude
+        lon_step (int): size of the split in longitude
+        outpath (str): path of the directory in which small grib files are saved
+    &#34;&#34;&#34;
+
+    filename = inpath.split(&#39;/&#39;)[-1]
+    temp = filename.split(&#39;_&#39;)
+    model = temp[0]
+    date = temp[1]
+    for lat1 in range(lat_sup, lat_inf, -lat_step) : 
+        lat2 = lat1 - lat_step
+        for lon1 in range(lon_left, lon_right, lon_step) : 
+            lon2 = lon1 + lon_step
+            area = [lat2, lon1, lat1, lon2]
+            regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
+            mv.write(outpath+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+str(area[2])+&#39;_&#39;+str(area[0])+&#39;_&#39;+str(area[1])+&#39;_&#39;+str(area[3])+&#39;.grib&#39;, regrided)</code></pre>
+</details>
+</dd>
 <dt id="mwi_tools.grib.split.split_grib_directory_per_hour"><code class="name flex">
 <span>def <span class="ident">split_grib_directory_per_hour</span></span>(<span>path: str) ‑> None</span>
 </code></dt>
@@ -207,6 +290,7 @@ One grib file per hour</p>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="mwi_tools.grib.split.split_grib_by_area" href="#mwi_tools.grib.split.split_grib_by_area">split_grib_by_area</a></code></li>
 <li><code><a title="mwi_tools.grib.split.split_grib_directory_per_hour" href="#mwi_tools.grib.split.split_grib_directory_per_hour">split_grib_directory_per_hour</a></code></li>
 <li><code><a title="mwi_tools.grib.split.split_grib_per_hour" href="#mwi_tools.grib.split.split_grib_per_hour">split_grib_per_hour</a></code></li>
 </ul>

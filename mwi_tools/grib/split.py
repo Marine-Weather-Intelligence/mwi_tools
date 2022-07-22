@@ -5,6 +5,7 @@
 """
 
 import os
+import metview as mv
 
 def split_grib_per_hour(grib_path : str, dir_name:str): 
     """Function spliting a grib file into many small ones
@@ -59,3 +60,30 @@ def split_grib_directory_per_hour(path : str) -> None :
                     else : 
                         new_filename+='_'+temp[i]
                 os.rename(dir_path+'/'+file, dir_path+'/'+new_filename)
+
+
+def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :float, lon_right :float, lat_step:int, lon_step :int, outpath:str) -> None :
+    """Split a grib file into many small grib files of size lat_step*lon_step
+
+    Args:
+        inpath (str): path of the first grib file, file is supposed to be named like this : model_date_latsup_latinf_lonleft_lonright.grib
+        lat_sup (float): highest latitude of the split
+        lat_inf (float): lowest latitude of the split
+        lon_left (float): leftest latitude of the split
+        lon_right (float): rightest latitude of the split
+        lat_step (int): size of the split in latitude
+        lon_step (int): size of the split in longitude
+        outpath (str): path of the directory in which small grib files are saved
+    """
+
+    filename = inpath.split('/')[-1]
+    temp = filename.split('_')
+    model = temp[0]
+    date = temp[1]
+    for lat1 in range(lat_sup, lat_inf, -lat_step) : 
+        lat2 = lat1 - lat_step
+        for lon1 in range(lon_left, lon_right, lon_step) : 
+            lon2 = lon1 + lon_step
+            area = [lat2, lon1, lat1, lon2]
+            regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
+            mv.write(outpath+'/'+model+'_'+date+'_'+str(area[2])+'_'+str(area[0])+'_'+str(area[1])+'_'+str(area[3])+'.grib', regrided)
