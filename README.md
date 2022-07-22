@@ -39,6 +39,7 @@ mwi_tools/
  │   ├── grib/
  │   │   ├── __init__.py
  │   │   ├── extract.py
+ │   │   ├── download.py
  │   │   └── split.py
  │   ├── polaire/
  │   │   ├── __init__.py

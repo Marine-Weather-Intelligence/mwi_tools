@@ -85,7 +85,7 @@ def calculate_features_df_weather(df) :
         diff = x[&#39;i10fg&#39;]-x[&#39;TWS&#39;]
         if (diff &lt; 0) : 
             diff = 0
-        return diff
+        return (diff/x[&#39;TWS&#39;])
 
     df[&#39;gust_diff&#39;] = df.apply(lambda x: set_diff_gust(x), axis=1)
 
@@ -229,7 +229,7 @@ This function is made for the Vendee Globe 2020 files</p>
         diff = x[&#39;i10fg&#39;]-x[&#39;TWS&#39;]
         if (diff &lt; 0) : 
             diff = 0
-        return diff
+        return (diff/x[&#39;TWS&#39;])
 
     df[&#39;gust_diff&#39;] = df.apply(lambda x: set_diff_gust(x), axis=1)
 
