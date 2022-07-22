@@ -107,7 +107,7 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
                 lon2 = str(int(lon2))
             area = [lat2, lon1, lat1, lon2]
             regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
-            zone_name = str(area[2])+'_'+str(area[0])+'_'+str(area[1])+'_'+str(area[3])
+            zone_name = area[2]+'_'+area[0]+'_'+area[1]+'_'+area[3]
             if not os.path.exists(outpath+'/'+zone_name) : 
                 os.mkdir(outpath+'/'+zone_name)
             if not os.path.exists(outpath+'/'+zone_name+'/grib') : 
