@@ -78,7 +78,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
 
     now = datetime.now()
     date_time = now.strftime("%Y%m%d")
-    with open(out_path+'/'+model+'_'+date_time+'_'+lat_sup+'_'+lon_left+'_'+lat_inf+'_'+lon_right+'.grib', 'wb') as out_file : 
+    with open(out_path+'/'+model+'_'+date_time+'_'+lat_sup+'_'+lat_inf+'_'+lon_left+'_'+lon_right+'.grib', 'wb') as out_file : 
         out_file.write(r.content)
 
     print(status)
