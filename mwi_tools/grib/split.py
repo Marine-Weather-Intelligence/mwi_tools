@@ -5,6 +5,7 @@
 """
 
 import os
+from black import out
 import metview as mv
 
 def split_grib_per_hour(grib_path : str, dir_name:str): 
@@ -73,7 +74,7 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
         lon_right (float): rightest latitude of the split
         lat_step (int): size of the split in latitude
         lon_step (int): size of the split in longitude
-        outpath (str): path of the directory in which small grib files are saved
+        outpath (str): path of the directory in which small grib files are saved, it create a folder per zone
     """
 
     filename = inpath.split('/')[-1]
@@ -84,6 +85,31 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
         lat2 = lat1 - lat_step
         for lon1 in range(lon_left, lon_right, lon_step) : 
             lon2 = lon1 + lon_step
+            if(lat1 == 0) :
+                lat1 = '00'
+            else : 
+                lat1 = str(int(lat1))
+            if(lat2 == 0) :
+                lat2 = '00'
+            else : 
+                lat2 = str(int(lat2))
+            if(lon1 == 0) :
+                lon1 = '00'
+            elif lon1 == -180 : 
+                lon1 = '180'
+            else : 
+                lon1 = str(int(lon1))
+            if(lon2 == 0) :
+                lon2 = '00'
+            elif lon2 == -180 : 
+                lon2 = '180'
+            else : 
+                lon2 = str(int(lon2))
             area = [lat2, lon1, lat1, lon2]
             regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
-            mv.write(outpath+'/'+model+'_'+date+'_'+str(area[2])+'_'+str(area[0])+'_'+str(area[1])+'_'+str(area[3])+'.grib', regrided)
+            zone_name = str(area[2])+'_'+str(area[0])+'_'+str(area[1])+'_'+str(area[3])
+            if not os.path.exists(outpath+'/'+zone_name) : 
+                os.mkdir(outpath+'/'+zone_name)
+            if not os.path.exists(outpath+'/'+zone_name+'/grib') : 
+                os.mkdir(outpath+'/'+zone_name+'/grib')
+            mv.write(outpath+'/'+zone_name+'/grib/'+model+'_'+date+'_'+zone_name+'.grib', regrided)
