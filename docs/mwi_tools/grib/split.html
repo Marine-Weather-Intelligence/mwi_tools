@@ -38,6 +38,7 @@
 &#34;&#34;&#34;
 
 import os
+from black import out
 import metview as mv
 
 def split_grib_per_hour(grib_path : str, dir_name:str): 
@@ -106,7 +107,7 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
         lon_right (float): rightest latitude of the split
         lat_step (int): size of the split in latitude
         lon_step (int): size of the split in longitude
-        outpath (str): path of the directory in which small grib files are saved
+        outpath (str): path of the directory in which small grib files are saved, it create a folder per zone
     &#34;&#34;&#34;
 
     filename = inpath.split(&#39;/&#39;)[-1]
@@ -117,9 +118,34 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
         lat2 = lat1 - lat_step
         for lon1 in range(lon_left, lon_right, lon_step) : 
             lon2 = lon1 + lon_step
+            if(int(lat1) == 0) :
+                lat1 = &#39;00&#39;
+            else : 
+                lat1 = str(int(lat1))
+            if(int(lat2) == 0) :
+                lat2 = &#39;00&#39;
+            else : 
+                lat2 = str(int(lat2))
+            if(int(lon1) == 0) :
+                lon1 = &#39;00&#39;
+            elif lon1 == -180 : 
+                lon1 = &#39;180&#39;
+            else : 
+                lon1 = str(int(lon1))
+            if(int(lon2) == 0) :
+                lon2 = &#39;00&#39;
+            elif lon2 == -180 : 
+                lon2 = &#39;180&#39;
+            else : 
+                lon2 = str(int(lon2))
             area = [lat2, lon1, lat1, lon2]
             regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
-            mv.write(outpath+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+str(area[2])+&#39;_&#39;+str(area[0])+&#39;_&#39;+str(area[1])+&#39;_&#39;+str(area[3])+&#39;.grib&#39;, regrided)</code></pre>
+            zone_name = area[2]+&#39;_&#39;+area[0]+&#39;_&#39;+area[1]+&#39;_&#39;+area[3]
+            if not os.path.exists(outpath+&#39;/&#39;+zone_name) : 
+                os.mkdir(outpath+&#39;/&#39;+zone_name)
+            if not os.path.exists(outpath+&#39;/&#39;+zone_name+&#39;/grib&#39;) : 
+                os.mkdir(outpath+&#39;/&#39;+zone_name+&#39;/grib&#39;)
+            mv.write(outpath+&#39;/&#39;+zone_name+&#39;/grib/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+zone_name+&#39;.grib&#39;, regrided)</code></pre>
 </details>
 </section>
 <section>
@@ -151,7 +177,7 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
 <dt><strong><code>lon_step</code></strong> :&ensp;<code>int</code></dt>
 <dd>size of the split in longitude</dd>
 <dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
-<dd>path of the directory in which small grib files are saved</dd>
+<dd>path of the directory in which small grib files are saved, it create a folder per zone</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -168,7 +194,7 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
         lon_right (float): rightest latitude of the split
         lat_step (int): size of the split in latitude
         lon_step (int): size of the split in longitude
-        outpath (str): path of the directory in which small grib files are saved
+        outpath (str): path of the directory in which small grib files are saved, it create a folder per zone
     &#34;&#34;&#34;
 
     filename = inpath.split(&#39;/&#39;)[-1]
@@ -179,9 +205,34 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
         lat2 = lat1 - lat_step
         for lon1 in range(lon_left, lon_right, lon_step) : 
             lon2 = lon1 + lon_step
+            if(int(lat1) == 0) :
+                lat1 = &#39;00&#39;
+            else : 
+                lat1 = str(int(lat1))
+            if(int(lat2) == 0) :
+                lat2 = &#39;00&#39;
+            else : 
+                lat2 = str(int(lat2))
+            if(int(lon1) == 0) :
+                lon1 = &#39;00&#39;
+            elif lon1 == -180 : 
+                lon1 = &#39;180&#39;
+            else : 
+                lon1 = str(int(lon1))
+            if(int(lon2) == 0) :
+                lon2 = &#39;00&#39;
+            elif lon2 == -180 : 
+                lon2 = &#39;180&#39;
+            else : 
+                lon2 = str(int(lon2))
             area = [lat2, lon1, lat1, lon2]
             regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
-            mv.write(outpath+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+str(area[2])+&#39;_&#39;+str(area[0])+&#39;_&#39;+str(area[1])+&#39;_&#39;+str(area[3])+&#39;.grib&#39;, regrided)</code></pre>
+            zone_name = area[2]+&#39;_&#39;+area[0]+&#39;_&#39;+area[1]+&#39;_&#39;+area[3]
+            if not os.path.exists(outpath+&#39;/&#39;+zone_name) : 
+                os.mkdir(outpath+&#39;/&#39;+zone_name)
+            if not os.path.exists(outpath+&#39;/&#39;+zone_name+&#39;/grib&#39;) : 
+                os.mkdir(outpath+&#39;/&#39;+zone_name+&#39;/grib&#39;)
+            mv.write(outpath+&#39;/&#39;+zone_name+&#39;/grib/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+zone_name+&#39;.grib&#39;, regrided)</code></pre>
 </details>
 </dd>
 <dt id="mwi_tools.grib.split.split_grib_directory_per_hour"><code class="name flex">
