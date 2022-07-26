@@ -11,3 +11,5 @@ google-cloud-storage==2.3.0
 gcsfs==2022.3.0
 pdoc3==0.10.0
 cdsapi==0.5.1
+metview==5.12.1
+metview-python==1.12.0
