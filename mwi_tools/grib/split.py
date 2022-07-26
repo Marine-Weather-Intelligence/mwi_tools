@@ -5,7 +5,6 @@
 """
 
 import os
-from black import out
 import metview as mv
 
 def split_grib_per_hour(grib_path : str, dir_name:str): 
