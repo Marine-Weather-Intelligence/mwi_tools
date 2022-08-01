@@ -116,7 +116,7 @@ def get_heading(pos1:list[float], pos2:list[float]) -&gt; int:
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="mwi_tools.coordinates.calculate.get_dist_ortho"><code class="name flex">
-<span>def <span class="ident">get_dist_ortho</span></span>(<span>pos1: list, pos2: list) ‑> float</span>
+<span>def <span class="ident">get_dist_ortho</span></span>(<span>pos1: list[float], pos2: list[float]) ‑> float</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Calculate orthodromic distance between two points</p>
@@ -160,7 +160,7 @@ def get_heading(pos1:list[float], pos2:list[float]) -&gt; int:
 </details>
 </dd>
 <dt id="mwi_tools.coordinates.calculate.get_heading"><code class="name flex">
-<span>def <span class="ident">get_heading</span></span>(<span>pos1: list, pos2: list) ‑> int</span>
+<span>def <span class="ident">get_heading</span></span>(<span>pos1: list[float], pos2: list[float]) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Calculate mean orthodromic heading between two positions</p>
@@ -210,7 +210,7 @@ def get_heading(pos1:list[float], pos2:list[float]) -&gt; int:
 </details>
 </dd>
 <dt id="mwi_tools.coordinates.calculate.get_speed"><code class="name flex">
-<span>def <span class="ident">get_speed</span></span>(<span>pos1: list, pos2: list, dt: int) ‑> float</span>
+<span>def <span class="ident">get_speed</span></span>(<span>pos1: list[float], pos2: list[float], dt: int) ‑> float</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Calculate mean speed in knots between two positions</p>

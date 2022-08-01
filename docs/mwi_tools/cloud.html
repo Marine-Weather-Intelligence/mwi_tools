@@ -37,7 +37,7 @@
 from google.oauth2 import service_account
 from google.cloud import storage
 
-def list_blobs_with_prefix(bucket_name, prefix, delimiter=None):
+def list_blobs_with_prefix(bucket_name, prefix, credentials, delimiter=None):
     &#34;&#34;&#34;Lists all the blobs in the bucket that begin with the prefix.
 
     This can be used to list all blobs in a &#34;folder&#34;, e.g. &#34;public/&#34;.
@@ -63,9 +63,11 @@ def list_blobs_with_prefix(bucket_name, prefix, delimiter=None):
     that lists the &#34;subfolders&#34; under `a/`:
 
         a/b/
+
+    credentials = service_account.Credentials.from_service_account_file(&#39;path/credentials_google_app.json&#39;)
+
     &#34;&#34;&#34;
 
-    credentials = service_account.Credentials.from_service_account_file(&#39;/Users/basile/Desktop/SFE/projet_polaire/data/credentials_google_app.json&#39;)
     storage_client = storage.Client(credentials=credentials)
 
     # Note: Client.list_blobs requires at least package version 1.17.0.
@@ -91,7 +93,7 @@ def list_blobs_with_prefix(bucket_name, prefix, delimiter=None):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="mwi_tools.cloud.list_blobs_with_prefix"><code class="name flex">
-<span>def <span class="ident">list_blobs_with_prefix</span></span>(<span>bucket_name, prefix, delimiter=None)</span>
+<span>def <span class="ident">list_blobs_with_prefix</span></span>(<span>bucket_name, prefix, credentials, delimiter=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Lists all the blobs in the bucket that begin with the prefix.</p>
@@ -113,12 +115,13 @@ only the file directly under 'a/':</p>
 <p>As part of the response, you'll also get back a blobs.prefixes entity
 that lists the "subfolders" under <code>a/</code>:</p>
 <pre><code>a/b/
-</code></pre></div>
+</code></pre>
+<p>credentials = service_account.Credentials.from_service_account_file('path/credentials_google_app.json')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def list_blobs_with_prefix(bucket_name, prefix, delimiter=None):
+<pre><code class="python">def list_blobs_with_prefix(bucket_name, prefix, credentials, delimiter=None):
     &#34;&#34;&#34;Lists all the blobs in the bucket that begin with the prefix.
 
     This can be used to list all blobs in a &#34;folder&#34;, e.g. &#34;public/&#34;.
@@ -144,9 +147,11 @@ that lists the "subfolders" under <code>a/</code>:</p>
     that lists the &#34;subfolders&#34; under `a/`:
 
         a/b/
+
+    credentials = service_account.Credentials.from_service_account_file(&#39;path/credentials_google_app.json&#39;)
+
     &#34;&#34;&#34;
 
-    credentials = service_account.Credentials.from_service_account_file(&#39;/Users/basile/Desktop/SFE/projet_polaire/data/credentials_google_app.json&#39;)
     storage_client = storage.Client(credentials=credentials)
 
     # Note: Client.list_blobs requires at least package version 1.17.0.

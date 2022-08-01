@@ -6,7 +6,7 @@
 from google.oauth2 import service_account
 from google.cloud import storage
 
-def list_blobs_with_prefix(bucket_name, prefix, delimiter=None):
+def list_blobs_with_prefix(bucket_name, prefix, credentials, delimiter=None):
     """Lists all the blobs in the bucket that begin with the prefix.
 
     This can be used to list all blobs in a "folder", e.g. "public/".
@@ -32,9 +32,11 @@ def list_blobs_with_prefix(bucket_name, prefix, delimiter=None):
     that lists the "subfolders" under `a/`:
 
         a/b/
+
+    credentials = service_account.Credentials.from_service_account_file('path/credentials_google_app.json')
+
     """
 
-    credentials = service_account.Credentials.from_service_account_file('/Users/basile/Desktop/SFE/projet_polaire/data/credentials_google_app.json')
     storage_client = storage.Client(credentials=credentials)
 
     # Note: Client.list_blobs requires at least package version 1.17.0.
