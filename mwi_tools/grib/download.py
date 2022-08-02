@@ -1,3 +1,11 @@
+"""
+    Download functions for grib files : 
+    - get_grib_api_squid(lat_sup, lat_inf, lon_left, lon_right, model, variables, step_from, step_to, step_dt, out_path, credentials)
+       --> Download grib from API GRIB SQUID
+    - get_era5_daily (lat_sup,lat_inf,lon_left,lon_right,year,month,day,format, outpath)
+       --> Download era5 file from cds api, only working for a one day request
+"""
+
 import requests
 from datetime import datetime
 import cdsapi
@@ -16,7 +24,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         step_from (int): Either a validityTime to start with or 'now' to get the first available timestep
         step_to (int): last timestep, must be a multiple of step_dt, ex : 384 for 16 days
         step_dt (int): 1,3,... timestep between forecast
-        out_path (str): path of the directory where the grib file will be downloaded ie '/data'
+        out_path (str): path of the directory where the grib file will be downloaded ie '/data' (without / at the end)
         credentials (list): [email, password, id, pwd] Credentials to access the squid API
 
     Returns:
@@ -79,8 +87,8 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
     status = r.status_code
 
     now = datetime.now()
-    date_time = now.strftime("%Y%m%d")
-    with open(out_path+'/'+model+'_'+date_time+'_'+lat_sup+'_'+lat_inf+'_'+lon_left+'_'+lon_right+'.grib', 'wb') as out_file : 
+    date = now.strftime("%Y%m%d")
+    with open(out_path+'/'+model+'_'+date+'_'+lat_sup+'_'+lat_inf+'_'+lon_left+'_'+lon_right+'.grib', 'wb') as out_file : 
         out_file.write(r.content)
 
     print(status)
@@ -88,8 +96,8 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
 
 
 
-def get_era5 (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -> None :
-    """Download era5 file from cds api 
+def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -> None :
+    """Download era5 file from cds api, only working for a one day request
 
     Args:
         lat_sup (float): latitude top (- for south)

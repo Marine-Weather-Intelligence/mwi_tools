@@ -6,7 +6,7 @@
 <meta name="generator" content="pdoc 0.10.0" />
 <title>mwi_tools.grib.split API documentation</title>
 <meta name="description" content="Splitting functions for grib files :
-- split_grib_per_hour(grib_path, dir_name) --&gt; Function spliting a grib file into one per hour
+- split_grib_per_hour(grib_path, output_path) --&gt; Function spliting a grib file into one per hour
 - …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -25,40 +25,69 @@
 </header>
 <section id="section-intro">
 <p>Splitting functions for grib files :
-- split_grib_per_hour(grib_path, dir_name) &ndash;&gt; Function spliting a grib file into one per hour
-- split_grib_directory_per_hour(path) &ndash;&gt; Split per hour every grib from a directory containing subfolders of grib sorted geographically,</p>
+- split_grib_per_hour(grib_path, output_path) &ndash;&gt; Function spliting a grib file into one per hour
+- split_grib_per_day(grib_path, output_path) &ndash;&gt; Function spliting a grib file into one per day
+- split_grib_by_area (grib_path, lat_step, lon_step, output_path) &ndash;&gt; Split a grib file into many small grib files of size lat_step*lon_step</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
     Splitting functions for grib files : 
-    - split_grib_per_hour(grib_path, dir_name) --&gt; Function spliting a grib file into one per hour
-    - split_grib_directory_per_hour(path) --&gt; Split per hour every grib from a directory containing subfolders of grib sorted geographically,
+    - split_grib_per_hour(grib_path, output_path) --&gt; Function spliting a grib file into one per hour
+    - split_grib_per_day(grib_path, output_path) --&gt; Function spliting a grib file into one per day
+    - split_grib_by_area (grib_path, lat_step, lon_step, output_path) --&gt; Split a grib file into many small grib files of size lat_step*lon_step
 &#34;&#34;&#34;
 
 import os
 import metview as mv
 
-def split_grib_per_hour(grib_path : str, dir_name:str): 
-    &#34;&#34;&#34;Function spliting a grib file into many small ones
-    One grib file per hour
+def split_grib_per_hour(grib_path:str, output_path:str) : 
+    &#34;&#34;&#34;Split a grib in grib/hour
 
     Args:
-        grib_path (str): &#34;path to the grib file&#34;
-        dir_name (str): &#34;Name of the directory where the grib files are located&#34;
-
+        grib_path (str): path to the input grib file
+        output_path (str): path to the directory that will contain the splitted grib files (without / at the end)
     &#34;&#34;&#34;
-    temp = grib_path.split(&#39;/&#39;)
-    path = &#39;&#39;
-    for i in range(len(temp)-1) : 
-        path += temp[i]+&#39;/&#39;
+    filename = grib_path.split(&#39;/&#39;)[-1]
+    temp = filename.split(&#39;_&#39;)
+    model = temp[0]
+    date = temp[1]
+    lat_sup = temp[2]
+    lat_inf = temp[3]
+    lon_left = temp[4]
+    lon_right = temp[5].split(&#39;.&#39;)[0]
 
-    f = open(path+&#39;rule.filter&#39;, &#39;w&#39;)
-    f.write(&#39;write &#34;&#39;+path+&#39;[validityDate]_[validityTime]_&#39;+dir_name+&#39;.grib&#34;;&#39;)
+    f = open(output_path+&#39;/rule.filter&#39;, &#39;w&#39;)
+    f.write(&#39;write &#34;&#39;+output_path+&#39;/&#39;+model+&#39;_[validityDate]_[validityTime]_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#34;;&#39;)
     f.close()
 
-    os.system(&#39;grib_filter &#39;+path+&#39;rule.filter &#39;+grib_path) 
+    os.system(&#39;grib_filter &#39;+output_path+&#39;/rule.filter &#39;+grib_path) 
+    os.remove(output_path+&#39;/rule.filter&#39;)
+
+def split_grib_per_day(grib_path:str, output_path:str) : 
+    &#34;&#34;&#34;Split a grib in grib/day
+
+    Args:
+        grib_path (str): path to the input grib file
+        output_path (str): path to the directory that will contain the splitted grib files (without / at the end)
+    &#34;&#34;&#34;
+
+    filename = grib_path.split(&#39;/&#39;)[-1]
+    temp = filename.split(&#39;_&#39;)
+    model = temp[0]
+    date = temp[1]
+    lat_sup = temp[2]
+    lat_inf = temp[3]
+    lon_left = temp[4]
+    lon_right = temp[5].split(&#39;.&#39;)[0]
+
+    f = open(output_path+&#39;/rule.filter&#39;, &#39;w&#39;)
+    f.write(&#39;write &#34;&#39;+output_path+&#39;/&#39;+model+&#39;_[validityDate]_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#34;;&#39;)
+    f.close()
+
+    os.system(&#39;grib_filter &#39;+output_path+&#39;/rule.filter &#39;+grib_path) 
+    os.remove(output_path+&#39;/rule.filter&#39;)
 
 def split_grib_directory_per_hour(path : str) -&gt; None :
     &#34;&#34;&#34;From a directory containing subfolders of grib sorted geographically, 
@@ -95,27 +124,39 @@ def split_grib_directory_per_hour(path : str) -&gt; None :
                 os.rename(dir_path+&#39;/&#39;+file, dir_path+&#39;/&#39;+new_filename)
 
 
-def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :float, lon_right :float, lat_step:int, lon_step :int, outpath:str) -&gt; None :
+
+def split_grib_by_area (grib_path :str, lat_step:int, lon_step :int, output_path:str) -&gt; None :
     &#34;&#34;&#34;Split a grib file into many small grib files of size lat_step*lon_step
 
     Args:
         inpath (str): path of the first grib file, file is supposed to be named like this : model_date_latsup_latinf_lonleft_lonright.grib
-        lat_sup (float): highest latitude of the split
-        lat_inf (float): lowest latitude of the split
-        lon_left (float): leftest latitude of the split
-        lon_right (float): rightest latitude of the split
         lat_step (int): size of the split in latitude
         lon_step (int): size of the split in longitude
-        outpath (str): path of the directory in which small grib files are saved, it create a folder per zone
+        output_path (str): path to the directory that will contain the splitted grib files (without / at the end), it create a folder per zone
     &#34;&#34;&#34;
 
-    filename = inpath.split(&#39;/&#39;)[-1]
+    filename = grib_path.split(&#39;/&#39;)[-1]
     temp = filename.split(&#39;_&#39;)
-    model = temp[0]
-    date = temp[1]
-    for lat1 in range(lat_sup, lat_inf, -lat_step) : 
+    if len(temp) == 6 : 
+        model = temp[0]
+        date = temp[1]
+        lat_sup = temp[2]
+        lat_inf = temp[3]
+        lon_left = temp[4]
+        lon_right = temp[5].split(&#39;.&#39;)[0]
+        time = None
+    else : 
+        model = temp[0]
+        date = temp[1]
+        time = temp[2]
+        lat_sup = temp[3]
+        lat_inf = temp[4]
+        lon_left = temp[5]
+        lon_right = temp[6].split(&#39;.&#39;)[0]
+
+    for lat1 in range(int(lat_sup), int(lat_inf), -lat_step) : 
         lat2 = lat1 - lat_step
-        for lon1 in range(lon_left, lon_right, lon_step) : 
+        for lon1 in range(int(lon_left), int(lon_right), lon_step) : 
             lon2 = lon1 + lon_step
             if(int(lat1) == 0) :
                 lat1 = &#39;00&#39;
@@ -138,13 +179,18 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
             else : 
                 lon2 = str(int(lon2))
             area = [lat2, lon1, lat1, lon2]
-            regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
+
+            regrided = mv.read(source = grib_path, area=[lat2, lon1, lat1, lon2])
             zone_name = area[2]+&#39;_&#39;+area[0]+&#39;_&#39;+area[1]+&#39;_&#39;+area[3]
-            if not os.path.exists(outpath+&#39;/&#39;+zone_name) : 
-                os.mkdir(outpath+&#39;/&#39;+zone_name)
-            if not os.path.exists(outpath+&#39;/&#39;+zone_name+&#39;/grib&#39;) : 
-                os.mkdir(outpath+&#39;/&#39;+zone_name+&#39;/grib&#39;)
-            mv.write(outpath+&#39;/&#39;+zone_name+&#39;/grib/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+zone_name+&#39;.grib&#39;, regrided)</code></pre>
+
+            if not os.path.exists(output_path+&#39;/&#39;+zone_name) : 
+                os.mkdir(output_path+&#39;/&#39;+zone_name)
+            if not os.path.exists(output_path+&#39;/&#39;+zone_name+&#39;/grib&#39;) : 
+                os.mkdir(output_path+&#39;/&#39;+zone_name+&#39;/grib&#39;)
+            if time != None : 
+                mv.write(output_path+&#39;/&#39;+zone_name+&#39;/grib/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+time+&#39;_&#39;+zone_name+&#39;.grib&#39;, regrided)
+            else : 
+                mv.write(output_path+&#39;/&#39;+zone_name+&#39;/grib/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+zone_name+&#39;.grib&#39;, regrided)</code></pre>
 </details>
 </section>
 <section>
@@ -155,7 +201,7 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="mwi_tools.grib.split.split_grib_by_area"><code class="name flex">
-<span>def <span class="ident">split_grib_by_area</span></span>(<span>inpath: str, lat_sup: float, lat_inf: float, lon_left: float, lon_right: float, lat_step: int, lon_step: int, outpath: str) ‑> None</span>
+<span>def <span class="ident">split_grib_by_area</span></span>(<span>grib_path: str, lat_step: int, lon_step: int, output_path: str) ‑> None</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Split a grib file into many small grib files of size lat_step*lon_step</p>
@@ -163,46 +209,49 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
 <dl>
 <dt><strong><code>inpath</code></strong> :&ensp;<code>str</code></dt>
 <dd>path of the first grib file, file is supposed to be named like this : model_date_latsup_latinf_lonleft_lonright.grib</dd>
-<dt><strong><code>lat_sup</code></strong> :&ensp;<code>float</code></dt>
-<dd>highest latitude of the split</dd>
-<dt><strong><code>lat_inf</code></strong> :&ensp;<code>float</code></dt>
-<dd>lowest latitude of the split</dd>
-<dt><strong><code>lon_left</code></strong> :&ensp;<code>float</code></dt>
-<dd>leftest latitude of the split</dd>
-<dt><strong><code>lon_right</code></strong> :&ensp;<code>float</code></dt>
-<dd>rightest latitude of the split</dd>
 <dt><strong><code>lat_step</code></strong> :&ensp;<code>int</code></dt>
 <dd>size of the split in latitude</dd>
 <dt><strong><code>lon_step</code></strong> :&ensp;<code>int</code></dt>
 <dd>size of the split in longitude</dd>
-<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
-<dd>path of the directory in which small grib files are saved, it create a folder per zone</dd>
+<dt><strong><code>output_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to the directory that will contain the splitted grib files (without / at the end), it create a folder per zone</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :float, lon_right :float, lat_step:int, lon_step :int, outpath:str) -&gt; None :
+<pre><code class="python">def split_grib_by_area (grib_path :str, lat_step:int, lon_step :int, output_path:str) -&gt; None :
     &#34;&#34;&#34;Split a grib file into many small grib files of size lat_step*lon_step
 
     Args:
         inpath (str): path of the first grib file, file is supposed to be named like this : model_date_latsup_latinf_lonleft_lonright.grib
-        lat_sup (float): highest latitude of the split
-        lat_inf (float): lowest latitude of the split
-        lon_left (float): leftest latitude of the split
-        lon_right (float): rightest latitude of the split
         lat_step (int): size of the split in latitude
         lon_step (int): size of the split in longitude
-        outpath (str): path of the directory in which small grib files are saved, it create a folder per zone
+        output_path (str): path to the directory that will contain the splitted grib files (without / at the end), it create a folder per zone
     &#34;&#34;&#34;
 
-    filename = inpath.split(&#39;/&#39;)[-1]
+    filename = grib_path.split(&#39;/&#39;)[-1]
     temp = filename.split(&#39;_&#39;)
-    model = temp[0]
-    date = temp[1]
-    for lat1 in range(lat_sup, lat_inf, -lat_step) : 
+    if len(temp) == 6 : 
+        model = temp[0]
+        date = temp[1]
+        lat_sup = temp[2]
+        lat_inf = temp[3]
+        lon_left = temp[4]
+        lon_right = temp[5].split(&#39;.&#39;)[0]
+        time = None
+    else : 
+        model = temp[0]
+        date = temp[1]
+        time = temp[2]
+        lat_sup = temp[3]
+        lat_inf = temp[4]
+        lon_left = temp[5]
+        lon_right = temp[6].split(&#39;.&#39;)[0]
+
+    for lat1 in range(int(lat_sup), int(lat_inf), -lat_step) : 
         lat2 = lat1 - lat_step
-        for lon1 in range(lon_left, lon_right, lon_step) : 
+        for lon1 in range(int(lon_left), int(lon_right), lon_step) : 
             lon2 = lon1 + lon_step
             if(int(lat1) == 0) :
                 lat1 = &#39;00&#39;
@@ -225,13 +274,18 @@ def split_grib_by_area (inpath :str, lat_sup :float, lat_inf :float, lon_left :f
             else : 
                 lon2 = str(int(lon2))
             area = [lat2, lon1, lat1, lon2]
-            regrided = mv.read(source = inpath, area=[lat2, lon1, lat1, lon2])
+
+            regrided = mv.read(source = grib_path, area=[lat2, lon1, lat1, lon2])
             zone_name = area[2]+&#39;_&#39;+area[0]+&#39;_&#39;+area[1]+&#39;_&#39;+area[3]
-            if not os.path.exists(outpath+&#39;/&#39;+zone_name) : 
-                os.mkdir(outpath+&#39;/&#39;+zone_name)
-            if not os.path.exists(outpath+&#39;/&#39;+zone_name+&#39;/grib&#39;) : 
-                os.mkdir(outpath+&#39;/&#39;+zone_name+&#39;/grib&#39;)
-            mv.write(outpath+&#39;/&#39;+zone_name+&#39;/grib/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+zone_name+&#39;.grib&#39;, regrided)</code></pre>
+
+            if not os.path.exists(output_path+&#39;/&#39;+zone_name) : 
+                os.mkdir(output_path+&#39;/&#39;+zone_name)
+            if not os.path.exists(output_path+&#39;/&#39;+zone_name+&#39;/grib&#39;) : 
+                os.mkdir(output_path+&#39;/&#39;+zone_name+&#39;/grib&#39;)
+            if time != None : 
+                mv.write(output_path+&#39;/&#39;+zone_name+&#39;/grib/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+time+&#39;_&#39;+zone_name+&#39;.grib&#39;, regrided)
+            else : 
+                mv.write(output_path+&#39;/&#39;+zone_name+&#39;/grib/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+zone_name+&#39;.grib&#39;, regrided)</code></pre>
 </details>
 </dd>
 <dt id="mwi_tools.grib.split.split_grib_directory_per_hour"><code class="name flex">
@@ -284,42 +338,85 @@ split every grib into many grib such as there is one grib per timestamp</p>
                 os.rename(dir_path+&#39;/&#39;+file, dir_path+&#39;/&#39;+new_filename)</code></pre>
 </details>
 </dd>
-<dt id="mwi_tools.grib.split.split_grib_per_hour"><code class="name flex">
-<span>def <span class="ident">split_grib_per_hour</span></span>(<span>grib_path: str, dir_name: str)</span>
+<dt id="mwi_tools.grib.split.split_grib_per_day"><code class="name flex">
+<span>def <span class="ident">split_grib_per_day</span></span>(<span>grib_path: str, output_path: str)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Function spliting a grib file into many small ones
-One grib file per hour</p>
+<div class="desc"><p>Split a grib in grib/day</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>grib_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>"path to the grib file"</dd>
-<dt><strong><code>dir_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>"Name of the directory where the grib files are located"</dd>
+<dd>path to the input grib file</dd>
+<dt><strong><code>output_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to the directory that will contain the splitted grib files (without / at the end)</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def split_grib_per_hour(grib_path : str, dir_name:str): 
-    &#34;&#34;&#34;Function spliting a grib file into many small ones
-    One grib file per hour
+<pre><code class="python">def split_grib_per_day(grib_path:str, output_path:str) : 
+    &#34;&#34;&#34;Split a grib in grib/day
 
     Args:
-        grib_path (str): &#34;path to the grib file&#34;
-        dir_name (str): &#34;Name of the directory where the grib files are located&#34;
-
+        grib_path (str): path to the input grib file
+        output_path (str): path to the directory that will contain the splitted grib files (without / at the end)
     &#34;&#34;&#34;
-    temp = grib_path.split(&#39;/&#39;)
-    path = &#39;&#39;
-    for i in range(len(temp)-1) : 
-        path += temp[i]+&#39;/&#39;
 
-    f = open(path+&#39;rule.filter&#39;, &#39;w&#39;)
-    f.write(&#39;write &#34;&#39;+path+&#39;[validityDate]_[validityTime]_&#39;+dir_name+&#39;.grib&#34;;&#39;)
+    filename = grib_path.split(&#39;/&#39;)[-1]
+    temp = filename.split(&#39;_&#39;)
+    model = temp[0]
+    date = temp[1]
+    lat_sup = temp[2]
+    lat_inf = temp[3]
+    lon_left = temp[4]
+    lon_right = temp[5].split(&#39;.&#39;)[0]
+
+    f = open(output_path+&#39;/rule.filter&#39;, &#39;w&#39;)
+    f.write(&#39;write &#34;&#39;+output_path+&#39;/&#39;+model+&#39;_[validityDate]_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#34;;&#39;)
     f.close()
 
-    os.system(&#39;grib_filter &#39;+path+&#39;rule.filter &#39;+grib_path) </code></pre>
+    os.system(&#39;grib_filter &#39;+output_path+&#39;/rule.filter &#39;+grib_path) 
+    os.remove(output_path+&#39;/rule.filter&#39;)</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.split.split_grib_per_hour"><code class="name flex">
+<span>def <span class="ident">split_grib_per_hour</span></span>(<span>grib_path: str, output_path: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Split a grib in grib/hour</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>grib_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to the input grib file</dd>
+<dt><strong><code>output_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to the directory that will contain the splitted grib files (without / at the end)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def split_grib_per_hour(grib_path:str, output_path:str) : 
+    &#34;&#34;&#34;Split a grib in grib/hour
+
+    Args:
+        grib_path (str): path to the input grib file
+        output_path (str): path to the directory that will contain the splitted grib files (without / at the end)
+    &#34;&#34;&#34;
+    filename = grib_path.split(&#39;/&#39;)[-1]
+    temp = filename.split(&#39;_&#39;)
+    model = temp[0]
+    date = temp[1]
+    lat_sup = temp[2]
+    lat_inf = temp[3]
+    lon_left = temp[4]
+    lon_right = temp[5].split(&#39;.&#39;)[0]
+
+    f = open(output_path+&#39;/rule.filter&#39;, &#39;w&#39;)
+    f.write(&#39;write &#34;&#39;+output_path+&#39;/&#39;+model+&#39;_[validityDate]_[validityTime]_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#34;;&#39;)
+    f.close()
+
+    os.system(&#39;grib_filter &#39;+output_path+&#39;/rule.filter &#39;+grib_path) 
+    os.remove(output_path+&#39;/rule.filter&#39;)</code></pre>
 </details>
 </dd>
 </dl>
@@ -342,6 +439,7 @@ One grib file per hour</p>
 <ul class="">
 <li><code><a title="mwi_tools.grib.split.split_grib_by_area" href="#mwi_tools.grib.split.split_grib_by_area">split_grib_by_area</a></code></li>
 <li><code><a title="mwi_tools.grib.split.split_grib_directory_per_hour" href="#mwi_tools.grib.split.split_grib_directory_per_hour">split_grib_directory_per_hour</a></code></li>
+<li><code><a title="mwi_tools.grib.split.split_grib_per_day" href="#mwi_tools.grib.split.split_grib_per_day">split_grib_per_day</a></code></li>
 <li><code><a title="mwi_tools.grib.split.split_grib_per_hour" href="#mwi_tools.grib.split.split_grib_per_hour">split_grib_per_hour</a></code></li>
 </ul>
 </li>
