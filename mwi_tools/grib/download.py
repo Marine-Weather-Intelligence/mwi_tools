@@ -183,9 +183,29 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
             ],
         }
 
+    if(int(lat_sup) == 0) :
+        lat_sup = '00'
+    else : 
+        lat_sup = str(int(lat_sup))
+    if(int(lat_inf) == 0) :
+        lat_inf = '00'
+    else : 
+        lat_inf = str(int(lat_inf))
+    if(int(lon_left) == 0) :
+        lon_left = '00'
+    elif lon_left == -180 : 
+        lon_left = '180'
+    else : 
+        lon_left = str(int(lon_left))
+    if(int(lon_right) == 0) :
+        lon_right = '00'
+    elif lon_right == -180 : 
+        lon_right = '180'
+    else : 
+        lon_right = str(int(lon_right))
     
     full_date = year+month+day
-    name = 'era5_'+full_date+'_'+str(int(lat_sup))+'_'+str(int(lat_inf))+'_'+str(int(lon_left))+'_'+str(int(lon_right))
+    name = 'era5_'+full_date+'_'+lat_sup+'_'+lat_inf+'_'+lon_left+'_'+lon_right
     if format == 'netcdf' : 
         namefile = name+'.nc'
     else : 
