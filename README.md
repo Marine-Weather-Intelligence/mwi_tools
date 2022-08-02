@@ -61,6 +61,8 @@ mwi_tools/
 
 - Clone the directory <br>
   ```git clone https://github.com/Marine-Weather-Intelligence/mwi_tools.git```
+  or 
+  ```git pull```
 - Add your modules / submodules 
 - Update the structure in readme file
 - Update documentation by using this command in the mwi_tools repository <br>
