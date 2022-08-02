@@ -13,7 +13,7 @@ from mwi_tools.grib import extract as mwige
 import os
 
 
-def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -> None :
+def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -> str :
     """Download grib from API GRIB SQUID
 
     Args:
@@ -30,7 +30,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         credentials (list): [email, password, id, pwd] Credentials to access the squid API
 
     Returns:
-        None: None
+        str: Path to the file downloaded
     """    
 
     modeldict = {
@@ -125,11 +125,11 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
 
     os.rename(out_path+'/'+model+'_'+date+'_'+lat_sup+'_'+lat_inf+'_'+lon_left+'_'+lon_right+'.grib', out_path+'/'+model+'_'+date+'_'+lat_sup_true+'_'+lat_inf_true+'_'+lon_left_true+'_'+lon_right_true+'.grib')
 
-    return None
+    return out_path+'/'+model+'_'+date+'_'+lat_sup_true+'_'+lat_inf_true+'_'+lon_left_true+'_'+lon_right_true+'.grib'
 
 
 
-def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -> None :
+def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -> str :
     """Download era5 file from cds api, only working for a one day request
 
     Args:
@@ -142,6 +142,9 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
         day (str): day with format '17' (don't forget the first 0 if there is one)
         format (str): 'netddf' or 'grib'
         outpath (str): path of the directory where to store the file, don't put '/' at the end
+
+    Returns:
+        str : path to the downloaded file
     """    
 
     c = cdsapi.Client() 
@@ -189,3 +192,5 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
         namefile = name+'.grib'
     
     c.retrieve('reanalysis-era5-single-levels',item, outpath+'/'+namefile)
+
+    return outpath+'/'+namefile

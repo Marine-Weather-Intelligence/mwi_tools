@@ -47,7 +47,7 @@ from mwi_tools.grib import extract as mwige
 import os
 
 
-def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -&gt; None :
+def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -&gt; str :
     &#34;&#34;&#34;Download grib from API GRIB SQUID
 
     Args:
@@ -64,7 +64,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         credentials (list): [email, password, id, pwd] Credentials to access the squid API
 
     Returns:
-        None: None
+        str: Path to the file downloaded
     &#34;&#34;&#34;    
 
     modeldict = {
@@ -159,11 +159,11 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
 
     os.rename(out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#39;, out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup_true+&#39;_&#39;+lat_inf_true+&#39;_&#39;+lon_left_true+&#39;_&#39;+lon_right_true+&#39;.grib&#39;)
 
-    return None
+    return out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup_true+&#39;_&#39;+lat_inf_true+&#39;_&#39;+lon_left_true+&#39;_&#39;+lon_right_true+&#39;.grib&#39;
 
 
 
-def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -&gt; None :
+def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -&gt; str :
     &#34;&#34;&#34;Download era5 file from cds api, only working for a one day request
 
     Args:
@@ -176,6 +176,9 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
         day (str): day with format &#39;17&#39; (don&#39;t forget the first 0 if there is one)
         format (str): &#39;netddf&#39; or &#39;grib&#39;
         outpath (str): path of the directory where to store the file, don&#39;t put &#39;/&#39; at the end
+
+    Returns:
+        str : path to the downloaded file
     &#34;&#34;&#34;    
 
     c = cdsapi.Client() 
@@ -222,7 +225,9 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
     else : 
         namefile = name+&#39;.grib&#39;
     
-    c.retrieve(&#39;reanalysis-era5-single-levels&#39;,item, outpath+&#39;/&#39;+namefile)</code></pre>
+    c.retrieve(&#39;reanalysis-era5-single-levels&#39;,item, outpath+&#39;/&#39;+namefile)
+
+    return outpath+&#39;/&#39;+namefile</code></pre>
 </details>
 </section>
 <section>
@@ -233,7 +238,7 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="mwi_tools.grib.download.get_era5_daily"><code class="name flex">
-<span>def <span class="ident">get_era5_daily</span></span>(<span>lat_sup: float, lat_inf: float, lon_left: float, lon_right: float, year: str, month: str, day: str, format: str, outpath: str) ‑> None</span>
+<span>def <span class="ident">get_era5_daily</span></span>(<span>lat_sup: float, lat_inf: float, lon_left: float, lon_right: float, year: str, month: str, day: str, format: str, outpath: str) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Download era5 file from cds api, only working for a one day request</p>
@@ -257,12 +262,17 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
 <dd>'netddf' or 'grib'</dd>
 <dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
 <dd>path of the directory where to store the file, don't put '/' at the end</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str </code></dt>
+<dd>path to the downloaded file</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -&gt; None :
+<pre><code class="python">def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -&gt; str :
     &#34;&#34;&#34;Download era5 file from cds api, only working for a one day request
 
     Args:
@@ -275,6 +285,9 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
         day (str): day with format &#39;17&#39; (don&#39;t forget the first 0 if there is one)
         format (str): &#39;netddf&#39; or &#39;grib&#39;
         outpath (str): path of the directory where to store the file, don&#39;t put &#39;/&#39; at the end
+
+    Returns:
+        str : path to the downloaded file
     &#34;&#34;&#34;    
 
     c = cdsapi.Client() 
@@ -321,11 +334,13 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
     else : 
         namefile = name+&#39;.grib&#39;
     
-    c.retrieve(&#39;reanalysis-era5-single-levels&#39;,item, outpath+&#39;/&#39;+namefile)</code></pre>
+    c.retrieve(&#39;reanalysis-era5-single-levels&#39;,item, outpath+&#39;/&#39;+namefile)
+
+    return outpath+&#39;/&#39;+namefile</code></pre>
 </details>
 </dd>
 <dt id="mwi_tools.grib.download.get_grib_api_squid"><code class="name flex">
-<span>def <span class="ident">get_grib_api_squid</span></span>(<span>lat_sup: float, lat_inf: float, lon_left: float, lon_right: float, model: str, variables: str, step_from: int, step_to: int, step_dt: int, out_path: str, credentials: list) ‑> None</span>
+<span>def <span class="ident">get_grib_api_squid</span></span>(<span>lat_sup: float, lat_inf: float, lon_left: float, lon_right: float, model: str, variables: str, step_from: int, step_to: int, step_dt: int, out_path: str, credentials: list) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Download grib from API GRIB SQUID</p>
@@ -356,14 +371,14 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>None</code></dt>
-<dd>None</dd>
+<dt><code>str</code></dt>
+<dd>Path to the file downloaded</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -&gt; None :
+<pre><code class="python">def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -&gt; str :
     &#34;&#34;&#34;Download grib from API GRIB SQUID
 
     Args:
@@ -380,7 +395,7 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
         credentials (list): [email, password, id, pwd] Credentials to access the squid API
 
     Returns:
-        None: None
+        str: Path to the file downloaded
     &#34;&#34;&#34;    
 
     modeldict = {
@@ -475,7 +490,7 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
 
     os.rename(out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#39;, out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup_true+&#39;_&#39;+lat_inf_true+&#39;_&#39;+lon_left_true+&#39;_&#39;+lon_right_true+&#39;.grib&#39;)
 
-    return None</code></pre>
+    return out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup_true+&#39;_&#39;+lat_inf_true+&#39;_&#39;+lon_left_true+&#39;_&#39;+lon_right_true+&#39;.grib&#39;</code></pre>
 </details>
 </dd>
 </dl>
