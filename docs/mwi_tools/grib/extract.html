@@ -41,7 +41,7 @@
 import subprocess
 import pandas as pd
 import progressbar
-from datetime import timedelta
+from mwi_tools.divers import *
 
 
 def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float, time : str) -&gt; dict: 
@@ -215,7 +215,38 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
                 df.loc[i, param_dict_out[param]] = float(dict_values[param_dict_in[param]])
         bar.update(i+1)
     bar.finish()
-    return df</code></pre>
+    return df
+
+
+def get_grib_lim(grib_path:str) -&gt; list[int]: 
+    &#34;&#34;&#34;Get the area of the grib
+
+    Args:
+        grib_path (str): path to the grib file we want to analyse
+
+    Returns:
+        list[int]: area [lat_sup, lat_inf, lon_left, lon_right]
+    &#34;&#34;&#34;
+    output = subprocess.check_output(&#39;wgrib2 -grid -d 1 &#39;+grib_path, shell=True)
+
+    temp = str(output).split(&#39;\\t&#39;)
+    lat_temp = temp[2].split()
+    lon_temp = temp[3].split()
+    lat_sup = float(lat_temp[1])
+    lat_inf = float(lat_temp[3])
+    lon_left = float(lon_temp[1])
+    if lon_left &gt; 180 : 
+        lon_left -= 360
+    lon_right = float(lon_temp[3])
+    if lon_right &gt; 180 : 
+        lon_right -= 360
+
+    lat_sup = round_10_inf(lat_sup)
+    lat_inf = round_10_sup(lat_inf)
+    lon_left = round_10_sup(lon_left)
+    lon_right = round_10_inf(lon_right)
+
+    return [lat_sup, lat_inf, lon_left, lon_right]</code></pre>
 </details>
 </section>
 <section>
@@ -335,6 +366,56 @@ This function takes every position in the track dataframe and look for the corre
         bar.update(i+1)
     bar.finish()
     return df</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.extract.get_grib_lim"><code class="name flex">
+<span>def <span class="ident">get_grib_lim</span></span>(<span>grib_path: str) ‑> list[int]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get the area of the grib</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>grib_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to the grib file we want to analyse</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list[int]</code></dt>
+<dd>area [lat_sup, lat_inf, lon_left, lon_right]</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_grib_lim(grib_path:str) -&gt; list[int]: 
+    &#34;&#34;&#34;Get the area of the grib
+
+    Args:
+        grib_path (str): path to the grib file we want to analyse
+
+    Returns:
+        list[int]: area [lat_sup, lat_inf, lon_left, lon_right]
+    &#34;&#34;&#34;
+    output = subprocess.check_output(&#39;wgrib2 -grid -d 1 &#39;+grib_path, shell=True)
+
+    temp = str(output).split(&#39;\\t&#39;)
+    lat_temp = temp[2].split()
+    lon_temp = temp[3].split()
+    lat_sup = float(lat_temp[1])
+    lat_inf = float(lat_temp[3])
+    lon_left = float(lon_temp[1])
+    if lon_left &gt; 180 : 
+        lon_left -= 360
+    lon_right = float(lon_temp[3])
+    if lon_right &gt; 180 : 
+        lon_right -= 360
+
+    lat_sup = round_10_inf(lat_sup)
+    lat_inf = round_10_sup(lat_inf)
+    lon_left = round_10_sup(lon_left)
+    lon_right = round_10_inf(lon_right)
+
+    return [lat_sup, lat_inf, lon_left, lon_right]</code></pre>
 </details>
 </dd>
 <dt id="mwi_tools.grib.extract.get_value_from_grib_dir"><code class="name flex">
@@ -516,6 +597,7 @@ grib_dir/
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="mwi_tools.grib.extract.fill_track_df_with_weather_data" href="#mwi_tools.grib.extract.fill_track_df_with_weather_data">fill_track_df_with_weather_data</a></code></li>
+<li><code><a title="mwi_tools.grib.extract.get_grib_lim" href="#mwi_tools.grib.extract.get_grib_lim">get_grib_lim</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_value_from_grib_dir" href="#mwi_tools.grib.extract.get_value_from_grib_dir">get_value_from_grib_dir</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_values_from_position_grib" href="#mwi_tools.grib.extract.get_values_from_position_grib">get_values_from_position_grib</a></code></li>
 </ul>

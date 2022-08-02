@@ -43,6 +43,8 @@
 import requests
 from datetime import datetime
 import cdsapi
+from mwi_tools.grib import extract as mwige
+import os
 
 
 def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -&gt; None :
@@ -126,6 +128,37 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         out_file.write(r.content)
 
     print(status)
+
+    #Rename file if zone name was too big
+    true_area = mwige.get_grib_lim(out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#39;)
+    lat_sup_true = true_area[0]
+    lat_inf_true = true_area[1]
+    lon_left_true = true_area[2]
+    lon_right_true = true_area[3]
+
+    if(lat_sup_true == 0) :
+        lat_sup_true = &#39;00&#39;
+    else : 
+        lat_sup_true = str(int(lat_sup_true))
+    if(lat_inf_true == 0) :
+        lat_inf_true = &#39;00&#39;
+    else : 
+        lat_inf_true = str(int(lat_inf_true))
+    if(lon_left_true == 0) :
+        lon_left_true = &#39;00&#39;
+    elif lon_left_true == -180 : 
+        lon_left_true = &#39;180&#39;
+    else : 
+        lon_left_true = str(int(lon_left_true))
+    if(lon_right_true == 0) :
+        lon_right_true = &#39;00&#39;
+    elif lon_right_true == -180 : 
+        lon_right_true = &#39;180&#39;
+    else : 
+        lon_right_true = str(int(lon_right_true))
+
+    os.rename(out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#39;, out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup_true+&#39;_&#39;+lat_inf_true+&#39;_&#39;+lon_left_true+&#39;_&#39;+lon_right_true+&#39;.grib&#39;)
+
     return None
 
 
@@ -411,6 +444,37 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
         out_file.write(r.content)
 
     print(status)
+
+    #Rename file if zone name was too big
+    true_area = mwige.get_grib_lim(out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#39;)
+    lat_sup_true = true_area[0]
+    lat_inf_true = true_area[1]
+    lon_left_true = true_area[2]
+    lon_right_true = true_area[3]
+
+    if(lat_sup_true == 0) :
+        lat_sup_true = &#39;00&#39;
+    else : 
+        lat_sup_true = str(int(lat_sup_true))
+    if(lat_inf_true == 0) :
+        lat_inf_true = &#39;00&#39;
+    else : 
+        lat_inf_true = str(int(lat_inf_true))
+    if(lon_left_true == 0) :
+        lon_left_true = &#39;00&#39;
+    elif lon_left_true == -180 : 
+        lon_left_true = &#39;180&#39;
+    else : 
+        lon_left_true = str(int(lon_left_true))
+    if(lon_right_true == 0) :
+        lon_right_true = &#39;00&#39;
+    elif lon_right_true == -180 : 
+        lon_right_true = &#39;180&#39;
+    else : 
+        lon_right_true = str(int(lon_right_true))
+
+    os.rename(out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup+&#39;_&#39;+lat_inf+&#39;_&#39;+lon_left+&#39;_&#39;+lon_right+&#39;.grib&#39;, out_path+&#39;/&#39;+model+&#39;_&#39;+date+&#39;_&#39;+lat_sup_true+&#39;_&#39;+lat_inf_true+&#39;_&#39;+lon_left_true+&#39;_&#39;+lon_right_true+&#39;.grib&#39;)
+
     return None</code></pre>
 </details>
 </dd>

@@ -29,6 +29,8 @@
 </summary>
 <pre><code class="python">&#34;&#34;&#34;Diverse functions usefull for development purposes
 &#34;&#34;&#34;
+from math import *
+import pandas as pd
 
 def x_round_25(x:float) -&gt; float:
     &#34;&#34;&#34;Round to the nearest 0.25 value
@@ -52,7 +54,46 @@ def x_round_50(x:float) -&gt; float:
         float: rounded value
     &#34;&#34;&#34;
 
-    return round(x*2)/2</code></pre>
+    return round(x*2)/2
+
+def round_10_sup(x:float) -&gt; int: 
+    return ceil(x/10)*10
+
+def round_10_inf(x:float) -&gt; int: 
+    return floor(x/10)*10
+
+def coord_gde_zone(df:pd.DataFrame, gd_zone:str)-&gt;list:
+    &#34;&#34;&#34;return the limits (latitude and longitude) of a big zone
+
+    Args:
+        df (pd.DataFrame): dataframe with information related to all geographic zone
+        gd_zone (str): name of the big zone(atlantique_nord,mediterranee, nord, atlantique_sud, indien, pacifique_nord or pacifique_sud)
+
+    Returns:
+        list: list of float
+    &#34;&#34;&#34;
+    lat_sup=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lat sup&#39;].max()
+    lat_inf=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lat inf&#39;].min()
+    lon_right=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lon right&#39;].max()
+    lon_left=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lon left&#39;].min()
+    return[lat_sup, lat_inf, lon_left, lon_right]
+
+def available_modeles(df:pd.DataFrame, gd_zone:str)-&gt;list:
+    &#34;&#34;&#34;return the list of available model for a big zone
+
+    Args:
+        df (pd.DataFrame): dataframe with information related to all geographic zone
+        gd_zone (str): name of the big zone(atlantique_nord,mediterranee, nord, atlantique_sud, indien, pacifique_nord or pacifique_sud)
+
+    Returns:
+        list: list of name of model (str)
+    &#34;&#34;&#34;
+    liste=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;modeles&#39;].unique()# on prend les modeles present dans chaque sous zones
+    mod=[e.split(&#39;,&#39;) for e in liste]
+    [mod[i+1].extend(mod[i]) for i in range(len(mod)-1)]
+    tot=mod[-1]
+    list_model=list(set(tot))
+    return list_model</code></pre>
 </details>
 </section>
 <section>
@@ -62,6 +103,109 @@ def x_round_50(x:float) -&gt; float:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="mwi_tools.divers.available_modeles"><code class="name flex">
+<span>def <span class="ident">available_modeles</span></span>(<span>df: pandas.core.frame.DataFrame, gd_zone: str) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>return the list of available model for a big zone</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pd.DataFrame</code></dt>
+<dd>dataframe with information related to all geographic zone</dd>
+<dt><strong><code>gd_zone</code></strong> :&ensp;<code>str</code></dt>
+<dd>name of the big zone(atlantique_nord,mediterranee, nord, atlantique_sud, indien, pacifique_nord or pacifique_sud)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>list of name of model (str)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def available_modeles(df:pd.DataFrame, gd_zone:str)-&gt;list:
+    &#34;&#34;&#34;return the list of available model for a big zone
+
+    Args:
+        df (pd.DataFrame): dataframe with information related to all geographic zone
+        gd_zone (str): name of the big zone(atlantique_nord,mediterranee, nord, atlantique_sud, indien, pacifique_nord or pacifique_sud)
+
+    Returns:
+        list: list of name of model (str)
+    &#34;&#34;&#34;
+    liste=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;modeles&#39;].unique()# on prend les modeles present dans chaque sous zones
+    mod=[e.split(&#39;,&#39;) for e in liste]
+    [mod[i+1].extend(mod[i]) for i in range(len(mod)-1)]
+    tot=mod[-1]
+    list_model=list(set(tot))
+    return list_model</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.divers.coord_gde_zone"><code class="name flex">
+<span>def <span class="ident">coord_gde_zone</span></span>(<span>df: pandas.core.frame.DataFrame, gd_zone: str) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>return the limits (latitude and longitude) of a big zone</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pd.DataFrame</code></dt>
+<dd>dataframe with information related to all geographic zone</dd>
+<dt><strong><code>gd_zone</code></strong> :&ensp;<code>str</code></dt>
+<dd>name of the big zone(atlantique_nord,mediterranee, nord, atlantique_sud, indien, pacifique_nord or pacifique_sud)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>list of float</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def coord_gde_zone(df:pd.DataFrame, gd_zone:str)-&gt;list:
+    &#34;&#34;&#34;return the limits (latitude and longitude) of a big zone
+
+    Args:
+        df (pd.DataFrame): dataframe with information related to all geographic zone
+        gd_zone (str): name of the big zone(atlantique_nord,mediterranee, nord, atlantique_sud, indien, pacifique_nord or pacifique_sud)
+
+    Returns:
+        list: list of float
+    &#34;&#34;&#34;
+    lat_sup=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lat sup&#39;].max()
+    lat_inf=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lat inf&#39;].min()
+    lon_right=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lon right&#39;].max()
+    lon_left=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lon left&#39;].min()
+    return[lat_sup, lat_inf, lon_left, lon_right]</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.divers.round_10_inf"><code class="name flex">
+<span>def <span class="ident">round_10_inf</span></span>(<span>x: float) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def round_10_inf(x:float) -&gt; int: 
+    return floor(x/10)*10</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.divers.round_10_sup"><code class="name flex">
+<span>def <span class="ident">round_10_sup</span></span>(<span>x: float) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def round_10_sup(x:float) -&gt; int: 
+    return ceil(x/10)*10</code></pre>
+</details>
+</dd>
 <dt id="mwi_tools.divers.x_round_25"><code class="name flex">
 <span>def <span class="ident">x_round_25</span></span>(<span>x: float) ‑> float</span>
 </code></dt>
@@ -143,7 +287,11 @@ def x_round_50(x:float) -&gt; float:
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
+<ul class="two-column">
+<li><code><a title="mwi_tools.divers.available_modeles" href="#mwi_tools.divers.available_modeles">available_modeles</a></code></li>
+<li><code><a title="mwi_tools.divers.coord_gde_zone" href="#mwi_tools.divers.coord_gde_zone">coord_gde_zone</a></code></li>
+<li><code><a title="mwi_tools.divers.round_10_inf" href="#mwi_tools.divers.round_10_inf">round_10_inf</a></code></li>
+<li><code><a title="mwi_tools.divers.round_10_sup" href="#mwi_tools.divers.round_10_sup">round_10_sup</a></code></li>
 <li><code><a title="mwi_tools.divers.x_round_25" href="#mwi_tools.divers.x_round_25">x_round_25</a></code></li>
 <li><code><a title="mwi_tools.divers.x_round_50" href="#mwi_tools.divers.x_round_50">x_round_50</a></code></li>
 </ul>
