@@ -8,7 +8,7 @@
 import subprocess
 import pandas as pd
 import progressbar
-from datetime import timedelta
+from mwi_tools.divers import *
 
 
 def get_values_from_position_grib(INPUT : str, lat_exp : float, lon_exp : float, time : str) -> dict: 
@@ -183,3 +183,34 @@ def fill_track_df_with_weather_data (df : pd, dir_path : str, param_list : dict)
         bar.update(i+1)
     bar.finish()
     return df
+
+
+def get_grib_lim(grib_path:str) -> list[int]: 
+    """Get the area of the grib
+
+    Args:
+        grib_path (str): path to the grib file we want to analyse
+
+    Returns:
+        list[int]: area [lat_sup, lat_inf, lon_left, lon_right]
+    """
+    output = subprocess.check_output('wgrib2 -grid -d 1 '+grib_path, shell=True)
+
+    temp = str(output).split('\\t')
+    lat_temp = temp[2].split()
+    lon_temp = temp[3].split()
+    lat_sup = float(lat_temp[1])
+    lat_inf = float(lat_temp[3])
+    lon_left = float(lon_temp[1])
+    if lon_left > 180 : 
+        lon_left -= 360
+    lon_right = float(lon_temp[3])
+    if lon_right > 180 : 
+        lon_right -= 360
+
+    lat_sup = round_10_inf(lat_sup)
+    lat_inf = round_10_sup(lat_inf)
+    lon_left = round_10_sup(lon_left)
+    lon_right = round_10_inf(lon_right)
+
+    return [lat_sup, lat_inf, lon_left, lon_right]
