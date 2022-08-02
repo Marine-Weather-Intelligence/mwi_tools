@@ -123,7 +123,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
     else : 
         lon_right_true = str(int(lon_right_true))
 
-    os.rename(out_path+'/'+model+'_'+date+'_'+lat_sup+'_'+lat_inf+'_'+lon_left+'_'+lon_right+'.grib', out_path+'/'+model+'_'+date+'_'+lat_sup_true+'_'+lat_inf_true+'_'+lon_left_true+'_'+lon_right_true+'.grib'
+    os.rename(out_path+'/'+model+'_'+date+'_'+lat_sup+'_'+lat_inf+'_'+lon_left+'_'+lon_right+'.grib', out_path+'/'+model+'_'+date+'_'+lat_sup_true+'_'+lat_inf_true+'_'+lon_left_true+'_'+lon_right_true+'.grib')
 
     return None
 
