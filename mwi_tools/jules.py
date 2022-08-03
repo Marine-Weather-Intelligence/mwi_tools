@@ -17,7 +17,7 @@ def convert_toCSV(selected_parameter:str,name_grib:str, origine:str, destination
 
 
 
-def clean_data3(messy_file:str)->pd.dataFrame: 
+def clean_data3(messy_file:str)->pd.DataFrame: 
     """return the dataframe from a csv file with 0.5° accuracy in space 
 
     Args:
