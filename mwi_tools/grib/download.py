@@ -15,6 +15,7 @@ import os
 
 def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_right : float, model : str, variables:str, step_from:int, step_to:int, step_dt:int, out_path:str, credentials : list) -> str :
     """Download grib from API GRIB SQUID
+    ATTENTION : Ne fonctionne pas sur un grib qui traverse l'antiméridien (erreur à rajouter, if lon_right < lon_left error)
 
     Args:
         lat_sup (float): latitude top (- for south)
@@ -62,14 +63,14 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         lat_inf = str(int(lat_inf))
     if(lon_left == 0) :
         lon_left = '00'
-    elif lon_left == -180 : 
-        lon_left = '180'
+    # elif lon_left == -180 : 
+    #     lon_left = '180'
     else : 
         lon_left = str(int(lon_left))
     if(lon_right == 0) :
         lon_right = '00'
-    elif lon_right == -180 : 
-        lon_right = '180'
+    # elif lon_right == -180 : 
+    #     lon_right = '180'
     else : 
         lon_right = str(int(lon_right))
     
@@ -112,14 +113,14 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         lat_inf_true = str(int(lat_inf_true))
     if(lon_left_true == 0) :
         lon_left_true = '00'
-    elif lon_left_true == -180 : 
-        lon_left_true = '180'
+    # elif lon_left_true == -180 : 
+    #     lon_left_true = '180'
     else : 
         lon_left_true = str(int(lon_left_true))
     if(lon_right_true == 0) :
         lon_right_true = '00'
-    elif lon_right_true == -180 : 
-        lon_right_true = '180'
+    # elif lon_right_true == -180 : 
+    #     lon_right_true = '180'
     else : 
         lon_right_true = str(int(lon_right_true))
 
@@ -131,6 +132,7 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
 
 def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,year:str,month:str,day:str,format:str, outpath:str) -> str :
     """Download era5 file from cds api, only working for a one day request
+    ATTENTION : Ne fonctionne pas sur un grib qui traverse l'antiméridien (erreur à rajouter, if lon_right < lon_left error)
 
     Args:
         lat_sup (float): latitude top (- for south)
@@ -183,9 +185,29 @@ def get_era5_daily (lat_sup:float,lat_inf:float,lon_left:float,lon_right:float,y
             ],
         }
 
+    if(int(lat_sup) == 0) :
+        lat_sup = '00'
+    else : 
+        lat_sup = str(int(lat_sup))
+    if(int(lat_inf) == 0) :
+        lat_inf = '00'
+    else : 
+        lat_inf = str(int(lat_inf))
+    if(int(lon_left) == 0) :
+        lon_left = '00'
+    # elif lon_left == -180 : 
+    #     lon_left = '180'
+    else : 
+        lon_left = str(int(lon_left))
+    if(int(lon_right) == 0) :
+        lon_right = '00'
+    # elif lon_right == -180 : 
+    #     lon_right = '180'
+    else : 
+        lon_right = str(int(lon_right))
     
     full_date = year+month+day
-    name = 'era5_'+full_date+'_'+str(int(lat_sup))+'_'+str(int(lat_inf))+'_'+str(int(lon_left))+'_'+str(int(lon_right))
+    name = 'era5_'+full_date+'_'+lat_sup+'_'+lat_inf+'_'+lon_left+'_'+lon_right
     if format == 'netcdf' : 
         namefile = name+'.nc'
     else : 
