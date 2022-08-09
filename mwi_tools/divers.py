@@ -2,6 +2,7 @@
 """
 from math import *
 import pandas as pd
+import datetime
 
 def x_round_25(x:float) -> float:
     """Round to the nearest 0.25 value
@@ -65,4 +66,13 @@ def available_modeles(df:pd.DataFrame, gd_zone:str)->list:
     tot=mod[-1]
     list_model=list(set(tot))
     return list_model
+
+def print_log(line:str):
+    """surcharge print to display the date and time of the print
+
+    Args:
+        line (str): string to print
+    """
+    d = datetime.datetime.now().strftime('[%y/%m/%d %H:%M] ') # actual time
+    print(d+line)
 
