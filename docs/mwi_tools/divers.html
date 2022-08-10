@@ -31,6 +31,7 @@
 &#34;&#34;&#34;
 from math import *
 import pandas as pd
+import datetime
 
 def x_round_25(x:float) -&gt; float:
     &#34;&#34;&#34;Round to the nearest 0.25 value
@@ -93,7 +94,16 @@ def available_modeles(df:pd.DataFrame, gd_zone:str)-&gt;list:
     [mod[i+1].extend(mod[i]) for i in range(len(mod)-1)]
     tot=mod[-1]
     list_model=list(set(tot))
-    return list_model</code></pre>
+    return list_model
+
+def print_log(line:str):
+    &#34;&#34;&#34;surcharge print to display the date and time of the print
+
+    Args:
+        line (str): string to print
+    &#34;&#34;&#34;
+    d = datetime.datetime.now().strftime(&#39;[%y/%m/%d %H:%M] &#39;) # actual time
+    print(d+line)</code></pre>
 </details>
 </section>
 <section>
@@ -178,6 +188,30 @@ def available_modeles(df:pd.DataFrame, gd_zone:str)-&gt;list:
     lon_right=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lon right&#39;].max()
     lon_left=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lon left&#39;].min()
     return[lat_sup, lat_inf, lon_left, lon_right]</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.divers.print_log"><code class="name flex">
+<span>def <span class="ident">print_log</span></span>(<span>line: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>surcharge print to display the date and time of the print</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>line</code></strong> :&ensp;<code>str</code></dt>
+<dd>string to print</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_log(line:str):
+    &#34;&#34;&#34;surcharge print to display the date and time of the print
+
+    Args:
+        line (str): string to print
+    &#34;&#34;&#34;
+    d = datetime.datetime.now().strftime(&#39;[%y/%m/%d %H:%M] &#39;) # actual time
+    print(d+line)</code></pre>
 </details>
 </dd>
 <dt id="mwi_tools.divers.round_10_inf"><code class="name flex">
@@ -290,6 +324,7 @@ def available_modeles(df:pd.DataFrame, gd_zone:str)-&gt;list:
 <ul class="two-column">
 <li><code><a title="mwi_tools.divers.available_modeles" href="#mwi_tools.divers.available_modeles">available_modeles</a></code></li>
 <li><code><a title="mwi_tools.divers.coord_gde_zone" href="#mwi_tools.divers.coord_gde_zone">coord_gde_zone</a></code></li>
+<li><code><a title="mwi_tools.divers.print_log" href="#mwi_tools.divers.print_log">print_log</a></code></li>
 <li><code><a title="mwi_tools.divers.round_10_inf" href="#mwi_tools.divers.round_10_inf">round_10_inf</a></code></li>
 <li><code><a title="mwi_tools.divers.round_10_sup" href="#mwi_tools.divers.round_10_sup">round_10_sup</a></code></li>
 <li><code><a title="mwi_tools.divers.x_round_25" href="#mwi_tools.divers.x_round_25">x_round_25</a></code></li>

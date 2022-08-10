@@ -168,14 +168,14 @@ def split_grib_by_area (grib_path :str, lat_step:int, lon_step :int, output_path
                 lat2 = str(int(lat2))
             if(int(lon1) == 0) :
                 lon1 = &#39;00&#39;
-            elif lon1 == -180 : 
-                lon1 = &#39;180&#39;
+            # elif lon1 == -180 : 
+            #     lon1 = &#39;180&#39;
             else : 
                 lon1 = str(int(lon1))
             if(int(lon2) == 0) :
                 lon2 = &#39;00&#39;
-            elif lon2 == -180 : 
-                lon2 = &#39;180&#39;
+            # elif lon2 == -180 : 
+            #     lon2 = &#39;180&#39;
             else : 
                 lon2 = str(int(lon2))
             area = [lat2, lon1, lat1, lon2]
@@ -263,14 +263,14 @@ def split_grib_by_area (grib_path :str, lat_step:int, lon_step :int, output_path
                 lat2 = str(int(lat2))
             if(int(lon1) == 0) :
                 lon1 = &#39;00&#39;
-            elif lon1 == -180 : 
-                lon1 = &#39;180&#39;
+            # elif lon1 == -180 : 
+            #     lon1 = &#39;180&#39;
             else : 
                 lon1 = str(int(lon1))
             if(int(lon2) == 0) :
                 lon2 = &#39;00&#39;
-            elif lon2 == -180 : 
-                lon2 = &#39;180&#39;
+            # elif lon2 == -180 : 
+            #     lon2 = &#39;180&#39;
             else : 
                 lon2 = str(int(lon2))
             area = [lat2, lon1, lat1, lon2]

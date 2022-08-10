@@ -246,7 +246,21 @@ def get_grib_lim(grib_path:str) -&gt; list[int]:
     lon_left = round_10_sup(lon_left)
     lon_right = round_10_inf(lon_right)
 
-    return [lat_sup, lat_inf, lon_left, lon_right]</code></pre>
+    return [lat_sup, lat_inf, lon_left, lon_right]
+
+
+
+def get_grib_process_date(grib_path:str) -&gt; str: 
+    &#34;&#34;&#34;Get the process time of the grib
+
+    Args:
+        grib_path (str): path to the grib file we want to analyse
+
+    Returns:
+        str: date of type %y%m%d
+    &#34;&#34;&#34;
+    output = subprocess.check_output(&#39;wgrib2 -t -d 1 &#39;+grib_path, shell=True)
+    return str(output)[-13:-3]</code></pre>
 </details>
 </section>
 <section>
@@ -416,6 +430,38 @@ This function takes every position in the track dataframe and look for the corre
     lon_right = round_10_inf(lon_right)
 
     return [lat_sup, lat_inf, lon_left, lon_right]</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.grib.extract.get_grib_process_date"><code class="name flex">
+<span>def <span class="ident">get_grib_process_date</span></span>(<span>grib_path: str) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get the process time of the grib</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>grib_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to the grib file we want to analyse</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>date of type %y%m%d</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_grib_process_date(grib_path:str) -&gt; str: 
+    &#34;&#34;&#34;Get the process time of the grib
+
+    Args:
+        grib_path (str): path to the grib file we want to analyse
+
+    Returns:
+        str: date of type %y%m%d
+    &#34;&#34;&#34;
+    output = subprocess.check_output(&#39;wgrib2 -t -d 1 &#39;+grib_path, shell=True)
+    return str(output)[-13:-3]</code></pre>
 </details>
 </dd>
 <dt id="mwi_tools.grib.extract.get_value_from_grib_dir"><code class="name flex">
@@ -598,6 +644,7 @@ grib_dir/
 <ul class="">
 <li><code><a title="mwi_tools.grib.extract.fill_track_df_with_weather_data" href="#mwi_tools.grib.extract.fill_track_df_with_weather_data">fill_track_df_with_weather_data</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_grib_lim" href="#mwi_tools.grib.extract.get_grib_lim">get_grib_lim</a></code></li>
+<li><code><a title="mwi_tools.grib.extract.get_grib_process_date" href="#mwi_tools.grib.extract.get_grib_process_date">get_grib_process_date</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_value_from_grib_dir" href="#mwi_tools.grib.extract.get_value_from_grib_dir">get_value_from_grib_dir</a></code></li>
 <li><code><a title="mwi_tools.grib.extract.get_values_from_position_grib" href="#mwi_tools.grib.extract.get_values_from_position_grib">get_values_from_position_grib</a></code></li>
 </ul>

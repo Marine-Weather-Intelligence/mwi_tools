@@ -214,3 +214,17 @@ def get_grib_lim(grib_path:str) -> list[int]:
     lon_right = round_10_inf(lon_right)
 
     return [lat_sup, lat_inf, lon_left, lon_right]
+
+
+
+def get_grib_process_date(grib_path:str) -> str: 
+    """Get the process time of the grib
+
+    Args:
+        grib_path (str): path to the grib file we want to analyse
+
+    Returns:
+        str: date of type %y%m%d
+    """
+    output = subprocess.check_output('wgrib2 -t -d 1 '+grib_path, shell=True)
+    return str(output)[-13:-3]

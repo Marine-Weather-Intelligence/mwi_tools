@@ -47,7 +47,9 @@ def get_grib_api_squid(lat_sup:float, lat_inf : float, lon_left : float, lon_rig
         'ecmwf' : 'ecmwf_0_4', 
         'ww3' : 'ww3_glo',
         'mfwam01' : 'mfwam_arpege_0_1',
-        'mfwam0025' : 'mfwam_arome_0_025'
+        'mfwam0025' : 'mfwam_arome_0_025',
+        'mfwam05' : 'mfwam_arpege_0_5',
+        'mercator' : 'myocean_global'
     }
    
 
