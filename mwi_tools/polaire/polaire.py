@@ -67,10 +67,3 @@ def plot_two_polaire(df1, df2, speed=None, nom1= None, nom2 = None) :
     set_ax_plot_polaire(df1, ax, speed, index=0, nom=nom1)
     set_ax_plot_polaire(df2, ax, speed, index=1, nom=nom2)
     plt.show()
-
-def plot_polaire_and_cloud(df, df_cloud, speed, nom=None) :
-    fig, ax = plt.subplots(subplot_kw={'projection': 'polar'}, figsize=(10,10))
-    set_ax_plot_polaire(df, ax, speed, nom=nom)
-    df_cloud_speed = df_cloud.loc[(df_cloud['TWS'] >= speed-0.5) & (df_cloud['TWS'] <= speed+0.5)]
-    ax.plot(df_cloud_speed['TWA']*np.pi/180, df_cloud_speed['speed'], 'r')
-    plt.show()
