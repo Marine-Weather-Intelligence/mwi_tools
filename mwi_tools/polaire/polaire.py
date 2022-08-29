@@ -76,3 +76,15 @@ def plot_polaire_and_cloud(df, df_cloud, speed, symetrique=False, nom=None) :
         df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
     ax.plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'o', 'b')
     plt.show()
+
+def plot_multiple_polaire_and_cloud(df, df_cloud, symetrique=False, nom=None) :
+    wind_list = [5, 8, 10,12, 15, 20, 25, 30, 35]
+    fig, ax = plt.subplots(nrows = 3, ncols=3, subplot_kw={'projection': 'polar'}, figsize=(20,20), sharey=True)
+    for i in range(len(wind_list)) :
+        speed = wind_list[i] 
+        set_ax_plot_polaire(df, ax, speed,index=i, nom=nom)
+        df_cloud_speed = df_cloud.loc[(df_cloud['TWS'] >= speed-0.5) & (df_cloud['TWS'] <= speed+0.5)].copy()
+        if symetrique : 
+            df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
+        ax[i].plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'o', 'b')
+    plt.show()
