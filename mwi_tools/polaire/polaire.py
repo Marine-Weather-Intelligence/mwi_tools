@@ -26,8 +26,13 @@ def closest_value_index(input_list, input_value):
 
 
 def set_ax_plot_polaire(df,ax, speed, index=None, nom=None) : 
+    s = ax.shape
     if index != None : 
-        axe = ax[index]
+        if len(ax.shape) == 2 : 
+            line = index//s[1]
+            axe = ax[line, index - line*s[1]]
+        else : 
+            axe = ax[index]
     else : 
         axe = ax
         
