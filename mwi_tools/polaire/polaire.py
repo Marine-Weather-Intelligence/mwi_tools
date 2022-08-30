@@ -92,7 +92,7 @@ def plot_polaire_and_cloud(df, df_cloud, speed, symetrique=False, nom=None) :
 
 def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom=None) :
     wind_list = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40]
-    fig, ax = plt.subplots(nrows = 6, ncols=3, subplot_kw={'projection': 'polar'}, figsize=(40,20), sharey=True)
+    fig, ax = plt.subplots(nrows = 6, ncols=3, subplot_kw={'projection': 'polar'}, figsize=(20,40), sharey=True)
     for i in range(18) :
         speed = wind_list[i] 
         set_ax_plot_polaire(df, ax, speed,index=i, nom=nom, color='r')
