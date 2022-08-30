@@ -20,7 +20,7 @@ def get_polaire_df(file, true_polaire=False) :
         line = file_table[i].split('\t')
         line[-1] = line[-1][:-1]
         for j in range(len(line)) : 
-            if line[j] < 0 : 
+            if float(line[j]) < 0 : 
                 line[j] = 0
         table[i,:] = line
     df = pd.DataFrame(table[1:,1:], columns = table[0,1:])
