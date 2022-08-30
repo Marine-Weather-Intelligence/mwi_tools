@@ -15,7 +15,7 @@ def get_polaire_df(file, true_polaire=False) :
         for i in range (1, len(table[0])) : 
             speed = int(table[0, i])
             speed = speed / 1.1
-            table[0, i] = speed
+            table[0, i] = round(speed,0)
     for i in range (1, nb_TWA) : 
         line = file_table[i].split('\t')
         line[-1] = line[-1][:-1]
@@ -91,9 +91,9 @@ def plot_polaire_and_cloud(df, df_cloud, speed, symetrique=False, nom=None) :
     plt.show()
 
 def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom=None) :
-    wind_list = [4, 8, 10,12, 14, 18, 20, 22, 24, 26, 30, 32]
-    fig, ax = plt.subplots(nrows = 4, ncols=3, subplot_kw={'projection': 'polar'}, figsize=(20,20), sharey=True)
-    for i in range(len(wind_list)) :
+    wind_list = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40]
+    fig, ax = plt.subplots(nrows = 6, ncols=3, subplot_kw={'projection': 'polar'}, figsize=(20,20), sharey=True)
+    for i in range(18) :
         speed = wind_list[i] 
         set_ax_plot_polaire(df, ax, speed,index=i, nom=nom, color='r')
         speed = set_ax_plot_polaire(df_true, ax, speed,index=i, nom=nom, color='g')
