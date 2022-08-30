@@ -19,6 +19,9 @@ def get_polaire_df(file, true_polaire=False) :
     for i in range (1, nb_TWA) : 
         line = file_table[i].split('\t')
         line[-1] = line[-1][:-1]
+        for j in range(len(line)) : 
+            if line[j] < 0 : 
+                line[j] = 0
         table[i,:] = line
     df = pd.DataFrame(table[1:,1:], columns = table[0,1:])
     df.insert(0,'TWA',table[1:,0])
@@ -100,7 +103,7 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
         df_cloud_speed = df_cloud.loc[(df_cloud['TWS'] >= speed-0.5) & (df_cloud['TWS'] <= speed+0.5)].copy()
         if symetrique : 
             df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
-        ax[i//3, i-(i//3)*3].plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'o', 'b')
+        ax[i//3, i-(i//3)*3].plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'bo')
         ax[i//3, i-(i//3)*3].set_theta_direction(-1)
         ax[i//3, i-(i//3)*3].set_theta_offset(np.pi / 2.0)
         ax[i//3, i-(i//3)*3].set_rlabel_position(-1)  # Move radial labels away from plotted line
