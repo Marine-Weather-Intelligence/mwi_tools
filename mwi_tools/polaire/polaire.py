@@ -76,7 +76,7 @@ def plot_polaire(df, speed=None, nom=None) :
     plt.show()
     
 def plot_two_polaire(df1, df2, speed=None, nom1= None, nom2 = None) : 
-    fig, ax = plt.subplots(nrows = 1, ncols=2, subplot_kw={'projection': 'polar'}, figsize=(20,20), sharey=True)
+    fig, ax = plt.subplots(nrows = 1, ncols=2, subplot_kw={'projection': 'polar'}, figsize=(40,20), sharey=True)
     set_ax_plot_polaire(df1, ax, speed, index=0, nom=nom1)
     set_ax_plot_polaire(df2, ax, speed, index=1, nom=nom2)
     plt.show()
