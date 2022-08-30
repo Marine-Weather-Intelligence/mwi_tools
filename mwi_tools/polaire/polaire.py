@@ -50,7 +50,7 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r') :
         for col_name in df.columns : 
             if col_name != 'TWA' : 
                 col = pd.concat([df[col_name],df[col_name].iloc[::-1]])
-                axe.plot(x, col, label=col_name+" kts")
+                axe.plot(x, col, label=str(col_name)+" kts")
         axe.set_title("Polaire complete\n"+str(nom or ''))
         axe.legend()
         
