@@ -33,7 +33,7 @@ def closest_value_index(input_list, input_value):
     return i
 
 
-def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r', label="") : 
+def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r', label="", symetrique=False) : 
     if index != None : 
         s = ax.shape
         if len(ax.shape) == 2 : 
@@ -46,10 +46,16 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r', label="")
         
     if speed == None : 
         #On plot toutes les polaires
-        x = pd.concat([df['TWA']*np.pi/180,(2*np.pi-df['TWA']*np.pi/180).iloc[::-1]])
+        if symetrique : 
+            x = df['TWA']*np.pi/180
+        else : 
+            x = pd.concat([df['TWA']*np.pi/180,(2*np.pi-df['TWA']*np.pi/180).iloc[::-1]])
         for col_name in df.columns : 
             if col_name != 'TWA' : 
-                col = pd.concat([df[col_name],df[col_name].iloc[::-1]])
+                if symetrique : 
+                    col = df[col_name]
+                else : 
+                    col = pd.concat([df[col_name],df[col_name].iloc[::-1]])
                 axe.plot(x, col, label=str(col_name)+" kts")
         axe.set_title("Polaire complete\n"+str(nom or ''))
         axe.legend()
@@ -59,8 +65,9 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r', label="")
         wind_speed_index = closest_value_index(df.columns[1:], speed)
         
         #On plot uniquement cette polaire
-        axe.plot(df['TWA']*np.pi/180, df.iloc[:,wind_speed_index+1], color)
-        axe.plot(2*np.pi-df['TWA']*np.pi/180, df.iloc[:,wind_speed_index+1], color, label=label)
+        axe.plot(df['TWA']*np.pi/180, df.iloc[:,wind_speed_index+1], color, label=label)
+        if not(symetrique) : 
+            axe.plot(2*np.pi-df['TWA']*np.pi/180, df.iloc[:,wind_speed_index+1], color)
         
 
         axe.set_title("Wind speed " +str(df.columns[wind_speed_index+1])+" kts\n"+str(nom or ''))
@@ -73,15 +80,15 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r', label="")
     if speed != None :
         return df.columns[wind_speed_index+1]
 
-def plot_polaire(df, speed=None, nom=None) :
+def plot_polaire(df, speed=None, nom=None, symetrique=False) :
     fig, ax = plt.subplots(subplot_kw={'projection': 'polar'}, figsize=(10,10))
-    set_ax_plot_polaire(df, ax, speed, nom=nom)
+    set_ax_plot_polaire(df, ax, speed, nom=nom, symetrique=symetrique)
     plt.show()
     
-def plot_two_polaire(df1, df2, speed=None, nom1= None, nom2 = None) : 
+def plot_two_polaire(df1, df2, speed=None, nom1= None, nom2 = None, symetrique=False) : 
     fig, ax = plt.subplots(nrows = 1, ncols=2, subplot_kw={'projection': 'polar'}, figsize=(20,20), sharey=True)
-    set_ax_plot_polaire(df1, ax, speed, index=0, nom=nom1)
-    set_ax_plot_polaire(df2, ax, speed, index=1, nom=nom2)
+    set_ax_plot_polaire(df1, ax, speed, index=0, nom=nom1, symetrique=symetrique)
+    set_ax_plot_polaire(df2, ax, speed, index=1, nom=nom2, symetrique=symetrique)
     plt.show()
 
 def plot_polaire_and_cloud(df, df_cloud, speed, symetrique=False, nom=None) :
@@ -90,7 +97,7 @@ def plot_polaire_and_cloud(df, df_cloud, speed, symetrique=False, nom=None) :
     if symetrique : 
         df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
     ax.plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'bo')
-    set_ax_plot_polaire(df, ax, speed, nom=nom)
+    set_ax_plot_polaire(df, ax, speed, nom=nom, symetrique=symetrique, label="predicted polar")
     plt.show()
 
 def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom=None) :
@@ -98,8 +105,8 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
     fig, ax = plt.subplots(nrows = 6, ncols=3, subplot_kw={'projection': 'polar'}, figsize=(20,40), sharey=True)
     for i in range(18) :
         speed = wind_list[i] 
-        speed = set_ax_plot_polaire(df_true, ax, speed,index=i, nom=nom, color='g', label="true_polar")
-        set_ax_plot_polaire(df, ax, speed,index=i, nom=nom, color='r', label="predicted_polar")
+        speed = set_ax_plot_polaire(df_true, ax, speed,index=i, nom=nom, color='g', label="true_polar", symetrique=symetrique)
+        set_ax_plot_polaire(df, ax, speed,index=i, nom=nom, color='r', label="predicted_polar", symetrique=symetrique)
         df_cloud_speed = df_cloud.loc[(df_cloud['TWS'] >= speed-0.5) & (df_cloud['TWS'] <= speed+0.5)].copy()
         if symetrique : 
             df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
