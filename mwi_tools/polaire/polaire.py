@@ -50,7 +50,7 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r') :
         for col_name in df.columns : 
             if col_name != 'TWA' : 
                 col = pd.concat([df[col_name],df[col_name].iloc[::-1]])
-                axe.plot(x, col, label=col_name)
+                axe.plot(x, col, label=col_name+" kts")
         axe.set_title("Polaire complete\n"+str(nom or ''))
         axe.legend()
         
@@ -60,7 +60,7 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r') :
         
         #On plot uniquement cette polaire
         axe.plot(df['TWA']*np.pi/180, df.iloc[:,wind_speed_index+1], color)
-        axe.plot(2*np.pi-df['TWA']*np.pi/180, df.iloc[:,wind_speed_index+1], color)
+        axe.plot(2*np.pi-df['TWA']*np.pi/180, df.iloc[:,wind_speed_index+1], color, label="predicted polar")
         
 
         axe.set_title("Wind speed " +str(df.columns[wind_speed_index+1])+" kts\n"+str(nom or ''))
@@ -98,14 +98,15 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
     fig, ax = plt.subplots(nrows = 6, ncols=3, subplot_kw={'projection': 'polar'}, figsize=(20,40), sharey=True)
     for i in range(18) :
         speed = wind_list[i] 
-        speed = set_ax_plot_polaire(df_true, ax, speed,index=i, nom=nom, color='g')
+        speed = set_ax_plot_polaire(df_true, ax, speed,index=i, nom=nom, color='g', label="true_polar")
         set_ax_plot_polaire(df, ax, speed,index=i, nom=nom, color='r')
         df_cloud_speed = df_cloud.loc[(df_cloud['TWS'] >= speed-0.5) & (df_cloud['TWS'] <= speed+0.5)].copy()
         if symetrique : 
             df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
-        ax[i//3, i-(i//3)*3].plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'bo')
+        ax[i//3, i-(i//3)*3].plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'bo', label="training_points")
         ax[i//3, i-(i//3)*3].set_theta_direction(-1)
         ax[i//3, i-(i//3)*3].set_theta_offset(np.pi / 2.0)
         ax[i//3, i-(i//3)*3].set_rlabel_position(-1)  # Move radial labels away from plotted line
         ax[i//3, i-(i//3)*3].grid(True)
+        ax[i//3, i-(i//3)*3].legend()
     plt.show()
