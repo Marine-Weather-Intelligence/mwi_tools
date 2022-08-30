@@ -62,6 +62,9 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r') :
     axe.set_rlabel_position(-1)  # Move radial labels away from plotted line
     axe.grid(True)
 
+    if speed != None :
+        return df.columns[wind_speed_index+1]
+
 def plot_polaire(df, speed=None, nom=None) :
     fig, ax = plt.subplots(subplot_kw={'projection': 'polar'}, figsize=(10,10))
     set_ax_plot_polaire(df, ax, speed, nom=nom)
@@ -88,7 +91,7 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
     for i in range(len(wind_list)) :
         speed = wind_list[i] 
         set_ax_plot_polaire(df, ax, speed,index=i, nom=nom, color='r')
-        set_ax_plot_polaire(df_true, ax, speed,index=i, nom=nom, color='g')
+        speed = set_ax_plot_polaire(df_true, ax, speed,index=i, nom=nom, color='g')
         df_cloud_speed = df_cloud.loc[(df_cloud['TWS'] >= speed-0.5) & (df_cloud['TWS'] <= speed+0.5)].copy()
         if symetrique : 
             df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
