@@ -76,6 +76,9 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r', label="",
     axe.set_theta_offset(np.pi / 2.0)
     axe.set_rlabel_position(-1)  # Move radial labels away from plotted line
     axe.grid(True)
+    if symetrique : 
+            axe.set_thetamin(0)
+            axe.set_thetamax(180)
 
     if speed != None :
         return df.columns[wind_speed_index+1]
@@ -116,4 +119,7 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
         ax[i//3, i-(i//3)*3].set_rlabel_position(-1)  # Move radial labels away from plotted line
         ax[i//3, i-(i//3)*3].grid(True)
         ax[i//3, i-(i//3)*3].legend()
+        if symetrique : 
+            ax[i//3, i-(i//3)*3].set_thetamin(0)
+            ax[i//3, i-(i//3)*3].set_thetamax(180)
     plt.show()
