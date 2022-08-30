@@ -99,7 +99,7 @@ def plot_polaire_and_cloud(df, df_cloud, speed, symetrique=False, nom=None) :
     df_cloud_speed = df_cloud.loc[(df_cloud['TWS'] >= speed-0.5) & (df_cloud['TWS'] <= speed+0.5)].copy()
     if symetrique : 
         df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
-    ax.plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'bo')
+    ax.plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'bo', markersize=10)
     set_ax_plot_polaire(df, ax, speed, nom=nom, symetrique=symetrique, label="predicted polar")
     plt.show()
 
@@ -113,7 +113,7 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
         df_cloud_speed = df_cloud.loc[(df_cloud['TWS'] >= speed-0.5) & (df_cloud['TWS'] <= speed+0.5)].copy()
         if symetrique : 
             df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
-        ax[i//3, i-(i//3)*3].plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'bo', label="training_points")
+        ax[i//3, i-(i//3)*3].plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'bo', label="training_points", markersize=10)
         ax[i//3, i-(i//3)*3].set_theta_direction(-1)
         ax[i//3, i-(i//3)*3].set_theta_offset(np.pi / 2.0)
         ax[i//3, i-(i//3)*3].set_rlabel_position(-1)  # Move radial labels away from plotted line
