@@ -101,4 +101,8 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
         if symetrique : 
             df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']] = df_cloud_speed.loc[df_cloud['TWA'] < 0, ['TWA']].apply(lambda x : -x)
         ax[i//3, i-(i//3)*3].plot(df_cloud_speed.TWA*np.pi/180, df_cloud_speed.speed, 'o', 'b')
+    ax.set_theta_direction(-1)
+    ax.set_theta_offset(np.pi / 2.0)
+    ax.set_rlabel_position(-1)  # Move radial labels away from plotted line
+    ax.grid(True)
     plt.show()
