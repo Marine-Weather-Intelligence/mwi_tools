@@ -76,3 +76,18 @@ def print_log(line:str):
     d = datetime.datetime.now().strftime('[%y/%m/%d %H:%M] ') # actual time
     print(d+line)
 
+def get_index(array, elem) : 
+    """Get index of elem in array. Return None if not in array
+
+    Args:
+        array (numpy array): array containing elem
+        elem (): elem to look for
+
+    Returns:
+        int: index of elem in array
+    """
+    for i in range(len(array)) : 
+        elmt = array[i]
+        if elmt == elem : 
+            return i 
+    return None
