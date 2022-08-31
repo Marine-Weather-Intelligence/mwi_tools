@@ -123,3 +123,39 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
             ax[i//3, i-(i//3)*3].set_thetamin(0)
             ax[i//3, i-(i//3)*3].set_thetamax(180)
     plt.show()
+
+
+def create_entry(TWS, TWA, gust=None, temp_air=288, temp_eau=288, pressure=101300, precip=0, hmax=0, pmax=0, peak_wave_period=0 ,shts=0, mpts=0, mats=0, shww=0, mpww=0, maww=0, swh=0, mwp=0, mwa=0, hh1=0, ph1=0, mah1=0, hh2=0, ph2=0, mah2=0, air_density=1.225) : 
+    if(gust == None) : 
+        gust = TWS
+    gust_diff = gust - TWS
+    d = {'TWS': [TWS], 'TWA': [TWA], 'i10fg' : [gust], 't2m' : [temp_air], 'msl' : [pressure], 'sst':[temp_eau], 'tp':[precip], 'hmax':[hmax], 'mpts':[mpts], 'mpww':[mpww], 'mwp':[mwp], 'swh':[swh], 'shts':[shts], 'shww':[shww], 'gust_diff':[gust_diff], 'mats':[mats], 'maww':[maww], 'mwa':[mwa], 'mah1':[mah1], 'mah2':[mah2], 'air_density':[air_density], 'ph1':[ph1], 'ph2':[ph2], 'hh1':[hh1], 'hh2':[hh2], 'peak_wave_period':[peak_wave_period], 'pmax':[pmax]}
+    df = pd.DataFrame(data=d)
+    return df
+    
+    
+    
+def create_wind_polar_file(reg, file, pipeline_preprocessing_from_config, config) : 
+    #Cree un fichier de polaire de vitesse en fonction de la force du vent et TWA 
+    #Prend les autres paramètres comme valeur nominale 
+    
+    f=open(file, "w")
+    TWA_list = [10, 15, 20, 25, 30,35,40,45,50,60,70,80,90,100,110,120,130,135,140,145,150,155,160,170,180]
+    TWS_list = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26, 28, 30,32,34]
+    
+    #Prmeière ligne
+    line = "TWA/TWS"
+    for TWS in TWS_list : 
+        line+="\t"+str(TWS)
+    f.write(line+"\n")
+    
+    #Suite des lignes
+    for TWA in TWA_list : 
+        line = str(TWA)
+        for TWS in TWS_list : 
+            entry = create_entry(TWS, TWA)
+            entry = pipeline_preprocessing_from_config(entry, config)
+            speed = reg.predict(entry[['TWA','TWS']])
+            line+= "\t"+str(round(speed[0],1))
+        f.write(line+"\n")
+    f.close()
