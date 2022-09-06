@@ -1,0 +1,1528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>mwi_tools.polaire.preprocessing API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>mwi_tools.polaire.preprocessing</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#On doit imposer des règles de normalisation qui correspondent aux paramètres 
+#(anticiper le fait que l&#39;on puisse rajouter des valeurs supérieures à celles que l&#39;on a aujourd&#39;hui.
+def remove_quantiles (df_input, config={}) :
+    df = df_input.copy()
+    for column in df.columns:
+        if bool(config) : 
+            q_low = config[&#39;q_low&#39;]
+            q_hi  = config[&#39;q_hi&#39;]
+            df = df[(df[column] &lt; q_hi) &amp; (df[column] &gt; q_low)] 
+            return df, None
+        else : 
+            q_low = df[column].quantile(0.01)
+            q_hi  = df[column].quantile(0.99)
+            config = {
+                &#39;q_low&#39; : q_low,
+                &#39;q_hi&#39; : q_hi
+            }
+            df = df[(df[column] &lt; q_hi) &amp; (df[column] &gt; q_low)]
+            return df, config
+
+def normalisation_minmax_manuel(mini, maxi, value) : 
+    delta = maxi-mini
+    return (value-mini)/delta
+    
+def normalisation_standard_manuel(mean, std, value) : 
+    return (value-mean)/std
+
+def normalisation_minmax(column_input, config, param_name) : 
+    column = column_input.copy()
+    if bool(config) : 
+        maxi = config[param_name][&#39;maxi&#39;]
+        mini  = config[param_name][&#39;mini&#39;]
+        column = column.apply(lambda x: normalisation_minmax_manuel(mini,maxi,x))
+        return column, None
+    else : 
+        maxi = column.max()
+        mini = column.min()
+        config = {
+            &#39;maxi&#39; : maxi,
+            &#39;mini&#39; : mini
+        }
+        column = column.apply(lambda x: normalisation_minmax_manuel(mini,maxi,x))
+        return column, config
+
+def normalisation_standard(column_input, config, param_name) : 
+    column = column_input.copy()
+    if bool(config) : 
+        mean = config[param_name][&#39;mean&#39;]
+        std  = config[param_name][&#39;std&#39;]
+        column = column.apply(lambda x: normalisation_standard_manuel(mean,std,x))
+        return column, None
+    else : 
+        mean = column.mean()
+        std = column.std()
+    
+        config = {
+            &#39;mean&#39; : mean,
+            &#39;std&#39; : std
+        }
+        column = column.apply(lambda x: normalisation_standard_manuel(mean,std,x))
+        return column, config
+
+
+def normalisation_angle(value, symetrique=True) : 
+    #Symétrique
+    if symetrique == True : 
+        return abs(value)/180
+
+    #Asymétrique
+    else : 
+        return (value+180)/360
+
+
+def normalize_df(df2, type, remove_outliers=False, normalize_speed=False, historique=True, symetrique=True, config={}) : 
+    config_norm = dict()
+    df=df2.copy()
+    if remove_outliers : 
+        df, config_quantiles = remove_quantiles(df, config)
+        if not bool(config): 
+            config_norm.update(config_quantiles)
+
+    if type == &#39;minmax&#39; :
+        df.loc[:,&#39;TWS&#39;], config_TWS = normalisation_minmax(df[&#39;TWS&#39;], config, &#39;TWS&#39;)
+        df.loc[:,&#39;i10fg&#39;], config_i10fg = normalisation_minmax(df[&#39;i10fg&#39;], config, &#39;i10fg&#39;)
+        df.loc[:,&#39;gust_diff&#39;], config_gust_diff = normalisation_minmax(df[&#39;gust_diff&#39;], config, &#39;gust_diff&#39;)
+        df.loc[:,&#39;hh1&#39;], config_hh1 = normalisation_minmax(df[&#39;hh1&#39;], config, &#39;hh1&#39;)
+        df.loc[:,&#39;hh2&#39;], config_hh2 = normalisation_minmax(df[&#39;hh2&#39;], config, &#39;hh2&#39;)
+        df.loc[:,&#39;shww&#39;], config_shww = normalisation_minmax(df[&#39;shww&#39;], config, &#39;shww&#39;)
+        df.loc[:,&#39;shts&#39;], config_shts = normalisation_minmax(df[&#39;shts&#39;], config, &#39;shts&#39;)
+        df.loc[:,&#39;swh&#39;], config_swh = normalisation_minmax(df[&#39;swh&#39;], config, &#39;swh&#39;)
+        df.loc[:,&#39;hmax&#39;], config_hmax = normalisation_minmax(df[&#39;hmax&#39;], config, &#39;hmax&#39;)
+        df.loc[:,&#39;tp&#39;], config_tp = normalisation_minmax(df[&#39;tp&#39;], config, &#39;tp&#39;)
+        df.loc[:,&#39;t2m&#39;], config_t2m = normalisation_minmax(df[&#39;t2m&#39;], config, &#39;t2m&#39;)
+        df.loc[:,&#39;sst&#39;], config_sst = normalisation_minmax(df[&#39;sst&#39;], config, &#39;sst&#39;)
+        df.loc[:,&#39;air_density&#39;], config_air_density = normalisation_minmax(df[&#39;air_density&#39;], config, &#39;air_density&#39;)
+        if symetrique : 
+            df.loc[:,&#39;mats&#39;], config_mats = normalisation_minmax(abs(df[&#39;mats&#39;]), config, &#39;mats&#39;)
+            df.loc[:,&#39;maww&#39;], config_maww = normalisation_minmax(abs(df[&#39;maww&#39;]), config, &#39;maww&#39;)
+            df.loc[:,&#39;mwa&#39;], config_mwa = normalisation_minmax(abs(df[&#39;mwa&#39;]), config, &#39;mwa&#39;)
+            df.loc[:,&#39;mah1&#39;], config_mah1 = normalisation_minmax(abs(df[&#39;mah1&#39;]), config, &#39;mah1&#39;)
+            df.loc[:,&#39;mah2&#39;], config_mah2 = normalisation_minmax(abs(df[&#39;mah2&#39;]), config, &#39;mah2&#39;)
+            df.loc[:,&#39;TWA&#39;], config_TWA = normalisation_minmax(abs(df[&#39;TWA&#39;]), config, &#39;TWA&#39;)
+        else : 
+            df.loc[:,&#39;mats&#39;], config_mats = normalisation_minmax(df[&#39;mats&#39;], config, &#39;mats&#39;)
+            df.loc[:,&#39;maww&#39;], config_maww = normalisation_minmax(df[&#39;maww&#39;], config, &#39;maww&#39;)
+            df.loc[:,&#39;mwa&#39;], config_mwa = normalisation_minmax(df[&#39;mwa&#39;], config, &#39;mwa&#39;)
+            df.loc[:,&#39;mah1&#39;], config_mah1 = normalisation_minmax(df[&#39;mah1&#39;], config, &#39;mah1&#39;)
+            df.loc[:,&#39;mah2&#39;], config_mah2 = normalisation_minmax(df[&#39;mah2&#39;], config, &#39;mah2&#39;)
+            df.loc[:,&#39;TWA&#39;], config_TWA = normalisation_minmax(df[&#39;TWA&#39;], config, &#39;TWA&#39;)
+        df.loc[:,&#39;ph1&#39;], config_ph1 = normalisation_minmax(df[&#39;ph1&#39;], config, &#39;ph1&#39;)
+        df.loc[:,&#39;ph2&#39;], config_ph2 = normalisation_minmax(df[&#39;ph2&#39;], config, &#39;ph2&#39;)
+        df.loc[:,&#39;mpww&#39;], config_mpww = normalisation_minmax(df[&#39;mpww&#39;], config, &#39;mpww&#39;)
+        df.loc[:,&#39;mpts&#39;], config_mpts = normalisation_minmax(df[&#39;mpts&#39;], config, &#39;mpts&#39;)
+        df.loc[:,&#39;mwp&#39;], config_mwp = normalisation_minmax(df[&#39;mwp&#39;], config, &#39;mwp&#39;)
+        df.loc[:,&#39;pmax&#39;], config_pmax = normalisation_minmax(df[&#39;pmax&#39;], config, &#39;pmax&#39;)
+        df.loc[:,&#39;peak_wave_period&#39;], config_peak_wave_period = normalisation_minmax(df[&#39;peak_wave_period&#39;], config, &#39;peak_wave_period&#39;)
+        df.loc[:,&#39;msl&#39;], config_msl = normalisation_minmax(df[&#39;msl&#39;], config, &#39;msl&#39;)
+
+        if normalize_speed : 
+            df.loc[:,&#39;speed&#39;], config_speed = normalisation_minmax(df[&#39;speed&#39;], config, &#39;speed&#39;)
+        
+        if not bool(config) :   
+            config_norm[&#39;TWS&#39;] = config_TWS
+            config_norm[&#39;i10fg&#39;] = config_i10fg
+            config_norm[&#39;gust_diff&#39;] = config_gust_diff
+            config_norm[&#39;hh1&#39;] = config_hh1
+            config_norm[&#39;hh2&#39;] = config_hh2
+            config_norm[&#39;shww&#39;] = config_shww
+            config_norm[&#39;shts&#39;] = config_shts
+            config_norm[&#39;swh&#39;] = config_swh
+            config_norm[&#39;hmax&#39;] = config_hmax
+            config_norm[&#39;tp&#39;] = config_tp
+            config_norm[&#39;t2m&#39;] = config_t2m
+            config_norm[&#39;sst&#39;] = config_sst
+            config_norm[&#39;air_density&#39;] = config_air_density
+            config_norm[&#39;mats&#39;] = config_mats
+            config_norm[&#39;mwa&#39;] = config_mwa
+            config_norm[&#39;mah1&#39;] = config_mah1
+            config_norm[&#39;mah2&#39;] = config_mah2
+            config_norm[&#39;TWA&#39;] = config_TWA
+            config_norm[&#39;maww&#39;] = config_maww
+            config_norm[&#39;ph1&#39;] = config_ph1
+            config_norm[&#39;ph2&#39;] = config_ph2
+            config_norm[&#39;mpww&#39;] = config_mpww
+            config_norm[&#39;mpts&#39;] = config_mpts
+            config_norm[&#39;mwp&#39;] = config_mwp
+            config_norm[&#39;pmax&#39;] = config_pmax
+            config_norm[&#39;peak_wave_period&#39;] = config_peak_wave_period
+            config_norm[&#39;msl&#39;] = config_msl
+            if normalize_speed : 
+                config_norm[&#39;speed&#39;] = config_speed
+
+    elif type == &#39;standard&#39; :
+        df.loc[:,&#39;TWS&#39;], config_TWS = normalisation_standard(df[&#39;TWS&#39;], config, &#39;TWS&#39;)
+        df.loc[:,&#39;i10fg&#39;], config_i10fg = normalisation_standard(df[&#39;i10fg&#39;], config, &#39;i10fg&#39;)
+        df.loc[:,&#39;gust_diff&#39;], config_gust_diff = normalisation_standard(df[&#39;gust_diff&#39;], config, &#39;gust_diff&#39;)
+        df.loc[:,&#39;hh1&#39;], config_hh1 = normalisation_standard(df[&#39;hh1&#39;], config, &#39;hh1&#39;)
+        df.loc[:,&#39;hh2&#39;], config_hh2 = normalisation_standard(df[&#39;hh2&#39;], config, &#39;hh2&#39;)
+        df.loc[:,&#39;shww&#39;], config_shww = normalisation_standard(df[&#39;shww&#39;], config, &#39;shww&#39;)
+        df.loc[:,&#39;shts&#39;], config_shts = normalisation_standard(df[&#39;shts&#39;], config, &#39;shts&#39;)
+        df.loc[:,&#39;swh&#39;], config_swh = normalisation_standard(df[&#39;swh&#39;], config, &#39;swh&#39;)
+        df.loc[:,&#39;hmax&#39;], config_hmax = normalisation_standard(df[&#39;hmax&#39;], config, &#39;hmax&#39;)
+        df.loc[:,&#39;tp&#39;], config_tp = normalisation_standard(df[&#39;tp&#39;], config, &#39;tp&#39;)
+        df.loc[:,&#39;t2m&#39;], config_t2m = normalisation_standard(df[&#39;t2m&#39;], config, &#39;t2m&#39;)
+        df.loc[:,&#39;sst&#39;], config_sst = normalisation_standard(df[&#39;sst&#39;], config, &#39;sst&#39;)
+        df.loc[:,&#39;air_density&#39;], config_air_density = normalisation_standard(df[&#39;air_density&#39;], config, &#39;air_density&#39;)
+        if symetrique : 
+            df.loc[:,&#39;mats&#39;], config_mats = normalisation_standard(abs(df[&#39;mats&#39;]), config, &#39;mats&#39;)
+            df.loc[:,&#39;maww&#39;], config_maww = normalisation_standard(abs(df[&#39;maww&#39;]), config, &#39;maww&#39;)
+            df.loc[:,&#39;mwa&#39;], config_mwa = normalisation_standard(abs(df[&#39;mwa&#39;]), config, &#39;mwa&#39;)
+            df.loc[:,&#39;mah1&#39;], config_mah1 = normalisation_standard(abs(df[&#39;mah1&#39;]), config, &#39;mah1&#39;)
+            df.loc[:,&#39;mah2&#39;], config_mah2 = normalisation_standard(abs(df[&#39;mah2&#39;]), config, &#39;mah2&#39;)
+            df.loc[:,&#39;TWA&#39;], config_TWA = normalisation_standard(abs(df[&#39;TWA&#39;]), config, &#39;TWA&#39;)
+        else :
+            df.loc[:,&#39;mats&#39;], config_mats = normalisation_standard(df[&#39;mats&#39;], config, &#39;mats&#39;)
+            df.loc[:,&#39;maww&#39;], config_maww = normalisation_standard(df[&#39;maww&#39;], config, &#39;maww&#39;)
+            df.loc[:,&#39;mwa&#39;], config_mwa = normalisation_standard(df[&#39;mwa&#39;], config, &#39;mwa&#39;)
+            df.loc[:,&#39;mah1&#39;], config_mah1 = normalisation_standard(df[&#39;mah1&#39;], config, &#39;mah1&#39;)
+            df.loc[:,&#39;mah2&#39;], config_mah2 = normalisation_standard(df[&#39;mah2&#39;], config, &#39;mah2&#39;)
+            df.loc[:,&#39;TWA&#39;], config_TWA = normalisation_standard(df[&#39;TWA&#39;], config, &#39;TWA&#39;)
+        df.loc[:,&#39;ph1&#39;], config_ph1 = normalisation_standard(df[&#39;ph1&#39;], config, &#39;ph1&#39;)
+        df.loc[:,&#39;ph2&#39;], config_ph2 = normalisation_standard(df[&#39;ph2&#39;], config, &#39;ph2&#39;)
+        df.loc[:,&#39;mpww&#39;], config_mpww = normalisation_standard(df[&#39;mpww&#39;], config, &#39;mpww&#39;)
+        df.loc[:,&#39;mpts&#39;], config_mpts = normalisation_standard(df[&#39;mpts&#39;], config, &#39;mpts&#39;)
+        df.loc[:,&#39;mwp&#39;], config_mwp = normalisation_standard(df[&#39;mwp&#39;], config, &#39;mwp&#39;)
+        df.loc[:,&#39;pmax&#39;], config_pmax = normalisation_standard(df[&#39;pmax&#39;], config, &#39;pmax&#39;)
+        df.loc[:,&#39;peak_wave_period&#39;], config_peak_wave_period = normalisation_standard(df[&#39;peak_wave_period&#39;], config, &#39;peak_wave_period&#39;)
+        df.loc[:,&#39;msl&#39;], config_msl = normalisation_standard(df[&#39;msl&#39;], config, &#39;msl&#39;)
+
+        if normalize_speed : 
+            df.loc[:,&#39;speed&#39;], config_speed = normalisation_standard(df[&#39;speed&#39;], config, &#39;speed&#39;)
+
+        if not bool(config) :   
+            config_norm[&#39;TWS&#39;] = config_TWS
+            config_norm[&#39;i10fg&#39;] = config_i10fg
+            config_norm[&#39;gust_diff&#39;] = config_gust_diff
+            config_norm[&#39;hh1&#39;] = config_hh1
+            config_norm[&#39;hh2&#39;] = config_hh2
+            config_norm[&#39;shww&#39;] = config_shww
+            config_norm[&#39;shts&#39;] = config_shts
+            config_norm[&#39;swh&#39;] = config_swh
+            config_norm[&#39;hmax&#39;] = config_hmax
+            config_norm[&#39;tp&#39;] = config_tp
+            config_norm[&#39;t2m&#39;] = config_t2m
+            config_norm[&#39;sst&#39;] = config_sst
+            config_norm[&#39;air_density&#39;] = config_air_density
+            config_norm[&#39;mats&#39;] = config_mats
+            config_norm[&#39;mwa&#39;] = config_mwa
+            config_norm[&#39;mah1&#39;] = config_mah1
+            config_norm[&#39;mah2&#39;] = config_mah2
+            config_norm[&#39;TWA&#39;] = config_TWA
+            config_norm[&#39;maww&#39;] = config_maww
+            config_norm[&#39;ph1&#39;] = config_ph1
+            config_norm[&#39;ph2&#39;] = config_ph2
+            config_norm[&#39;mpww&#39;] = config_mpww
+            config_norm[&#39;mpts&#39;] = config_mpts
+            config_norm[&#39;mwp&#39;] = config_mwp
+            config_norm[&#39;pmax&#39;] = config_pmax
+            config_norm[&#39;peak_wave_period&#39;] = config_peak_wave_period
+            config_norm[&#39;msl&#39;] = config_msl
+            if normalize_speed : 
+                config_norm[&#39;speed&#39;] = config_speed
+
+    else : #type == manuel
+        if historique : 
+            if not bool(config) : 
+                #Vent moyen 0-45 kts
+                config_TWS = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 60
+                }
+                #Rafales histo 0-70kts
+                config_i10fg = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 70
+                }
+                #Gust-diff relative 0-10
+                config_gust_diff = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 15
+                }
+                #Wave height 0-10m
+                config_hh1 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_hh2 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_shww = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_shts = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_swh = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                #hmax 0-15m
+                config_hmax = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 15
+                }
+                #Precip 0-40mm (m) en 1h
+                config_tp = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 40e-3
+                }
+                #température 0-50°C --&gt; 273 - 323K
+                config_t2m = {
+                    &#39;mini&#39; : 273,
+                    &#39;maxi&#39; : 323
+                }
+                #Température eau 0-30°C --&gt; 273 - 303K 
+                config_sst = {
+                    &#39;mini&#39; : 273,
+                    &#39;maxi&#39; : 303
+                }
+                #air density (kg.m-3) 1.05 - 1.40 kg.m-3
+                config_air_density = {
+                    &#39;mini&#39; : 1.05,
+                    &#39;maxi&#39; : 1.40
+                }
+                #periodes 0-30s
+                config_ph1 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_ph2 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mpww = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mpts = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mwp = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_pmax = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_peak_wave_period = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                #Pression 910-1050hPa (Pa)
+                config_msl = {
+                    &#39;mini&#39; : 91000,
+                    &#39;maxi&#39; : 105000
+                }
+                
+
+                df.loc[:,&#39;TWS&#39;] = df[&#39;TWS&#39;].apply(lambda x: normalisation_minmax_manuel(config_TWS[&#39;mini&#39;],config_TWS[&#39;maxi&#39;],x))
+                df.loc[:,&#39;i10fg&#39;] = df[&#39;i10fg&#39;].apply(lambda x: normalisation_minmax_manuel(config_i10fg[&#39;mini&#39;],config_i10fg[&#39;maxi&#39;],x))
+                df.loc[:,&#39;gust_diff&#39;] = df[&#39;gust_diff&#39;].apply(lambda x: normalisation_minmax_manuel(config_gust_diff[&#39;mini&#39;],config_gust_diff[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hh1&#39;] = df[&#39;hh1&#39;].apply(lambda x: normalisation_minmax_manuel(config_hh1[&#39;mini&#39;],config_hh1[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hh2&#39;] = df[&#39;hh2&#39;].apply(lambda x: normalisation_minmax_manuel(config_hh2[&#39;mini&#39;],config_hh2[&#39;maxi&#39;],x))
+                df.loc[:,&#39;shww&#39;] = df[&#39;shww&#39;].apply(lambda x: normalisation_minmax_manuel(config_shww[&#39;mini&#39;],config_shww[&#39;maxi&#39;],x))
+                df.loc[:,&#39;shts&#39;] = df[&#39;shts&#39;].apply(lambda x: normalisation_minmax_manuel(config_shts[&#39;mini&#39;],config_shts[&#39;maxi&#39;],x))
+                df.loc[:,&#39;swh&#39;] = df[&#39;swh&#39;].apply(lambda x: normalisation_minmax_manuel(config_swh[&#39;mini&#39;],config_swh[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hmax&#39;] = df[&#39;hmax&#39;].apply(lambda x: normalisation_minmax_manuel(config_hmax[&#39;mini&#39;],config_hmax[&#39;maxi&#39;],x))
+                df.loc[:,&#39;tp&#39;] = df[&#39;tp&#39;].apply(lambda x: normalisation_minmax_manuel(config_tp[&#39;mini&#39;],config_tp[&#39;maxi&#39;],x))
+                df.loc[:,&#39;t2m&#39;] = df[&#39;t2m&#39;].apply(lambda x: normalisation_minmax_manuel(config_t2m[&#39;mini&#39;],config_t2m[&#39;maxi&#39;],x))
+                df.loc[:,&#39;sst&#39;] = df[&#39;sst&#39;].apply(lambda x: normalisation_minmax_manuel(config_sst[&#39;mini&#39;],config_sst[&#39;maxi&#39;],x))
+                df.loc[:,&#39;air_density&#39;] = df[&#39;air_density&#39;].apply(lambda x: normalisation_minmax_manuel(config_air_density[&#39;mini&#39;],config_air_density[&#39;maxi&#39;],x))
+                df.loc[:,&#39;ph1&#39;] = df[&#39;ph1&#39;].apply(lambda x: normalisation_minmax_manuel(config_ph1[&#39;mini&#39;],config_ph1[&#39;maxi&#39;],x))
+                df.loc[:,&#39;ph2&#39;] = df[&#39;ph2&#39;].apply(lambda x: normalisation_minmax_manuel(config_ph2[&#39;mini&#39;],config_ph2[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mpww&#39;] = df[&#39;mpww&#39;].apply(lambda x: normalisation_minmax_manuel(config_mpww[&#39;mini&#39;],config_mpww[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mpts&#39;] = df[&#39;mpts&#39;].apply(lambda x: normalisation_minmax_manuel(config_mpts[&#39;mini&#39;],config_mpts[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mwp&#39;] = df[&#39;mwp&#39;].apply(lambda x: normalisation_minmax_manuel(config_mwp[&#39;mini&#39;],config_mwp[&#39;maxi&#39;],x))
+                df.loc[:,&#39;pmax&#39;] = df[&#39;pmax&#39;].apply(lambda x: normalisation_minmax_manuel(config_pmax[&#39;mini&#39;],config_pmax[&#39;maxi&#39;],x))
+                df.loc[:,&#39;peak_wave_period&#39;] = df[&#39;peak_wave_period&#39;].apply(lambda x: normalisation_minmax_manuel(config_peak_wave_period[&#39;mini&#39;],config_peak_wave_period[&#39;maxi&#39;],x))
+                df.loc[:,&#39;msl&#39;] = df[&#39;msl&#39;].apply(lambda x: normalisation_minmax_manuel(config_msl[&#39;mini&#39;],config_msl[&#39;maxi&#39;],x))
+                if normalize_speed : 
+                    #Speed 0-50 kts
+                    config_speed = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 50
+                    }
+                    df.loc[:,&#39;speed&#39;] = df[&#39;speed&#39;].apply(lambda x: normalisation_minmax_manuel(config_speed[&#39;mini&#39;],config_speed[&#39;maxi&#39;],x))
+
+
+            else : 
+                df.loc[:,&#39;TWS&#39;], config_TWS = normalisation_minmax(df[&#39;TWS&#39;], config, &#39;TWS&#39;)
+                df.loc[:,&#39;i10fg&#39;], config_i10fg = normalisation_minmax(df[&#39;i10fg&#39;], config, &#39;i10fg&#39;)
+                df.loc[:,&#39;gust_diff&#39;], config_gust_diff = normalisation_minmax(df[&#39;gust_diff&#39;], config, &#39;gust_diff&#39;)
+                df.loc[:,&#39;hh1&#39;], config_hh1 = normalisation_minmax(df[&#39;hh1&#39;], config, &#39;hh1&#39;)
+                df.loc[:,&#39;hh2&#39;], config_hh2 = normalisation_minmax(df[&#39;hh2&#39;], config, &#39;hh2&#39;)
+                df.loc[:,&#39;shww&#39;], config_shww = normalisation_minmax(df[&#39;shww&#39;], config, &#39;shww&#39;)
+                df.loc[:,&#39;shts&#39;], config_shts = normalisation_minmax(df[&#39;shts&#39;], config, &#39;shts&#39;)
+                df.loc[:,&#39;swh&#39;], config_swh = normalisation_minmax(df[&#39;swh&#39;], config, &#39;swh&#39;)
+                df.loc[:,&#39;hmax&#39;], config_hmax = normalisation_minmax(df[&#39;hmax&#39;], config, &#39;hmax&#39;)
+                df.loc[:,&#39;tp&#39;], config_tp = normalisation_minmax(df[&#39;tp&#39;], config, &#39;tp&#39;)
+                df.loc[:,&#39;t2m&#39;], config_t2m = normalisation_minmax(df[&#39;t2m&#39;], config, &#39;t2m&#39;)
+                df.loc[:,&#39;sst&#39;], config_sst = normalisation_minmax(df[&#39;sst&#39;], config, &#39;sst&#39;)
+                df.loc[:,&#39;air_density&#39;], config_air_density = normalisation_minmax(df[&#39;air_density&#39;], config, &#39;air_density&#39;)
+                df.loc[:,&#39;ph1&#39;], config_ph1 = normalisation_minmax(df[&#39;ph1&#39;], config, &#39;ph1&#39;)
+                df.loc[:,&#39;ph2&#39;], config_ph2 = normalisation_minmax(df[&#39;ph2&#39;], config, &#39;ph2&#39;)
+                df.loc[:,&#39;mpww&#39;], config_mpww = normalisation_minmax(df[&#39;mpww&#39;], config, &#39;mpww&#39;)
+                df.loc[:,&#39;mpts&#39;], config_mpts = normalisation_minmax(df[&#39;mpts&#39;], config, &#39;mpts&#39;)
+                df.loc[:,&#39;mwp&#39;], config_mwp = normalisation_minmax(df[&#39;mwp&#39;], config, &#39;mwp&#39;)
+                df.loc[:,&#39;pmax&#39;], config_pmax = normalisation_minmax(df[&#39;pmax&#39;], config, &#39;pmax&#39;)
+                df.loc[:,&#39;peak_wave_period&#39;], config_peak_wave_period = normalisation_minmax(df[&#39;peak_wave_period&#39;], config, &#39;peak_wave_period&#39;)
+                df.loc[:,&#39;msl&#39;], config_msl = normalisation_minmax(df[&#39;msl&#39;], config, &#39;msl&#39;)
+
+                if normalize_speed : 
+                    df.loc[:,&#39;speed&#39;], config_speed = normalisation_minmax(df[&#39;speed&#39;], config, &#39;speed&#39;)
+
+
+            #angles vagues/vent -180 - 180° 
+            df.loc[:,&#39;mats&#39;] = df[&#39;mats&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;maww&#39;] = df[&#39;maww&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mwa&#39;] = df[&#39;mwa&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mah1&#39;] = df[&#39;mah1&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mah2&#39;] = df[&#39;mah2&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;TWA&#39;] = df[&#39;TWA&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+           
+
+        else : 
+            #CHANGER LES PARAMS MANUELS pour des params plus intelligents
+            if not bool(config) : 
+                #Vent moyen 0-45 kts
+                config_TWS = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 45
+                }
+                #Rafales histo 0-70kts
+                config_i10fg = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 70
+                }
+                #Gust-diff relative 0-10
+                config_gust_diff = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                #Wave height 0-10m
+                config_hh1 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_hh2 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_shww = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_shts = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_swh = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                #hmax 0-15m
+                config_hmax = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 15
+                }
+                #Precip 0-40mm (m) en 1h
+                config_tp = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 40e-3
+                }
+                #température 0-50°C --&gt; 273 - 323K
+                config_t2m = {
+                    &#39;mini&#39; : 273,
+                    &#39;maxi&#39; : 323
+                }
+                #Température eau 0-30°C --&gt; 273 - 303K 
+                config_sst = {
+                    &#39;mini&#39; : 273,
+                    &#39;maxi&#39; : 303
+                }
+                #air density (kg.m-3) 1.05 - 1.40 kg.m-3
+                config_air_density = {
+                    &#39;mini&#39; : 1.05,
+                    &#39;maxi&#39; : 1.40
+                }
+                #periodes 0-30s
+                config_ph1 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_ph2 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mpww = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mpts = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mwp = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_pmax = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_peak_wave_period = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                #Pression 910-1050hPa (Pa)
+                config_msl = {
+                    &#39;mini&#39; : 91000,
+                    &#39;maxi&#39; : 105000
+                }
+                
+
+                df.loc[:,&#39;TWS&#39;] = df[&#39;TWS&#39;].apply(lambda x: normalisation_minmax_manuel(config_TWS[&#39;mini&#39;],config_TWS[&#39;maxi&#39;],x))
+                df.loc[:,&#39;i10fg&#39;] = df[&#39;i10fg&#39;].apply(lambda x: normalisation_minmax_manuel(config_i10fg[&#39;mini&#39;],config_i10fg[&#39;maxi&#39;],x))
+                df.loc[:,&#39;gust_diff&#39;] = df[&#39;gust_diff&#39;].apply(lambda x: normalisation_minmax_manuel(config_gust_diff[&#39;mini&#39;],config_gust_diff[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hh1&#39;] = df[&#39;hh1&#39;].apply(lambda x: normalisation_minmax_manuel(config_hh1[&#39;mini&#39;],config_hh1[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hh2&#39;] = df[&#39;hh2&#39;].apply(lambda x: normalisation_minmax_manuel(config_hh2[&#39;mini&#39;],config_hh2[&#39;maxi&#39;],x))
+                df.loc[:,&#39;shww&#39;] = df[&#39;shww&#39;].apply(lambda x: normalisation_minmax_manuel(config_shww[&#39;mini&#39;],config_shww[&#39;maxi&#39;],x))
+                df.loc[:,&#39;shts&#39;] = df[&#39;shts&#39;].apply(lambda x: normalisation_minmax_manuel(config_shts[&#39;mini&#39;],config_shts[&#39;maxi&#39;],x))
+                df.loc[:,&#39;swh&#39;] = df[&#39;swh&#39;].apply(lambda x: normalisation_minmax_manuel(config_swh[&#39;mini&#39;],config_swh[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hmax&#39;] = df[&#39;hmax&#39;].apply(lambda x: normalisation_minmax_manuel(config_hmax[&#39;mini&#39;],config_hmax[&#39;maxi&#39;],x))
+                df.loc[:,&#39;tp&#39;] = df[&#39;tp&#39;].apply(lambda x: normalisation_minmax_manuel(config_tp[&#39;mini&#39;],config_tp[&#39;maxi&#39;],x))
+                df.loc[:,&#39;t2m&#39;] = df[&#39;t2m&#39;].apply(lambda x: normalisation_minmax_manuel(config_t2m[&#39;mini&#39;],config_t2m[&#39;maxi&#39;],x))
+                df.loc[:,&#39;sst&#39;] = df[&#39;sst&#39;].apply(lambda x: normalisation_minmax_manuel(config_sst[&#39;mini&#39;],config_sst[&#39;maxi&#39;],x))
+                df.loc[:,&#39;air_density&#39;] = df[&#39;air_density&#39;].apply(lambda x: normalisation_minmax_manuel(config_air_density[&#39;mini&#39;],config_air_density[&#39;maxi&#39;],x))
+                df.loc[:,&#39;ph1&#39;] = df[&#39;ph1&#39;].apply(lambda x: normalisation_minmax_manuel(config_ph1[&#39;mini&#39;],config_ph1[&#39;maxi&#39;],x))
+                df.loc[:,&#39;ph2&#39;] = df[&#39;ph2&#39;].apply(lambda x: normalisation_minmax_manuel(config_ph2[&#39;mini&#39;],config_ph2[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mpww&#39;] = df[&#39;mpww&#39;].apply(lambda x: normalisation_minmax_manuel(config_mpww[&#39;mini&#39;],config_mpww[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mpts&#39;] = df[&#39;mpts&#39;].apply(lambda x: normalisation_minmax_manuel(config_mpts[&#39;mini&#39;],config_mpts[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mwp&#39;] = df[&#39;mwp&#39;].apply(lambda x: normalisation_minmax_manuel(config_mwp[&#39;mini&#39;],config_mwp[&#39;maxi&#39;],x))
+                df.loc[:,&#39;pmax&#39;] = df[&#39;pmax&#39;].apply(lambda x: normalisation_minmax_manuel(config_pmax[&#39;mini&#39;],config_pmax[&#39;maxi&#39;],x))
+                df.loc[:,&#39;peak_wave_period&#39;] = df[&#39;peak_wave_period&#39;].apply(lambda x: normalisation_minmax_manuel(config_peak_wave_period[&#39;mini&#39;],config_peak_wave_period[&#39;maxi&#39;],x))
+                df.loc[:,&#39;msl&#39;] = df[&#39;msl&#39;].apply(lambda x: normalisation_minmax_manuel(config_msl[&#39;mini&#39;],config_msl[&#39;maxi&#39;],x))
+                if normalize_speed : 
+                    #Speed 0-50 kts
+                    config_speed = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 50
+                    }
+                    df.loc[:,&#39;speed&#39;] = df[&#39;speed&#39;].apply(lambda x: normalisation_minmax_manuel(config_speed[&#39;mini&#39;],config_speed[&#39;maxi&#39;],x))
+
+
+            else : 
+                df.loc[:,&#39;TWS&#39;], config_TWS = normalisation_minmax(df[&#39;TWS&#39;], config, &#39;TWS&#39;)
+                df.loc[:,&#39;i10fg&#39;], config_i10fg = normalisation_minmax(df[&#39;i10fg&#39;], config, &#39;i10fg&#39;)
+                df.loc[:,&#39;gust_diff&#39;], config_gust_diff = normalisation_minmax(df[&#39;gust_diff&#39;], config, &#39;gust_diff&#39;)
+                df.loc[:,&#39;hh1&#39;], config_hh1 = normalisation_minmax(df[&#39;hh1&#39;], config, &#39;hh1&#39;)
+                df.loc[:,&#39;hh2&#39;], config_hh2 = normalisation_minmax(df[&#39;hh2&#39;], config, &#39;hh2&#39;)
+                df.loc[:,&#39;shww&#39;], config_shww = normalisation_minmax(df[&#39;shww&#39;], config, &#39;shww&#39;)
+                df.loc[:,&#39;shts&#39;], config_shts = normalisation_minmax(df[&#39;shts&#39;], config, &#39;shts&#39;)
+                df.loc[:,&#39;swh&#39;], config_swh = normalisation_minmax(df[&#39;swh&#39;], config, &#39;swh&#39;)
+                df.loc[:,&#39;hmax&#39;], config_hmax = normalisation_minmax(df[&#39;hmax&#39;], config, &#39;hmax&#39;)
+                df.loc[:,&#39;tp&#39;], config_tp = normalisation_minmax(df[&#39;tp&#39;], config, &#39;tp&#39;)
+                df.loc[:,&#39;t2m&#39;], config_t2m = normalisation_minmax(df[&#39;t2m&#39;], config, &#39;t2m&#39;)
+                df.loc[:,&#39;sst&#39;], config_sst = normalisation_minmax(df[&#39;sst&#39;], config, &#39;sst&#39;)
+                df.loc[:,&#39;air_density&#39;], config_air_density = normalisation_minmax(df[&#39;air_density&#39;], config, &#39;air_density&#39;)
+                df.loc[:,&#39;ph1&#39;], config_ph1 = normalisation_minmax(df[&#39;ph1&#39;], config, &#39;ph1&#39;)
+                df.loc[:,&#39;ph2&#39;], config_ph2 = normalisation_minmax(df[&#39;ph2&#39;], config, &#39;ph2&#39;)
+                df.loc[:,&#39;mpww&#39;], config_mpww = normalisation_minmax(df[&#39;mpww&#39;], config, &#39;mpww&#39;)
+                df.loc[:,&#39;mpts&#39;], config_mpts = normalisation_minmax(df[&#39;mpts&#39;], config, &#39;mpts&#39;)
+                df.loc[:,&#39;mwp&#39;], config_mwp = normalisation_minmax(df[&#39;mwp&#39;], config, &#39;mwp&#39;)
+                df.loc[:,&#39;pmax&#39;], config_pmax = normalisation_minmax(df[&#39;pmax&#39;], config, &#39;pmax&#39;)
+                df.loc[:,&#39;peak_wave_period&#39;], config_peak_wave_period = normalisation_minmax(df[&#39;peak_wave_period&#39;], config, &#39;peak_wave_period&#39;)
+                df.loc[:,&#39;msl&#39;], config_msl = normalisation_minmax(df[&#39;msl&#39;], config, &#39;msl&#39;)
+
+                if normalize_speed : 
+                    df.loc[:,&#39;speed&#39;], config_speed = normalisation_minmax(df[&#39;speed&#39;], config, &#39;speed&#39;)
+
+
+            #angles vagues/vent -180 - 180° 
+            df.loc[:,&#39;mats&#39;] = df[&#39;mats&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;maww&#39;] = df[&#39;maww&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mwa&#39;] = df[&#39;mwa&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mah1&#39;] = df[&#39;mah1&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mah2&#39;] = df[&#39;mah2&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;TWA&#39;] = df[&#39;TWA&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+
+        if not bool(config) :   
+            config_norm[&#39;TWS&#39;] = config_TWS
+            config_norm[&#39;i10fg&#39;] = config_i10fg
+            config_norm[&#39;gust_diff&#39;] = config_gust_diff
+            config_norm[&#39;hh1&#39;] = config_hh1
+            config_norm[&#39;hh2&#39;] = config_hh2
+            config_norm[&#39;shww&#39;] = config_shww
+            config_norm[&#39;shts&#39;] = config_shts
+            config_norm[&#39;swh&#39;] = config_swh
+            config_norm[&#39;hmax&#39;] = config_hmax
+            config_norm[&#39;tp&#39;] = config_tp
+            config_norm[&#39;t2m&#39;] = config_t2m
+            config_norm[&#39;sst&#39;] = config_sst
+            config_norm[&#39;air_density&#39;] = config_air_density
+            config_norm[&#39;ph1&#39;] = config_ph1
+            config_norm[&#39;ph2&#39;] = config_ph2
+            config_norm[&#39;mpww&#39;] = config_mpww
+            config_norm[&#39;mpts&#39;] = config_mpts
+            config_norm[&#39;mwp&#39;] = config_mwp
+            config_norm[&#39;pmax&#39;] = config_pmax
+            config_norm[&#39;peak_wave_period&#39;] = config_peak_wave_period
+            config_norm[&#39;msl&#39;] = config_msl
+            if normalize_speed : 
+                config_norm[&#39;speed&#39;] = config_speed
+
+    if bool(config) : 
+        return df, None
+    else :
+        return df, config_norm
+
+def drop_columns(df, c_dict) : 
+    for column in c_dict : 
+        if c_dict[column] == 0 : 
+            df.drop(column, axis=1, inplace=True, errors=&#39;ignore&#39;)
+
+def pipeline_preprocessing(df_input, speed_treshold_sup = 160, speed_treshold_inf = 30, norm_type = &#39;minmax&#39;, remove_outliers=False, normalize_speed=False, historique=True, symetrique=True) : 
+    df = df_input.copy()
+    config = {
+        &#39;type&#39; : norm_type, 
+        &#39;remove_outliers&#39; : remove_outliers, 
+        &#39;normalize_speed&#39; : normalize_speed, 
+        &#39;historique&#39; : historique, 
+        &#39;symetrique&#39; : symetrique
+    }
+
+    #On met un treshold sur les valeurs de TWA trop haute ou trop basse 
+    df.loc[(abs(df.TWA) &gt; speed_treshold_sup), &#39;speed&#39;] = 0
+    df.loc[(abs(df.TWA) &lt; speed_treshold_inf), &#39;speed&#39;] = 0
+    
+
+    config[&#39;speed_treshold_sup&#39;] = speed_treshold_sup
+    config[&#39;speed_treshold_inf&#39;] = speed_treshold_inf
+
+    #On normalise toutes les données
+    df, config_norm = normalize_df(df, type=norm_type,remove_outliers=remove_outliers, normalize_speed=normalize_speed, historique=historique, symetrique=symetrique)
+    config.update(config_norm)
+
+    #Data augmentation for 0
+    df.append([df.loc[(abs(df.TWA) &gt; speed_treshold_sup)]]*5,ignore_index=True)
+    df.append([df.loc[(abs(df.TWA) &lt; speed_treshold_sup)]]*5,ignore_index=True)
+
+    #On enlève les param inutiles
+    c_dict = {
+    &#39;lat&#39; : 0,
+    &#39;lon&#39; : 0,
+    &#39;datetime&#39; : 0,
+    &#39;i10fg&#39; : 0,
+    &#39;msl&#39; : 1,
+    &#39;t2m&#39; : 1,
+    &#39;sst&#39; : 0,
+    &#39;tp&#39; : 1,
+    &#39;hmax&#39; : 0,
+    &#39;shts&#39; : 1,
+    &#39;mpts&#39; : 0,
+    &#39;shww&#39; : 1,
+    &#39;mpww&#39; : 1,
+    &#39;swh&#39; : 1,
+    &#39;mwp&#39; : 1,
+    &#39;speed&#39; : 1,
+    &#39;TWS&#39; : 1,
+    &#39;gust_diff&#39; : 1,
+    &#39;TWA&#39; : 1,
+    &#39;mats&#39; : 0,
+    &#39;maww&#39; : 0,
+    &#39;mwa&#39; : 1,
+    &#39;mah1&#39; : 1,
+    &#39;mah2&#39; : 1,
+    &#39;air_density&#39; : 0,
+    &#39;ph1&#39; : 1,
+    &#39;ph2&#39; : 1,
+    &#39;hh1&#39; : 1,
+    &#39;hh2&#39; : 1,
+    &#39;peak_wave_period&#39; : 0,
+    &#39;pmax&#39; : 0
+    }
+
+    config[&#39;cdict&#39;] = c_dict
+    drop_columns(df, c_dict)
+
+    #Save config file
+
+    return df, config
+
+def pipeline_preprocessing_from_config(df_input, config) : 
+    df = df_input.copy()
+    #On met un treshold sur les valeurs de TWA trop haute ou trop basse 
+    speed_treshold_sup = config[&#39;speed_treshold_sup&#39;]
+    speed_treshold_inf = config[&#39;speed_treshold_inf&#39;]
+    df.loc[(abs(df.TWA) &gt; speed_treshold_sup), &#39;speed&#39;] = 0
+    df.loc[(abs(df.TWA) &lt; speed_treshold_inf), &#39;speed&#39;] = 0
+
+    #On normalise toutes les données
+    norm_type = config[&#39;type&#39;] 
+    remove_outliers = config[&#39;remove_outliers&#39;]
+    normalize_speed = config[&#39;normalize_speed&#39;]
+    historique = config[&#39;historique&#39;]
+    symetrique = config[&#39;symetrique&#39;]
+    df, _ = normalize_df(df, type=norm_type,remove_outliers=remove_outliers, normalize_speed=normalize_speed, historique=historique, symetrique=symetrique, config=config)
+
+    #On enlève les param inutiles
+    c_dict = config[&#39;cdict&#39;]
+    drop_columns(df, c_dict)
+
+    return df</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="mwi_tools.polaire.preprocessing.drop_columns"><code class="name flex">
+<span>def <span class="ident">drop_columns</span></span>(<span>df, c_dict)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def drop_columns(df, c_dict) : 
+    for column in c_dict : 
+        if c_dict[column] == 0 : 
+            df.drop(column, axis=1, inplace=True, errors=&#39;ignore&#39;)</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.normalisation_angle"><code class="name flex">
+<span>def <span class="ident">normalisation_angle</span></span>(<span>value, symetrique=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalisation_angle(value, symetrique=True) : 
+    #Symétrique
+    if symetrique == True : 
+        return abs(value)/180
+
+    #Asymétrique
+    else : 
+        return (value+180)/360</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.normalisation_minmax"><code class="name flex">
+<span>def <span class="ident">normalisation_minmax</span></span>(<span>column_input, config, param_name)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalisation_minmax(column_input, config, param_name) : 
+    column = column_input.copy()
+    if bool(config) : 
+        maxi = config[param_name][&#39;maxi&#39;]
+        mini  = config[param_name][&#39;mini&#39;]
+        column = column.apply(lambda x: normalisation_minmax_manuel(mini,maxi,x))
+        return column, None
+    else : 
+        maxi = column.max()
+        mini = column.min()
+        config = {
+            &#39;maxi&#39; : maxi,
+            &#39;mini&#39; : mini
+        }
+        column = column.apply(lambda x: normalisation_minmax_manuel(mini,maxi,x))
+        return column, config</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.normalisation_minmax_manuel"><code class="name flex">
+<span>def <span class="ident">normalisation_minmax_manuel</span></span>(<span>mini, maxi, value)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalisation_minmax_manuel(mini, maxi, value) : 
+    delta = maxi-mini
+    return (value-mini)/delta</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.normalisation_standard"><code class="name flex">
+<span>def <span class="ident">normalisation_standard</span></span>(<span>column_input, config, param_name)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalisation_standard(column_input, config, param_name) : 
+    column = column_input.copy()
+    if bool(config) : 
+        mean = config[param_name][&#39;mean&#39;]
+        std  = config[param_name][&#39;std&#39;]
+        column = column.apply(lambda x: normalisation_standard_manuel(mean,std,x))
+        return column, None
+    else : 
+        mean = column.mean()
+        std = column.std()
+    
+        config = {
+            &#39;mean&#39; : mean,
+            &#39;std&#39; : std
+        }
+        column = column.apply(lambda x: normalisation_standard_manuel(mean,std,x))
+        return column, config</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.normalisation_standard_manuel"><code class="name flex">
+<span>def <span class="ident">normalisation_standard_manuel</span></span>(<span>mean, std, value)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalisation_standard_manuel(mean, std, value) : 
+    return (value-mean)/std</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.normalize_df"><code class="name flex">
+<span>def <span class="ident">normalize_df</span></span>(<span>df2, type, remove_outliers=False, normalize_speed=False, historique=True, symetrique=True, config={})</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalize_df(df2, type, remove_outliers=False, normalize_speed=False, historique=True, symetrique=True, config={}) : 
+    config_norm = dict()
+    df=df2.copy()
+    if remove_outliers : 
+        df, config_quantiles = remove_quantiles(df, config)
+        if not bool(config): 
+            config_norm.update(config_quantiles)
+
+    if type == &#39;minmax&#39; :
+        df.loc[:,&#39;TWS&#39;], config_TWS = normalisation_minmax(df[&#39;TWS&#39;], config, &#39;TWS&#39;)
+        df.loc[:,&#39;i10fg&#39;], config_i10fg = normalisation_minmax(df[&#39;i10fg&#39;], config, &#39;i10fg&#39;)
+        df.loc[:,&#39;gust_diff&#39;], config_gust_diff = normalisation_minmax(df[&#39;gust_diff&#39;], config, &#39;gust_diff&#39;)
+        df.loc[:,&#39;hh1&#39;], config_hh1 = normalisation_minmax(df[&#39;hh1&#39;], config, &#39;hh1&#39;)
+        df.loc[:,&#39;hh2&#39;], config_hh2 = normalisation_minmax(df[&#39;hh2&#39;], config, &#39;hh2&#39;)
+        df.loc[:,&#39;shww&#39;], config_shww = normalisation_minmax(df[&#39;shww&#39;], config, &#39;shww&#39;)
+        df.loc[:,&#39;shts&#39;], config_shts = normalisation_minmax(df[&#39;shts&#39;], config, &#39;shts&#39;)
+        df.loc[:,&#39;swh&#39;], config_swh = normalisation_minmax(df[&#39;swh&#39;], config, &#39;swh&#39;)
+        df.loc[:,&#39;hmax&#39;], config_hmax = normalisation_minmax(df[&#39;hmax&#39;], config, &#39;hmax&#39;)
+        df.loc[:,&#39;tp&#39;], config_tp = normalisation_minmax(df[&#39;tp&#39;], config, &#39;tp&#39;)
+        df.loc[:,&#39;t2m&#39;], config_t2m = normalisation_minmax(df[&#39;t2m&#39;], config, &#39;t2m&#39;)
+        df.loc[:,&#39;sst&#39;], config_sst = normalisation_minmax(df[&#39;sst&#39;], config, &#39;sst&#39;)
+        df.loc[:,&#39;air_density&#39;], config_air_density = normalisation_minmax(df[&#39;air_density&#39;], config, &#39;air_density&#39;)
+        if symetrique : 
+            df.loc[:,&#39;mats&#39;], config_mats = normalisation_minmax(abs(df[&#39;mats&#39;]), config, &#39;mats&#39;)
+            df.loc[:,&#39;maww&#39;], config_maww = normalisation_minmax(abs(df[&#39;maww&#39;]), config, &#39;maww&#39;)
+            df.loc[:,&#39;mwa&#39;], config_mwa = normalisation_minmax(abs(df[&#39;mwa&#39;]), config, &#39;mwa&#39;)
+            df.loc[:,&#39;mah1&#39;], config_mah1 = normalisation_minmax(abs(df[&#39;mah1&#39;]), config, &#39;mah1&#39;)
+            df.loc[:,&#39;mah2&#39;], config_mah2 = normalisation_minmax(abs(df[&#39;mah2&#39;]), config, &#39;mah2&#39;)
+            df.loc[:,&#39;TWA&#39;], config_TWA = normalisation_minmax(abs(df[&#39;TWA&#39;]), config, &#39;TWA&#39;)
+        else : 
+            df.loc[:,&#39;mats&#39;], config_mats = normalisation_minmax(df[&#39;mats&#39;], config, &#39;mats&#39;)
+            df.loc[:,&#39;maww&#39;], config_maww = normalisation_minmax(df[&#39;maww&#39;], config, &#39;maww&#39;)
+            df.loc[:,&#39;mwa&#39;], config_mwa = normalisation_minmax(df[&#39;mwa&#39;], config, &#39;mwa&#39;)
+            df.loc[:,&#39;mah1&#39;], config_mah1 = normalisation_minmax(df[&#39;mah1&#39;], config, &#39;mah1&#39;)
+            df.loc[:,&#39;mah2&#39;], config_mah2 = normalisation_minmax(df[&#39;mah2&#39;], config, &#39;mah2&#39;)
+            df.loc[:,&#39;TWA&#39;], config_TWA = normalisation_minmax(df[&#39;TWA&#39;], config, &#39;TWA&#39;)
+        df.loc[:,&#39;ph1&#39;], config_ph1 = normalisation_minmax(df[&#39;ph1&#39;], config, &#39;ph1&#39;)
+        df.loc[:,&#39;ph2&#39;], config_ph2 = normalisation_minmax(df[&#39;ph2&#39;], config, &#39;ph2&#39;)
+        df.loc[:,&#39;mpww&#39;], config_mpww = normalisation_minmax(df[&#39;mpww&#39;], config, &#39;mpww&#39;)
+        df.loc[:,&#39;mpts&#39;], config_mpts = normalisation_minmax(df[&#39;mpts&#39;], config, &#39;mpts&#39;)
+        df.loc[:,&#39;mwp&#39;], config_mwp = normalisation_minmax(df[&#39;mwp&#39;], config, &#39;mwp&#39;)
+        df.loc[:,&#39;pmax&#39;], config_pmax = normalisation_minmax(df[&#39;pmax&#39;], config, &#39;pmax&#39;)
+        df.loc[:,&#39;peak_wave_period&#39;], config_peak_wave_period = normalisation_minmax(df[&#39;peak_wave_period&#39;], config, &#39;peak_wave_period&#39;)
+        df.loc[:,&#39;msl&#39;], config_msl = normalisation_minmax(df[&#39;msl&#39;], config, &#39;msl&#39;)
+
+        if normalize_speed : 
+            df.loc[:,&#39;speed&#39;], config_speed = normalisation_minmax(df[&#39;speed&#39;], config, &#39;speed&#39;)
+        
+        if not bool(config) :   
+            config_norm[&#39;TWS&#39;] = config_TWS
+            config_norm[&#39;i10fg&#39;] = config_i10fg
+            config_norm[&#39;gust_diff&#39;] = config_gust_diff
+            config_norm[&#39;hh1&#39;] = config_hh1
+            config_norm[&#39;hh2&#39;] = config_hh2
+            config_norm[&#39;shww&#39;] = config_shww
+            config_norm[&#39;shts&#39;] = config_shts
+            config_norm[&#39;swh&#39;] = config_swh
+            config_norm[&#39;hmax&#39;] = config_hmax
+            config_norm[&#39;tp&#39;] = config_tp
+            config_norm[&#39;t2m&#39;] = config_t2m
+            config_norm[&#39;sst&#39;] = config_sst
+            config_norm[&#39;air_density&#39;] = config_air_density
+            config_norm[&#39;mats&#39;] = config_mats
+            config_norm[&#39;mwa&#39;] = config_mwa
+            config_norm[&#39;mah1&#39;] = config_mah1
+            config_norm[&#39;mah2&#39;] = config_mah2
+            config_norm[&#39;TWA&#39;] = config_TWA
+            config_norm[&#39;maww&#39;] = config_maww
+            config_norm[&#39;ph1&#39;] = config_ph1
+            config_norm[&#39;ph2&#39;] = config_ph2
+            config_norm[&#39;mpww&#39;] = config_mpww
+            config_norm[&#39;mpts&#39;] = config_mpts
+            config_norm[&#39;mwp&#39;] = config_mwp
+            config_norm[&#39;pmax&#39;] = config_pmax
+            config_norm[&#39;peak_wave_period&#39;] = config_peak_wave_period
+            config_norm[&#39;msl&#39;] = config_msl
+            if normalize_speed : 
+                config_norm[&#39;speed&#39;] = config_speed
+
+    elif type == &#39;standard&#39; :
+        df.loc[:,&#39;TWS&#39;], config_TWS = normalisation_standard(df[&#39;TWS&#39;], config, &#39;TWS&#39;)
+        df.loc[:,&#39;i10fg&#39;], config_i10fg = normalisation_standard(df[&#39;i10fg&#39;], config, &#39;i10fg&#39;)
+        df.loc[:,&#39;gust_diff&#39;], config_gust_diff = normalisation_standard(df[&#39;gust_diff&#39;], config, &#39;gust_diff&#39;)
+        df.loc[:,&#39;hh1&#39;], config_hh1 = normalisation_standard(df[&#39;hh1&#39;], config, &#39;hh1&#39;)
+        df.loc[:,&#39;hh2&#39;], config_hh2 = normalisation_standard(df[&#39;hh2&#39;], config, &#39;hh2&#39;)
+        df.loc[:,&#39;shww&#39;], config_shww = normalisation_standard(df[&#39;shww&#39;], config, &#39;shww&#39;)
+        df.loc[:,&#39;shts&#39;], config_shts = normalisation_standard(df[&#39;shts&#39;], config, &#39;shts&#39;)
+        df.loc[:,&#39;swh&#39;], config_swh = normalisation_standard(df[&#39;swh&#39;], config, &#39;swh&#39;)
+        df.loc[:,&#39;hmax&#39;], config_hmax = normalisation_standard(df[&#39;hmax&#39;], config, &#39;hmax&#39;)
+        df.loc[:,&#39;tp&#39;], config_tp = normalisation_standard(df[&#39;tp&#39;], config, &#39;tp&#39;)
+        df.loc[:,&#39;t2m&#39;], config_t2m = normalisation_standard(df[&#39;t2m&#39;], config, &#39;t2m&#39;)
+        df.loc[:,&#39;sst&#39;], config_sst = normalisation_standard(df[&#39;sst&#39;], config, &#39;sst&#39;)
+        df.loc[:,&#39;air_density&#39;], config_air_density = normalisation_standard(df[&#39;air_density&#39;], config, &#39;air_density&#39;)
+        if symetrique : 
+            df.loc[:,&#39;mats&#39;], config_mats = normalisation_standard(abs(df[&#39;mats&#39;]), config, &#39;mats&#39;)
+            df.loc[:,&#39;maww&#39;], config_maww = normalisation_standard(abs(df[&#39;maww&#39;]), config, &#39;maww&#39;)
+            df.loc[:,&#39;mwa&#39;], config_mwa = normalisation_standard(abs(df[&#39;mwa&#39;]), config, &#39;mwa&#39;)
+            df.loc[:,&#39;mah1&#39;], config_mah1 = normalisation_standard(abs(df[&#39;mah1&#39;]), config, &#39;mah1&#39;)
+            df.loc[:,&#39;mah2&#39;], config_mah2 = normalisation_standard(abs(df[&#39;mah2&#39;]), config, &#39;mah2&#39;)
+            df.loc[:,&#39;TWA&#39;], config_TWA = normalisation_standard(abs(df[&#39;TWA&#39;]), config, &#39;TWA&#39;)
+        else :
+            df.loc[:,&#39;mats&#39;], config_mats = normalisation_standard(df[&#39;mats&#39;], config, &#39;mats&#39;)
+            df.loc[:,&#39;maww&#39;], config_maww = normalisation_standard(df[&#39;maww&#39;], config, &#39;maww&#39;)
+            df.loc[:,&#39;mwa&#39;], config_mwa = normalisation_standard(df[&#39;mwa&#39;], config, &#39;mwa&#39;)
+            df.loc[:,&#39;mah1&#39;], config_mah1 = normalisation_standard(df[&#39;mah1&#39;], config, &#39;mah1&#39;)
+            df.loc[:,&#39;mah2&#39;], config_mah2 = normalisation_standard(df[&#39;mah2&#39;], config, &#39;mah2&#39;)
+            df.loc[:,&#39;TWA&#39;], config_TWA = normalisation_standard(df[&#39;TWA&#39;], config, &#39;TWA&#39;)
+        df.loc[:,&#39;ph1&#39;], config_ph1 = normalisation_standard(df[&#39;ph1&#39;], config, &#39;ph1&#39;)
+        df.loc[:,&#39;ph2&#39;], config_ph2 = normalisation_standard(df[&#39;ph2&#39;], config, &#39;ph2&#39;)
+        df.loc[:,&#39;mpww&#39;], config_mpww = normalisation_standard(df[&#39;mpww&#39;], config, &#39;mpww&#39;)
+        df.loc[:,&#39;mpts&#39;], config_mpts = normalisation_standard(df[&#39;mpts&#39;], config, &#39;mpts&#39;)
+        df.loc[:,&#39;mwp&#39;], config_mwp = normalisation_standard(df[&#39;mwp&#39;], config, &#39;mwp&#39;)
+        df.loc[:,&#39;pmax&#39;], config_pmax = normalisation_standard(df[&#39;pmax&#39;], config, &#39;pmax&#39;)
+        df.loc[:,&#39;peak_wave_period&#39;], config_peak_wave_period = normalisation_standard(df[&#39;peak_wave_period&#39;], config, &#39;peak_wave_period&#39;)
+        df.loc[:,&#39;msl&#39;], config_msl = normalisation_standard(df[&#39;msl&#39;], config, &#39;msl&#39;)
+
+        if normalize_speed : 
+            df.loc[:,&#39;speed&#39;], config_speed = normalisation_standard(df[&#39;speed&#39;], config, &#39;speed&#39;)
+
+        if not bool(config) :   
+            config_norm[&#39;TWS&#39;] = config_TWS
+            config_norm[&#39;i10fg&#39;] = config_i10fg
+            config_norm[&#39;gust_diff&#39;] = config_gust_diff
+            config_norm[&#39;hh1&#39;] = config_hh1
+            config_norm[&#39;hh2&#39;] = config_hh2
+            config_norm[&#39;shww&#39;] = config_shww
+            config_norm[&#39;shts&#39;] = config_shts
+            config_norm[&#39;swh&#39;] = config_swh
+            config_norm[&#39;hmax&#39;] = config_hmax
+            config_norm[&#39;tp&#39;] = config_tp
+            config_norm[&#39;t2m&#39;] = config_t2m
+            config_norm[&#39;sst&#39;] = config_sst
+            config_norm[&#39;air_density&#39;] = config_air_density
+            config_norm[&#39;mats&#39;] = config_mats
+            config_norm[&#39;mwa&#39;] = config_mwa
+            config_norm[&#39;mah1&#39;] = config_mah1
+            config_norm[&#39;mah2&#39;] = config_mah2
+            config_norm[&#39;TWA&#39;] = config_TWA
+            config_norm[&#39;maww&#39;] = config_maww
+            config_norm[&#39;ph1&#39;] = config_ph1
+            config_norm[&#39;ph2&#39;] = config_ph2
+            config_norm[&#39;mpww&#39;] = config_mpww
+            config_norm[&#39;mpts&#39;] = config_mpts
+            config_norm[&#39;mwp&#39;] = config_mwp
+            config_norm[&#39;pmax&#39;] = config_pmax
+            config_norm[&#39;peak_wave_period&#39;] = config_peak_wave_period
+            config_norm[&#39;msl&#39;] = config_msl
+            if normalize_speed : 
+                config_norm[&#39;speed&#39;] = config_speed
+
+    else : #type == manuel
+        if historique : 
+            if not bool(config) : 
+                #Vent moyen 0-45 kts
+                config_TWS = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 60
+                }
+                #Rafales histo 0-70kts
+                config_i10fg = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 70
+                }
+                #Gust-diff relative 0-10
+                config_gust_diff = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 15
+                }
+                #Wave height 0-10m
+                config_hh1 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_hh2 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_shww = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_shts = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_swh = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                #hmax 0-15m
+                config_hmax = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 15
+                }
+                #Precip 0-40mm (m) en 1h
+                config_tp = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 40e-3
+                }
+                #température 0-50°C --&gt; 273 - 323K
+                config_t2m = {
+                    &#39;mini&#39; : 273,
+                    &#39;maxi&#39; : 323
+                }
+                #Température eau 0-30°C --&gt; 273 - 303K 
+                config_sst = {
+                    &#39;mini&#39; : 273,
+                    &#39;maxi&#39; : 303
+                }
+                #air density (kg.m-3) 1.05 - 1.40 kg.m-3
+                config_air_density = {
+                    &#39;mini&#39; : 1.05,
+                    &#39;maxi&#39; : 1.40
+                }
+                #periodes 0-30s
+                config_ph1 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_ph2 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mpww = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mpts = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mwp = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_pmax = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_peak_wave_period = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                #Pression 910-1050hPa (Pa)
+                config_msl = {
+                    &#39;mini&#39; : 91000,
+                    &#39;maxi&#39; : 105000
+                }
+                
+
+                df.loc[:,&#39;TWS&#39;] = df[&#39;TWS&#39;].apply(lambda x: normalisation_minmax_manuel(config_TWS[&#39;mini&#39;],config_TWS[&#39;maxi&#39;],x))
+                df.loc[:,&#39;i10fg&#39;] = df[&#39;i10fg&#39;].apply(lambda x: normalisation_minmax_manuel(config_i10fg[&#39;mini&#39;],config_i10fg[&#39;maxi&#39;],x))
+                df.loc[:,&#39;gust_diff&#39;] = df[&#39;gust_diff&#39;].apply(lambda x: normalisation_minmax_manuel(config_gust_diff[&#39;mini&#39;],config_gust_diff[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hh1&#39;] = df[&#39;hh1&#39;].apply(lambda x: normalisation_minmax_manuel(config_hh1[&#39;mini&#39;],config_hh1[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hh2&#39;] = df[&#39;hh2&#39;].apply(lambda x: normalisation_minmax_manuel(config_hh2[&#39;mini&#39;],config_hh2[&#39;maxi&#39;],x))
+                df.loc[:,&#39;shww&#39;] = df[&#39;shww&#39;].apply(lambda x: normalisation_minmax_manuel(config_shww[&#39;mini&#39;],config_shww[&#39;maxi&#39;],x))
+                df.loc[:,&#39;shts&#39;] = df[&#39;shts&#39;].apply(lambda x: normalisation_minmax_manuel(config_shts[&#39;mini&#39;],config_shts[&#39;maxi&#39;],x))
+                df.loc[:,&#39;swh&#39;] = df[&#39;swh&#39;].apply(lambda x: normalisation_minmax_manuel(config_swh[&#39;mini&#39;],config_swh[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hmax&#39;] = df[&#39;hmax&#39;].apply(lambda x: normalisation_minmax_manuel(config_hmax[&#39;mini&#39;],config_hmax[&#39;maxi&#39;],x))
+                df.loc[:,&#39;tp&#39;] = df[&#39;tp&#39;].apply(lambda x: normalisation_minmax_manuel(config_tp[&#39;mini&#39;],config_tp[&#39;maxi&#39;],x))
+                df.loc[:,&#39;t2m&#39;] = df[&#39;t2m&#39;].apply(lambda x: normalisation_minmax_manuel(config_t2m[&#39;mini&#39;],config_t2m[&#39;maxi&#39;],x))
+                df.loc[:,&#39;sst&#39;] = df[&#39;sst&#39;].apply(lambda x: normalisation_minmax_manuel(config_sst[&#39;mini&#39;],config_sst[&#39;maxi&#39;],x))
+                df.loc[:,&#39;air_density&#39;] = df[&#39;air_density&#39;].apply(lambda x: normalisation_minmax_manuel(config_air_density[&#39;mini&#39;],config_air_density[&#39;maxi&#39;],x))
+                df.loc[:,&#39;ph1&#39;] = df[&#39;ph1&#39;].apply(lambda x: normalisation_minmax_manuel(config_ph1[&#39;mini&#39;],config_ph1[&#39;maxi&#39;],x))
+                df.loc[:,&#39;ph2&#39;] = df[&#39;ph2&#39;].apply(lambda x: normalisation_minmax_manuel(config_ph2[&#39;mini&#39;],config_ph2[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mpww&#39;] = df[&#39;mpww&#39;].apply(lambda x: normalisation_minmax_manuel(config_mpww[&#39;mini&#39;],config_mpww[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mpts&#39;] = df[&#39;mpts&#39;].apply(lambda x: normalisation_minmax_manuel(config_mpts[&#39;mini&#39;],config_mpts[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mwp&#39;] = df[&#39;mwp&#39;].apply(lambda x: normalisation_minmax_manuel(config_mwp[&#39;mini&#39;],config_mwp[&#39;maxi&#39;],x))
+                df.loc[:,&#39;pmax&#39;] = df[&#39;pmax&#39;].apply(lambda x: normalisation_minmax_manuel(config_pmax[&#39;mini&#39;],config_pmax[&#39;maxi&#39;],x))
+                df.loc[:,&#39;peak_wave_period&#39;] = df[&#39;peak_wave_period&#39;].apply(lambda x: normalisation_minmax_manuel(config_peak_wave_period[&#39;mini&#39;],config_peak_wave_period[&#39;maxi&#39;],x))
+                df.loc[:,&#39;msl&#39;] = df[&#39;msl&#39;].apply(lambda x: normalisation_minmax_manuel(config_msl[&#39;mini&#39;],config_msl[&#39;maxi&#39;],x))
+                if normalize_speed : 
+                    #Speed 0-50 kts
+                    config_speed = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 50
+                    }
+                    df.loc[:,&#39;speed&#39;] = df[&#39;speed&#39;].apply(lambda x: normalisation_minmax_manuel(config_speed[&#39;mini&#39;],config_speed[&#39;maxi&#39;],x))
+
+
+            else : 
+                df.loc[:,&#39;TWS&#39;], config_TWS = normalisation_minmax(df[&#39;TWS&#39;], config, &#39;TWS&#39;)
+                df.loc[:,&#39;i10fg&#39;], config_i10fg = normalisation_minmax(df[&#39;i10fg&#39;], config, &#39;i10fg&#39;)
+                df.loc[:,&#39;gust_diff&#39;], config_gust_diff = normalisation_minmax(df[&#39;gust_diff&#39;], config, &#39;gust_diff&#39;)
+                df.loc[:,&#39;hh1&#39;], config_hh1 = normalisation_minmax(df[&#39;hh1&#39;], config, &#39;hh1&#39;)
+                df.loc[:,&#39;hh2&#39;], config_hh2 = normalisation_minmax(df[&#39;hh2&#39;], config, &#39;hh2&#39;)
+                df.loc[:,&#39;shww&#39;], config_shww = normalisation_minmax(df[&#39;shww&#39;], config, &#39;shww&#39;)
+                df.loc[:,&#39;shts&#39;], config_shts = normalisation_minmax(df[&#39;shts&#39;], config, &#39;shts&#39;)
+                df.loc[:,&#39;swh&#39;], config_swh = normalisation_minmax(df[&#39;swh&#39;], config, &#39;swh&#39;)
+                df.loc[:,&#39;hmax&#39;], config_hmax = normalisation_minmax(df[&#39;hmax&#39;], config, &#39;hmax&#39;)
+                df.loc[:,&#39;tp&#39;], config_tp = normalisation_minmax(df[&#39;tp&#39;], config, &#39;tp&#39;)
+                df.loc[:,&#39;t2m&#39;], config_t2m = normalisation_minmax(df[&#39;t2m&#39;], config, &#39;t2m&#39;)
+                df.loc[:,&#39;sst&#39;], config_sst = normalisation_minmax(df[&#39;sst&#39;], config, &#39;sst&#39;)
+                df.loc[:,&#39;air_density&#39;], config_air_density = normalisation_minmax(df[&#39;air_density&#39;], config, &#39;air_density&#39;)
+                df.loc[:,&#39;ph1&#39;], config_ph1 = normalisation_minmax(df[&#39;ph1&#39;], config, &#39;ph1&#39;)
+                df.loc[:,&#39;ph2&#39;], config_ph2 = normalisation_minmax(df[&#39;ph2&#39;], config, &#39;ph2&#39;)
+                df.loc[:,&#39;mpww&#39;], config_mpww = normalisation_minmax(df[&#39;mpww&#39;], config, &#39;mpww&#39;)
+                df.loc[:,&#39;mpts&#39;], config_mpts = normalisation_minmax(df[&#39;mpts&#39;], config, &#39;mpts&#39;)
+                df.loc[:,&#39;mwp&#39;], config_mwp = normalisation_minmax(df[&#39;mwp&#39;], config, &#39;mwp&#39;)
+                df.loc[:,&#39;pmax&#39;], config_pmax = normalisation_minmax(df[&#39;pmax&#39;], config, &#39;pmax&#39;)
+                df.loc[:,&#39;peak_wave_period&#39;], config_peak_wave_period = normalisation_minmax(df[&#39;peak_wave_period&#39;], config, &#39;peak_wave_period&#39;)
+                df.loc[:,&#39;msl&#39;], config_msl = normalisation_minmax(df[&#39;msl&#39;], config, &#39;msl&#39;)
+
+                if normalize_speed : 
+                    df.loc[:,&#39;speed&#39;], config_speed = normalisation_minmax(df[&#39;speed&#39;], config, &#39;speed&#39;)
+
+
+            #angles vagues/vent -180 - 180° 
+            df.loc[:,&#39;mats&#39;] = df[&#39;mats&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;maww&#39;] = df[&#39;maww&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mwa&#39;] = df[&#39;mwa&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mah1&#39;] = df[&#39;mah1&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mah2&#39;] = df[&#39;mah2&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;TWA&#39;] = df[&#39;TWA&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+           
+
+        else : 
+            #CHANGER LES PARAMS MANUELS pour des params plus intelligents
+            if not bool(config) : 
+                #Vent moyen 0-45 kts
+                config_TWS = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 45
+                }
+                #Rafales histo 0-70kts
+                config_i10fg = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 70
+                }
+                #Gust-diff relative 0-10
+                config_gust_diff = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                #Wave height 0-10m
+                config_hh1 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_hh2 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_shww = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_shts = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                config_swh = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 10
+                }
+                #hmax 0-15m
+                config_hmax = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 15
+                }
+                #Precip 0-40mm (m) en 1h
+                config_tp = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 40e-3
+                }
+                #température 0-50°C --&gt; 273 - 323K
+                config_t2m = {
+                    &#39;mini&#39; : 273,
+                    &#39;maxi&#39; : 323
+                }
+                #Température eau 0-30°C --&gt; 273 - 303K 
+                config_sst = {
+                    &#39;mini&#39; : 273,
+                    &#39;maxi&#39; : 303
+                }
+                #air density (kg.m-3) 1.05 - 1.40 kg.m-3
+                config_air_density = {
+                    &#39;mini&#39; : 1.05,
+                    &#39;maxi&#39; : 1.40
+                }
+                #periodes 0-30s
+                config_ph1 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_ph2 = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mpww = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mpts = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_mwp = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_pmax = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                config_peak_wave_period = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 30
+                }
+                #Pression 910-1050hPa (Pa)
+                config_msl = {
+                    &#39;mini&#39; : 91000,
+                    &#39;maxi&#39; : 105000
+                }
+                
+
+                df.loc[:,&#39;TWS&#39;] = df[&#39;TWS&#39;].apply(lambda x: normalisation_minmax_manuel(config_TWS[&#39;mini&#39;],config_TWS[&#39;maxi&#39;],x))
+                df.loc[:,&#39;i10fg&#39;] = df[&#39;i10fg&#39;].apply(lambda x: normalisation_minmax_manuel(config_i10fg[&#39;mini&#39;],config_i10fg[&#39;maxi&#39;],x))
+                df.loc[:,&#39;gust_diff&#39;] = df[&#39;gust_diff&#39;].apply(lambda x: normalisation_minmax_manuel(config_gust_diff[&#39;mini&#39;],config_gust_diff[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hh1&#39;] = df[&#39;hh1&#39;].apply(lambda x: normalisation_minmax_manuel(config_hh1[&#39;mini&#39;],config_hh1[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hh2&#39;] = df[&#39;hh2&#39;].apply(lambda x: normalisation_minmax_manuel(config_hh2[&#39;mini&#39;],config_hh2[&#39;maxi&#39;],x))
+                df.loc[:,&#39;shww&#39;] = df[&#39;shww&#39;].apply(lambda x: normalisation_minmax_manuel(config_shww[&#39;mini&#39;],config_shww[&#39;maxi&#39;],x))
+                df.loc[:,&#39;shts&#39;] = df[&#39;shts&#39;].apply(lambda x: normalisation_minmax_manuel(config_shts[&#39;mini&#39;],config_shts[&#39;maxi&#39;],x))
+                df.loc[:,&#39;swh&#39;] = df[&#39;swh&#39;].apply(lambda x: normalisation_minmax_manuel(config_swh[&#39;mini&#39;],config_swh[&#39;maxi&#39;],x))
+                df.loc[:,&#39;hmax&#39;] = df[&#39;hmax&#39;].apply(lambda x: normalisation_minmax_manuel(config_hmax[&#39;mini&#39;],config_hmax[&#39;maxi&#39;],x))
+                df.loc[:,&#39;tp&#39;] = df[&#39;tp&#39;].apply(lambda x: normalisation_minmax_manuel(config_tp[&#39;mini&#39;],config_tp[&#39;maxi&#39;],x))
+                df.loc[:,&#39;t2m&#39;] = df[&#39;t2m&#39;].apply(lambda x: normalisation_minmax_manuel(config_t2m[&#39;mini&#39;],config_t2m[&#39;maxi&#39;],x))
+                df.loc[:,&#39;sst&#39;] = df[&#39;sst&#39;].apply(lambda x: normalisation_minmax_manuel(config_sst[&#39;mini&#39;],config_sst[&#39;maxi&#39;],x))
+                df.loc[:,&#39;air_density&#39;] = df[&#39;air_density&#39;].apply(lambda x: normalisation_minmax_manuel(config_air_density[&#39;mini&#39;],config_air_density[&#39;maxi&#39;],x))
+                df.loc[:,&#39;ph1&#39;] = df[&#39;ph1&#39;].apply(lambda x: normalisation_minmax_manuel(config_ph1[&#39;mini&#39;],config_ph1[&#39;maxi&#39;],x))
+                df.loc[:,&#39;ph2&#39;] = df[&#39;ph2&#39;].apply(lambda x: normalisation_minmax_manuel(config_ph2[&#39;mini&#39;],config_ph2[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mpww&#39;] = df[&#39;mpww&#39;].apply(lambda x: normalisation_minmax_manuel(config_mpww[&#39;mini&#39;],config_mpww[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mpts&#39;] = df[&#39;mpts&#39;].apply(lambda x: normalisation_minmax_manuel(config_mpts[&#39;mini&#39;],config_mpts[&#39;maxi&#39;],x))
+                df.loc[:,&#39;mwp&#39;] = df[&#39;mwp&#39;].apply(lambda x: normalisation_minmax_manuel(config_mwp[&#39;mini&#39;],config_mwp[&#39;maxi&#39;],x))
+                df.loc[:,&#39;pmax&#39;] = df[&#39;pmax&#39;].apply(lambda x: normalisation_minmax_manuel(config_pmax[&#39;mini&#39;],config_pmax[&#39;maxi&#39;],x))
+                df.loc[:,&#39;peak_wave_period&#39;] = df[&#39;peak_wave_period&#39;].apply(lambda x: normalisation_minmax_manuel(config_peak_wave_period[&#39;mini&#39;],config_peak_wave_period[&#39;maxi&#39;],x))
+                df.loc[:,&#39;msl&#39;] = df[&#39;msl&#39;].apply(lambda x: normalisation_minmax_manuel(config_msl[&#39;mini&#39;],config_msl[&#39;maxi&#39;],x))
+                if normalize_speed : 
+                    #Speed 0-50 kts
+                    config_speed = {
+                    &#39;mini&#39; : 0,
+                    &#39;maxi&#39; : 50
+                    }
+                    df.loc[:,&#39;speed&#39;] = df[&#39;speed&#39;].apply(lambda x: normalisation_minmax_manuel(config_speed[&#39;mini&#39;],config_speed[&#39;maxi&#39;],x))
+
+
+            else : 
+                df.loc[:,&#39;TWS&#39;], config_TWS = normalisation_minmax(df[&#39;TWS&#39;], config, &#39;TWS&#39;)
+                df.loc[:,&#39;i10fg&#39;], config_i10fg = normalisation_minmax(df[&#39;i10fg&#39;], config, &#39;i10fg&#39;)
+                df.loc[:,&#39;gust_diff&#39;], config_gust_diff = normalisation_minmax(df[&#39;gust_diff&#39;], config, &#39;gust_diff&#39;)
+                df.loc[:,&#39;hh1&#39;], config_hh1 = normalisation_minmax(df[&#39;hh1&#39;], config, &#39;hh1&#39;)
+                df.loc[:,&#39;hh2&#39;], config_hh2 = normalisation_minmax(df[&#39;hh2&#39;], config, &#39;hh2&#39;)
+                df.loc[:,&#39;shww&#39;], config_shww = normalisation_minmax(df[&#39;shww&#39;], config, &#39;shww&#39;)
+                df.loc[:,&#39;shts&#39;], config_shts = normalisation_minmax(df[&#39;shts&#39;], config, &#39;shts&#39;)
+                df.loc[:,&#39;swh&#39;], config_swh = normalisation_minmax(df[&#39;swh&#39;], config, &#39;swh&#39;)
+                df.loc[:,&#39;hmax&#39;], config_hmax = normalisation_minmax(df[&#39;hmax&#39;], config, &#39;hmax&#39;)
+                df.loc[:,&#39;tp&#39;], config_tp = normalisation_minmax(df[&#39;tp&#39;], config, &#39;tp&#39;)
+                df.loc[:,&#39;t2m&#39;], config_t2m = normalisation_minmax(df[&#39;t2m&#39;], config, &#39;t2m&#39;)
+                df.loc[:,&#39;sst&#39;], config_sst = normalisation_minmax(df[&#39;sst&#39;], config, &#39;sst&#39;)
+                df.loc[:,&#39;air_density&#39;], config_air_density = normalisation_minmax(df[&#39;air_density&#39;], config, &#39;air_density&#39;)
+                df.loc[:,&#39;ph1&#39;], config_ph1 = normalisation_minmax(df[&#39;ph1&#39;], config, &#39;ph1&#39;)
+                df.loc[:,&#39;ph2&#39;], config_ph2 = normalisation_minmax(df[&#39;ph2&#39;], config, &#39;ph2&#39;)
+                df.loc[:,&#39;mpww&#39;], config_mpww = normalisation_minmax(df[&#39;mpww&#39;], config, &#39;mpww&#39;)
+                df.loc[:,&#39;mpts&#39;], config_mpts = normalisation_minmax(df[&#39;mpts&#39;], config, &#39;mpts&#39;)
+                df.loc[:,&#39;mwp&#39;], config_mwp = normalisation_minmax(df[&#39;mwp&#39;], config, &#39;mwp&#39;)
+                df.loc[:,&#39;pmax&#39;], config_pmax = normalisation_minmax(df[&#39;pmax&#39;], config, &#39;pmax&#39;)
+                df.loc[:,&#39;peak_wave_period&#39;], config_peak_wave_period = normalisation_minmax(df[&#39;peak_wave_period&#39;], config, &#39;peak_wave_period&#39;)
+                df.loc[:,&#39;msl&#39;], config_msl = normalisation_minmax(df[&#39;msl&#39;], config, &#39;msl&#39;)
+
+                if normalize_speed : 
+                    df.loc[:,&#39;speed&#39;], config_speed = normalisation_minmax(df[&#39;speed&#39;], config, &#39;speed&#39;)
+
+
+            #angles vagues/vent -180 - 180° 
+            df.loc[:,&#39;mats&#39;] = df[&#39;mats&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;maww&#39;] = df[&#39;maww&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mwa&#39;] = df[&#39;mwa&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mah1&#39;] = df[&#39;mah1&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;mah2&#39;] = df[&#39;mah2&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+            df.loc[:,&#39;TWA&#39;] = df[&#39;TWA&#39;].apply(lambda x: normalisation_angle(x, symetrique=symetrique))
+
+        if not bool(config) :   
+            config_norm[&#39;TWS&#39;] = config_TWS
+            config_norm[&#39;i10fg&#39;] = config_i10fg
+            config_norm[&#39;gust_diff&#39;] = config_gust_diff
+            config_norm[&#39;hh1&#39;] = config_hh1
+            config_norm[&#39;hh2&#39;] = config_hh2
+            config_norm[&#39;shww&#39;] = config_shww
+            config_norm[&#39;shts&#39;] = config_shts
+            config_norm[&#39;swh&#39;] = config_swh
+            config_norm[&#39;hmax&#39;] = config_hmax
+            config_norm[&#39;tp&#39;] = config_tp
+            config_norm[&#39;t2m&#39;] = config_t2m
+            config_norm[&#39;sst&#39;] = config_sst
+            config_norm[&#39;air_density&#39;] = config_air_density
+            config_norm[&#39;ph1&#39;] = config_ph1
+            config_norm[&#39;ph2&#39;] = config_ph2
+            config_norm[&#39;mpww&#39;] = config_mpww
+            config_norm[&#39;mpts&#39;] = config_mpts
+            config_norm[&#39;mwp&#39;] = config_mwp
+            config_norm[&#39;pmax&#39;] = config_pmax
+            config_norm[&#39;peak_wave_period&#39;] = config_peak_wave_period
+            config_norm[&#39;msl&#39;] = config_msl
+            if normalize_speed : 
+                config_norm[&#39;speed&#39;] = config_speed
+
+    if bool(config) : 
+        return df, None
+    else :
+        return df, config_norm</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.pipeline_preprocessing"><code class="name flex">
+<span>def <span class="ident">pipeline_preprocessing</span></span>(<span>df_input, speed_treshold_sup=160, speed_treshold_inf=30, norm_type='minmax', remove_outliers=False, normalize_speed=False, historique=True, symetrique=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pipeline_preprocessing(df_input, speed_treshold_sup = 160, speed_treshold_inf = 30, norm_type = &#39;minmax&#39;, remove_outliers=False, normalize_speed=False, historique=True, symetrique=True) : 
+    df = df_input.copy()
+    config = {
+        &#39;type&#39; : norm_type, 
+        &#39;remove_outliers&#39; : remove_outliers, 
+        &#39;normalize_speed&#39; : normalize_speed, 
+        &#39;historique&#39; : historique, 
+        &#39;symetrique&#39; : symetrique
+    }
+
+    #On met un treshold sur les valeurs de TWA trop haute ou trop basse 
+    df.loc[(abs(df.TWA) &gt; speed_treshold_sup), &#39;speed&#39;] = 0
+    df.loc[(abs(df.TWA) &lt; speed_treshold_inf), &#39;speed&#39;] = 0
+    
+
+    config[&#39;speed_treshold_sup&#39;] = speed_treshold_sup
+    config[&#39;speed_treshold_inf&#39;] = speed_treshold_inf
+
+    #On normalise toutes les données
+    df, config_norm = normalize_df(df, type=norm_type,remove_outliers=remove_outliers, normalize_speed=normalize_speed, historique=historique, symetrique=symetrique)
+    config.update(config_norm)
+
+    #Data augmentation for 0
+    df.append([df.loc[(abs(df.TWA) &gt; speed_treshold_sup)]]*5,ignore_index=True)
+    df.append([df.loc[(abs(df.TWA) &lt; speed_treshold_sup)]]*5,ignore_index=True)
+
+    #On enlève les param inutiles
+    c_dict = {
+    &#39;lat&#39; : 0,
+    &#39;lon&#39; : 0,
+    &#39;datetime&#39; : 0,
+    &#39;i10fg&#39; : 0,
+    &#39;msl&#39; : 1,
+    &#39;t2m&#39; : 1,
+    &#39;sst&#39; : 0,
+    &#39;tp&#39; : 1,
+    &#39;hmax&#39; : 0,
+    &#39;shts&#39; : 1,
+    &#39;mpts&#39; : 0,
+    &#39;shww&#39; : 1,
+    &#39;mpww&#39; : 1,
+    &#39;swh&#39; : 1,
+    &#39;mwp&#39; : 1,
+    &#39;speed&#39; : 1,
+    &#39;TWS&#39; : 1,
+    &#39;gust_diff&#39; : 1,
+    &#39;TWA&#39; : 1,
+    &#39;mats&#39; : 0,
+    &#39;maww&#39; : 0,
+    &#39;mwa&#39; : 1,
+    &#39;mah1&#39; : 1,
+    &#39;mah2&#39; : 1,
+    &#39;air_density&#39; : 0,
+    &#39;ph1&#39; : 1,
+    &#39;ph2&#39; : 1,
+    &#39;hh1&#39; : 1,
+    &#39;hh2&#39; : 1,
+    &#39;peak_wave_period&#39; : 0,
+    &#39;pmax&#39; : 0
+    }
+
+    config[&#39;cdict&#39;] = c_dict
+    drop_columns(df, c_dict)
+
+    #Save config file
+
+    return df, config</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.pipeline_preprocessing_from_config"><code class="name flex">
+<span>def <span class="ident">pipeline_preprocessing_from_config</span></span>(<span>df_input, config)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pipeline_preprocessing_from_config(df_input, config) : 
+    df = df_input.copy()
+    #On met un treshold sur les valeurs de TWA trop haute ou trop basse 
+    speed_treshold_sup = config[&#39;speed_treshold_sup&#39;]
+    speed_treshold_inf = config[&#39;speed_treshold_inf&#39;]
+    df.loc[(abs(df.TWA) &gt; speed_treshold_sup), &#39;speed&#39;] = 0
+    df.loc[(abs(df.TWA) &lt; speed_treshold_inf), &#39;speed&#39;] = 0
+
+    #On normalise toutes les données
+    norm_type = config[&#39;type&#39;] 
+    remove_outliers = config[&#39;remove_outliers&#39;]
+    normalize_speed = config[&#39;normalize_speed&#39;]
+    historique = config[&#39;historique&#39;]
+    symetrique = config[&#39;symetrique&#39;]
+    df, _ = normalize_df(df, type=norm_type,remove_outliers=remove_outliers, normalize_speed=normalize_speed, historique=historique, symetrique=symetrique, config=config)
+
+    #On enlève les param inutiles
+    c_dict = config[&#39;cdict&#39;]
+    drop_columns(df, c_dict)
+
+    return df</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.preprocessing.remove_quantiles"><code class="name flex">
+<span>def <span class="ident">remove_quantiles</span></span>(<span>df_input, config={})</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_quantiles (df_input, config={}) :
+    df = df_input.copy()
+    for column in df.columns:
+        if bool(config) : 
+            q_low = config[&#39;q_low&#39;]
+            q_hi  = config[&#39;q_hi&#39;]
+            df = df[(df[column] &lt; q_hi) &amp; (df[column] &gt; q_low)] 
+            return df, None
+        else : 
+            q_low = df[column].quantile(0.01)
+            q_hi  = df[column].quantile(0.99)
+            config = {
+                &#39;q_low&#39; : q_low,
+                &#39;q_hi&#39; : q_hi
+            }
+            df = df[(df[column] &lt; q_hi) &amp; (df[column] &gt; q_low)]
+            return df, config</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="mwi_tools.polaire" href="index.html">mwi_tools.polaire</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="mwi_tools.polaire.preprocessing.drop_columns" href="#mwi_tools.polaire.preprocessing.drop_columns">drop_columns</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.normalisation_angle" href="#mwi_tools.polaire.preprocessing.normalisation_angle">normalisation_angle</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.normalisation_minmax" href="#mwi_tools.polaire.preprocessing.normalisation_minmax">normalisation_minmax</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.normalisation_minmax_manuel" href="#mwi_tools.polaire.preprocessing.normalisation_minmax_manuel">normalisation_minmax_manuel</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.normalisation_standard" href="#mwi_tools.polaire.preprocessing.normalisation_standard">normalisation_standard</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.normalisation_standard_manuel" href="#mwi_tools.polaire.preprocessing.normalisation_standard_manuel">normalisation_standard_manuel</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.normalize_df" href="#mwi_tools.polaire.preprocessing.normalize_df">normalize_df</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.pipeline_preprocessing" href="#mwi_tools.polaire.preprocessing.pipeline_preprocessing">pipeline_preprocessing</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.pipeline_preprocessing_from_config" href="#mwi_tools.polaire.preprocessing.pipeline_preprocessing_from_config">pipeline_preprocessing_from_config</a></code></li>
+<li><code><a title="mwi_tools.polaire.preprocessing.remove_quantiles" href="#mwi_tools.polaire.preprocessing.remove_quantiles">remove_quantiles</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

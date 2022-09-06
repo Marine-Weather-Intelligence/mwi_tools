@@ -60,6 +60,21 @@ def set_ax_plot_polaire(df,ax, speed, index=None, nom=None, color='r', label="",
         axe.set_title("Polaire complete\n"+str(nom or ''))
         axe.legend()
         
+    elif isinstance(speed, list) : 
+        #On plot toutes les polaires qui sont dans speed
+        if symetrique : 
+            x = df['TWA']*np.pi/180
+        else : 
+            x = pd.concat([df['TWA']*np.pi/180,(2*np.pi-df['TWA']*np.pi/180).iloc[::-1]])
+        for col_name in df.columns : 
+            if col_name != 'TWA' : 
+                if symetrique : 
+                    col = df[col_name]
+                else : 
+                    col = pd.concat([df[col_name],df[col_name].iloc[::-1]])
+                axe.plot(x, col, label=str(col_name)+" kts")
+        axe.set_title("Polaire complete\n"+str(nom or ''))
+        axe.legend()
     else : 
         #On obtient l'indice du vent le plus proche
         wind_speed_index = closest_value_index(df.columns[1:], speed)

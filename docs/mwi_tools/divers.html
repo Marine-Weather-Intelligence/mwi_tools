@@ -103,7 +103,23 @@ def print_log(line:str):
         line (str): string to print
     &#34;&#34;&#34;
     d = datetime.datetime.now().strftime(&#39;[%y/%m/%d %H:%M] &#39;) # actual time
-    print(d+line)</code></pre>
+    print(d+line)
+
+def get_index(array, elem) : 
+    &#34;&#34;&#34;Get index of elem in array. Return None if not in array
+
+    Args:
+        array (numpy array): array containing elem
+        elem (): elem to look for
+
+    Returns:
+        int: index of elem in array
+    &#34;&#34;&#34;
+    for i in range(len(array)) : 
+        elmt = array[i]
+        if elmt == elem : 
+            return i 
+    return None</code></pre>
 </details>
 </section>
 <section>
@@ -188,6 +204,43 @@ def print_log(line:str):
     lon_right=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lon right&#39;].max()
     lon_left=df[df[&#39;gd_zone&#39;]==gd_zone][&#39;lon left&#39;].min()
     return[lat_sup, lat_inf, lon_left, lon_right]</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.divers.get_index"><code class="name flex">
+<span>def <span class="ident">get_index</span></span>(<span>array, elem)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get index of elem in array. Return None if not in array</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>array</code></strong> :&ensp;<code>numpy array</code></dt>
+<dd>array containing elem</dd>
+</dl>
+<p>elem (): elem to look for</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code></dt>
+<dd>index of elem in array</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_index(array, elem) : 
+    &#34;&#34;&#34;Get index of elem in array. Return None if not in array
+
+    Args:
+        array (numpy array): array containing elem
+        elem (): elem to look for
+
+    Returns:
+        int: index of elem in array
+    &#34;&#34;&#34;
+    for i in range(len(array)) : 
+        elmt = array[i]
+        if elmt == elem : 
+            return i 
+    return None</code></pre>
 </details>
 </dd>
 <dt id="mwi_tools.divers.print_log"><code class="name flex">
@@ -324,6 +377,7 @@ def print_log(line:str):
 <ul class="two-column">
 <li><code><a title="mwi_tools.divers.available_modeles" href="#mwi_tools.divers.available_modeles">available_modeles</a></code></li>
 <li><code><a title="mwi_tools.divers.coord_gde_zone" href="#mwi_tools.divers.coord_gde_zone">coord_gde_zone</a></code></li>
+<li><code><a title="mwi_tools.divers.get_index" href="#mwi_tools.divers.get_index">get_index</a></code></li>
 <li><code><a title="mwi_tools.divers.print_log" href="#mwi_tools.divers.print_log">print_log</a></code></li>
 <li><code><a title="mwi_tools.divers.round_10_inf" href="#mwi_tools.divers.round_10_inf">round_10_inf</a></code></li>
 <li><code><a title="mwi_tools.divers.round_10_sup" href="#mwi_tools.divers.round_10_sup">round_10_sup</a></code></li>
