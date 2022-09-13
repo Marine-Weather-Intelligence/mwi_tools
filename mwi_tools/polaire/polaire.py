@@ -140,7 +140,7 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
     plt.show()
 
 
-def create_entry(TWS, TWA, gust=None, temp_air=288, temp_eau=288, pressure=101300, precip=0, hmax=0, pmax=0, peak_wave_period=0 ,shts=0, mpts=0, mats=0, shww=0, mpww=0, maww=0, swh=0, mwp=0, mwa=0, hh1=0, ph1=0, mah1=0, hh2=0, ph2=0, mah2=0, air_density=1.225) : 
+def create_entry(TWS, TWA, gust=None, temp_air=288, temp_eau=288, pressure=101300, precip=0, hmax=0, pmax=0, peak_wave_period=0 ,shts=0, mpts=0, mats=0, shww=0, mpww=0, maww=0, swh=1, mwp=8.6, mwa=0, hh1=0, ph1=0, mah1=0, hh2=0, ph2=0, mah2=0, air_density=1.225) : 
     if(gust == None) : 
         gust = TWS
     gust_diff = gust - TWS
