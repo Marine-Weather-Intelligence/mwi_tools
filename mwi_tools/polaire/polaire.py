@@ -141,9 +141,9 @@ def plot_multiple_polaire_and_cloud(df, df_cloud, df_true, symetrique=False, nom
 
 
 def create_entry(TWS, TWA, gust_diff=0.1, temp_air=288, temp_eau=288, pressure=101300, precip=0, hmax=0, pmax=0, peak_wave_period=0 ,shts=0, mpts=0, mats=0, shww=0, mpww=0, maww=0, swh=0, mwp=0, mwa=0, hh1=0, ph1=0, mah1=0, hh2=0, ph2=0, mah2=0, air_density=1.225) : 
-    if(gust == None) : 
-        gust = TWS
-    gust_diff = gust - TWS
+    # if(gust == None) : 
+    #     gust = TWS
+    # gust_diff = gust - TWS
     d = {'TWS': [TWS], 'TWA': [TWA], 'gust_diff' : [gust_diff*TWS], 't2m' : [temp_air], 'msl' : [pressure], 'tp':[precip], 'mpww':[mpww], 'mwp':[mwp], 'swh':[swh], 'shts':[shts], 'shww':[shww], 'mwa':[mwa], 'mah1':[mah1], 'mah2':[mah2], 'ph1':[ph1], 'ph2':[ph2], 'hh1':[hh1], 'hh2':[hh2]}
     df = pd.DataFrame(data=d)
     return df
