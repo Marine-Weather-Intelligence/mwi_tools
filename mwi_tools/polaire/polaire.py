@@ -174,3 +174,29 @@ def create_wind_polar_file(reg, file, pipeline_preprocessing_from_config, config
             line+= "\t"+str(round(speed[0],1))
         f.write(line+"\n")
     f.close()
+
+
+def create_wind_polar_file_full(reg, file, pipeline_preprocessing_from_config, config) : 
+    #Cree un fichier de polaire de vitesse en fonction de la force du vent et TWA 
+    #Prend les autres paramètres comme valeur nominale 
+    
+    f=open(file, "w")
+    TWA_list = [10, 15, 20, 25, 30,35,40,45,50,60,70,80,90,100,110,120,130,135,140,145,150,155,160,170,180]
+    TWS_list = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26, 28, 30,32,34]
+    
+    #Prmeière ligne
+    line = "TWA/TWS"
+    for TWS in TWS_list : 
+        line+="\t"+str(TWS)
+    f.write(line+"\n")
+    
+    #Suite des lignes
+    for TWA in TWA_list : 
+        line = str(TWA)
+        for TWS in TWS_list : 
+            entry = create_entry(TWS, TWA)
+            entry = pipeline_preprocessing_from_config(entry, config)
+            speed = reg.predict(entry)
+            line+= "\t"+str(round(speed[0],1))
+        f.write(line+"\n")
+    f.close()

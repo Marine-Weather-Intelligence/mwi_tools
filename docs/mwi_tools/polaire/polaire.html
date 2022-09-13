@@ -201,6 +201,32 @@ def create_wind_polar_file(reg, file, pipeline_preprocessing_from_config, config
             speed = reg.predict(entry[[&#39;TWA&#39;,&#39;TWS&#39;]])
             line+= &#34;\t&#34;+str(round(speed[0],1))
         f.write(line+&#34;\n&#34;)
+    f.close()
+
+
+def create_wind_polar_file_full(reg, file, pipeline_preprocessing_from_config, config) : 
+    #Cree un fichier de polaire de vitesse en fonction de la force du vent et TWA 
+    #Prend les autres paramètres comme valeur nominale 
+    
+    f=open(file, &#34;w&#34;)
+    TWA_list = [10, 15, 20, 25, 30,35,40,45,50,60,70,80,90,100,110,120,130,135,140,145,150,155,160,170,180]
+    TWS_list = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26, 28, 30,32,34]
+    
+    #Prmeière ligne
+    line = &#34;TWA/TWS&#34;
+    for TWS in TWS_list : 
+        line+=&#34;\t&#34;+str(TWS)
+    f.write(line+&#34;\n&#34;)
+    
+    #Suite des lignes
+    for TWA in TWA_list : 
+        line = str(TWA)
+        for TWS in TWS_list : 
+            entry = create_entry(TWS, TWA)
+            entry = pipeline_preprocessing_from_config(entry, config)
+            speed = reg.predict(entry)
+            line+= &#34;\t&#34;+str(round(speed[0],1))
+        f.write(line+&#34;\n&#34;)
     f.close()</code></pre>
 </details>
 </section>
@@ -274,6 +300,41 @@ def create_wind_polar_file(reg, file, pipeline_preprocessing_from_config, config
             entry = create_entry(TWS, TWA)
             entry = pipeline_preprocessing_from_config(entry, config)
             speed = reg.predict(entry[[&#39;TWA&#39;,&#39;TWS&#39;]])
+            line+= &#34;\t&#34;+str(round(speed[0],1))
+        f.write(line+&#34;\n&#34;)
+    f.close()</code></pre>
+</details>
+</dd>
+<dt id="mwi_tools.polaire.polaire.create_wind_polar_file_full"><code class="name flex">
+<span>def <span class="ident">create_wind_polar_file_full</span></span>(<span>reg, file, pipeline_preprocessing_from_config, config)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_wind_polar_file_full(reg, file, pipeline_preprocessing_from_config, config) : 
+    #Cree un fichier de polaire de vitesse en fonction de la force du vent et TWA 
+    #Prend les autres paramètres comme valeur nominale 
+    
+    f=open(file, &#34;w&#34;)
+    TWA_list = [10, 15, 20, 25, 30,35,40,45,50,60,70,80,90,100,110,120,130,135,140,145,150,155,160,170,180]
+    TWS_list = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26, 28, 30,32,34]
+    
+    #Prmeière ligne
+    line = &#34;TWA/TWS&#34;
+    for TWS in TWS_list : 
+        line+=&#34;\t&#34;+str(TWS)
+    f.write(line+&#34;\n&#34;)
+    
+    #Suite des lignes
+    for TWA in TWA_list : 
+        line = str(TWA)
+        for TWS in TWS_list : 
+            entry = create_entry(TWS, TWA)
+            entry = pipeline_preprocessing_from_config(entry, config)
+            speed = reg.predict(entry)
             line+= &#34;\t&#34;+str(round(speed[0],1))
         f.write(line+&#34;\n&#34;)
     f.close()</code></pre>
@@ -491,6 +552,7 @@ def create_wind_polar_file(reg, file, pipeline_preprocessing_from_config, config
 <li><code><a title="mwi_tools.polaire.polaire.closest_value_index" href="#mwi_tools.polaire.polaire.closest_value_index">closest_value_index</a></code></li>
 <li><code><a title="mwi_tools.polaire.polaire.create_entry" href="#mwi_tools.polaire.polaire.create_entry">create_entry</a></code></li>
 <li><code><a title="mwi_tools.polaire.polaire.create_wind_polar_file" href="#mwi_tools.polaire.polaire.create_wind_polar_file">create_wind_polar_file</a></code></li>
+<li><code><a title="mwi_tools.polaire.polaire.create_wind_polar_file_full" href="#mwi_tools.polaire.polaire.create_wind_polar_file_full">create_wind_polar_file_full</a></code></li>
 <li><code><a title="mwi_tools.polaire.polaire.get_polaire_df" href="#mwi_tools.polaire.polaire.get_polaire_df">get_polaire_df</a></code></li>
 <li><code><a title="mwi_tools.polaire.polaire.plot_multiple_polaire_and_cloud" href="#mwi_tools.polaire.polaire.plot_multiple_polaire_and_cloud">plot_multiple_polaire_and_cloud</a></code></li>
 <li><code><a title="mwi_tools.polaire.polaire.plot_polaire" href="#mwi_tools.polaire.polaire.plot_polaire">plot_polaire</a></code></li>
