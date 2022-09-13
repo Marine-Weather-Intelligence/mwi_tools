@@ -170,7 +170,6 @@ def create_wind_polar_file(reg, file, pipeline_preprocessing_from_config, config
         for TWS in TWS_list : 
             entry = create_entry(TWS, TWA)
             entry = pipeline_preprocessing_from_config(entry, config)
-            entry.drop('speed', axis=1, inplace=True, errors='ignore')
             speed = reg.predict(entry[['TWA','TWS']])
             line+= "\t"+str(round(speed[0],1))
         f.write(line+"\n")
@@ -197,6 +196,7 @@ def create_wind_polar_file_full(reg, file, pipeline_preprocessing_from_config, c
         for TWS in TWS_list : 
             entry = create_entry(TWS, TWA)
             entry = pipeline_preprocessing_from_config(entry, config)
+            entry.drop('speed', axis=1, inplace=True, errors='ignore')
             speed = reg.predict(entry)
             line+= "\t"+str(round(speed[0],1))
         f.write(line+"\n")
