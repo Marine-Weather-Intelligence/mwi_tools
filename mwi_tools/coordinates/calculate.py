@@ -55,13 +55,13 @@ def get_heading(pos1:list[float], pos2:list[float]) -> int:
         int: mean orthodromic heading between two points
     """
     lat1 = m.radians(pos1[0])
-    print("lat1 : "+ str(pos1[0])+"°"+str(lat1)+"rad")
+    #print("lat1 : "+ str(pos1[0])+"°"+str(lat1)+"rad")
     lon1 = m.radians(pos1[1])
-    print("lon1 : "+ str(pos1[1])+"°"+str(lon1)+"rad")
+    #print("lon1 : "+ str(pos1[1])+"°"+str(lon1)+"rad")
     lat2 = m.radians(pos2[0])
-    print("lat2 : "+ str(pos2[0])+"°"+str(lat2)+"rad")
+    #print("lat2 : "+ str(pos2[0])+"°"+str(lat2)+"rad")
     lon2 = m.radians(pos2[1])
-    print("lon2 : "+ str(pos2[1])+"°"+str(lon2)+"rad")
+    #print("lon2 : "+ str(pos2[1])+"°"+str(lon2)+"rad")
 
     #Case of same position 
     if (lat1 == lat2 and lon1 == lon2) : 
