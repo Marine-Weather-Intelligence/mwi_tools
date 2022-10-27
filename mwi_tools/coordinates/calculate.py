@@ -68,8 +68,13 @@ def get_heading(pos1:list[float], pos2:list[float]) -> int:
         return None
     B = m.acos(m.sin(lat1)*m.sin(lat2)+m.cos(lat1)*m.cos(lat2)*m.cos(abs(lon1-lon2)))
 
-    #On a ici mis un round car cela faisait parfois moins que -1
-    heading = m.acos(round((m.sin(lat2)-m.sin(lat1)*m.cos(B))/m.cos(lat1)/m.sin(B),6))
+    #On a ici mis un if car cela faisait parfois moins que -1 ou plus que 1
+    temp = (m.sin(lat2)-m.sin(lat1)*m.cos(B))/m.cos(lat1)/m.sin(B)
+    if temp < -1 : 
+        temp = -1
+    elif temp > 1 : 
+        temp =1
+    heading = m.acos(temp)
     heading = heading*180/m.pi
     if (lon2 <lon1) : 
         return round(360-heading)
