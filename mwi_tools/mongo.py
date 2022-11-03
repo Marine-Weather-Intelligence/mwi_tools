@@ -1,3 +1,5 @@
+from mwi_tools.coordinates import calculate as mwicc
+
 def set_heading_and_speed_positions(races, race_name, id) : 
     a = races.aggregate([
         { "$match": {"name" : race_name} },
