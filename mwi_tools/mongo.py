@@ -68,7 +68,10 @@ def set_heading_and_speed_journal(races, race_name, id) :
         lat_start = pos2['lat']
         lon_start = pos2['lon']
 
-        speed = mwicc.get_speed([lat_start,lon_start], [lat_end,lon_end], t_end-t_start)
+        if (t_end-t_start == 0) : 
+            speed = 0
+        else : 
+            speed = mwicc.get_speed([lat_start,lon_start], [lat_end,lon_end], t_end-t_start)
         heading = mwicc.get_heading([lat_start,lon_start], [lat_end,lon_end])
         if (heading == None) and ('heading' in pos2): 
             pos['heading'] = pos2['heading']
