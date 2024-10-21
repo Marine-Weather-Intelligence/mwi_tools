@@ -7,6 +7,10 @@
 """
 import math as m
 
+# Constant to used for WGS84
+# consistent with PostGis
+EARTH_RADIUS = 6371.0087714150598
+
 def get_dist_ortho(pos1:list[float], pos2:list[float]) -> float: 
     """Calculate orthodromic distance between two points
 
@@ -16,6 +20,12 @@ def get_dist_ortho(pos1:list[float], pos2:list[float]) -> float:
 
     Returns:
         float: Distance in m
+
+    Example:
+    >>> paris = (48.8566, 2.3522)
+    >>> nyc = (40.7128, -74.0060)
+    >>> print(get_dist_ortho(paris, nyc))
+    5837248.940376267
     """
     lat1 = m.radians(pos1[0])
     lon1 = m.radians(pos1[1])
@@ -27,7 +37,7 @@ def get_dist_ortho(pos1:list[float], pos2:list[float]) -> float:
         return 0
 
     B = m.acos(m.sin(lat1)*m.sin(lat2)+m.cos(lat1)*m.cos(lat2)*m.cos(abs(lon1-lon2)))
-    return B*12735.3/2*1000;
+    return B * EARTH_RADIUS * 1000
 
 def get_speed(pos1:list[float], pos2:list[float], dt:int) -> float : 
     """Calculate mean speed in knots between two positions
