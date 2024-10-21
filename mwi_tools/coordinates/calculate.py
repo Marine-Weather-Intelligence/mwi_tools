@@ -61,15 +61,22 @@ def get_speed(pos1:tuple[float, float], pos2:tuple[float, float], dt:int, n_digi
     v = dist/dt # speed m/s
     return round(v * MS_TO_KNOTS, n_digits)
 
-def get_heading(pos1:list[float], pos2:list[float]) -> int: 
+def get_heading(pos1:tuple[float, float], pos2:tuple[float, float]) -> int: 
     """Calculate mean orthodromic heading between two positions
 
     Args:
-        pos1 (list[float]): List of lat and lon of pos1 in deg.dec
-        pos2 (list[float]): List of lat and lon of pos2 in deg.dec
+        pos1 (tuple[float, float]): Tuple of lat and lon of pos1 in deg.dec
+        pos2 (tuple[float, float]): Tuple of lat and lon of pos2 in deg.dec
         
     Returns:
         int: mean orthodromic heading between two points
+    Example:
+    >>> paris = (48.8566, 2.3522)
+    >>> nyc = (40.7128, -74.0060)
+    >>> print(get_heading(paris, nyc))
+    292
+    >>> print(get_heading((-62.568, 178.948), (-62.562, -178.924)))
+    269 # Prime meridian bug: should be 90
     """
     lat1 = m.radians(pos1[0])
     #print("lat1 : "+ str(pos1[0])+"°"+str(lat1)+"rad")
