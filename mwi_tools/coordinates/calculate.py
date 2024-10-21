@@ -11,6 +11,8 @@ import math as m
 # consistent with PostGis
 EARTH_RADIUS = 6371.0087714150598
 
+MS_TO_KNOTS = 3600 / 1852
+
 def get_dist_ortho(pos1:tuple[float, float], pos2:tuple[float, float]) -> float: 
     """Calculate orthodromic distance between two points
 
@@ -37,7 +39,7 @@ def get_dist_ortho(pos1:tuple[float, float], pos2:tuple[float, float]) -> float:
     B = m.acos(m.sin(lat1)*m.sin(lat2)+m.cos(lat1)*m.cos(lat2)*m.cos(abs(lon1-lon2)))
     return B * EARTH_RADIUS * 1000
 
-def get_speed(pos1:tuple[float, float], pos2:tuple[float, float], dt:int) -> float : 
+def get_speed(pos1:tuple[float, float], pos2:tuple[float, float], dt:int, n_digits:int = 1) -> float : 
     """Calculate mean speed in knots between two positions
 
     Args:
@@ -47,10 +49,17 @@ def get_speed(pos1:tuple[float, float], pos2:tuple[float, float], dt:int) -> flo
 
     Returns:
         float: mean speed in knots between two points
+    Example:
+    >>> quiberon = (47.475911695481756, -3.1208038330078125)
+    >>> palais = (47.34696504890934, -3.1468963623046875)
+    >>> get_speed(quiberon, palais, 3600)
+    7.8
+    >>> get_speed(quiberon, palais, 3600, 2)
+    7.81
     """
     dist = get_dist_ortho(pos1, pos2)
-    v = dist/dt #speed m/s
-    return round(v * 1.9438, 1)
+    v = dist/dt # speed m/s
+    return round(v * MS_TO_KNOTS, n_digits)
 
 def get_heading(pos1:list[float], pos2:list[float]) -> int: 
     """Calculate mean orthodromic heading between two positions
