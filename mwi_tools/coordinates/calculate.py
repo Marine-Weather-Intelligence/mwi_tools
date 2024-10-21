@@ -11,12 +11,12 @@ import math as m
 # consistent with PostGis
 EARTH_RADIUS = 6371.0087714150598
 
-def get_dist_ortho(pos1:list[float], pos2:list[float]) -> float: 
+def get_dist_ortho(pos1:tuple[float, float], pos2:tuple[float, float]) -> float: 
     """Calculate orthodromic distance between two points
 
     Args:
-        pos1 (list[float]): List of lat and lon of pos1 in deg.dec
-        pos2 (list[float]): List of lat and lon of pos2 in deg.dec
+        pos1 (tuple[float, float]): Tuple (lat, lon) in deg.dec
+        pos2 (tuple[float, float]): Tuple (lat, lon) in deg.dec
 
     Returns:
         float: Distance in m
@@ -27,10 +27,8 @@ def get_dist_ortho(pos1:list[float], pos2:list[float]) -> float:
     >>> print(get_dist_ortho(paris, nyc))
     5837248.940376267
     """
-    lat1 = m.radians(pos1[0])
-    lon1 = m.radians(pos1[1])
-    lat2 = m.radians(pos2[0])
-    lon2 = m.radians(pos2[1])
+    lat1, lon1 = (m.radians(coord) for coord in pos1)
+    lat2, lon2 = (m.radians(coord) for coord in pos2)
 
     #Case of same position 
     if (lat1 == lat2 and lon1 == lon2) : 
@@ -39,12 +37,12 @@ def get_dist_ortho(pos1:list[float], pos2:list[float]) -> float:
     B = m.acos(m.sin(lat1)*m.sin(lat2)+m.cos(lat1)*m.cos(lat2)*m.cos(abs(lon1-lon2)))
     return B * EARTH_RADIUS * 1000
 
-def get_speed(pos1:list[float], pos2:list[float], dt:int) -> float : 
+def get_speed(pos1:tuple[float, float], pos2:tuple[float, float], dt:int) -> float : 
     """Calculate mean speed in knots between two positions
 
     Args:
-        pos1 (list[float]): List of lat and lon of pos1 in deg.dec
-        pos2 (list[float]): List of lat and lon of pos2 in deg.dec
+        pos1 (tuple[float, float]): Tuple of lat and lon of pos1 in deg.dec
+        pos2 (tuple[float, float]): Tuple of lat and lon of pos2 in deg.dec
         dt (int): delta time in sec between the two positions
 
     Returns:
