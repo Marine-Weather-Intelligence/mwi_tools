@@ -12,6 +12,11 @@ import math
 # consistent with PostGis
 EARTH_RADIUS = 6371.0087714150598
 
+# Constants for WGS-84 ellipsoid
+WGS84_A = 6378137.0       # semi-major axis (meters)
+WGS84_F = 1 / 298.257223563  # flattening
+WGS84_B = WGS84_A * (1 - WGS84_F)  # semi-minor axis
+
 MS_TO_KNOTS = 3600 / 1852
 
 def get_dist_ortho(pos1:tuple[float, float], pos2:tuple[float, float]) -> float: 
@@ -129,12 +134,6 @@ def spherical_azimuth(lat1, lon1, lat2, lon2):
     azimuth = math.atan2(numerator, denominator)
     
     return azimuth
-
-
-# Constants for WGS-84 ellipsoid
-WGS84_A = 6378137.0       # semi-major axis (meters)
-WGS84_F = 1 / 298.257223563  # flattening
-WGS84_B = WGS84_A * (1 - WGS84_F)  # semi-minor axis
 
 def normal_section_azimuth(lat1, lon1, lat2, lon2):
     """
