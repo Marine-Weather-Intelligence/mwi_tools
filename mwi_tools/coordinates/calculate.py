@@ -67,7 +67,7 @@ def get_speed(pos1:tuple[float, float], pos2:tuple[float, float], dt:int, n_digi
     v = dist/dt # speed m/s
     return round(v * MS_TO_KNOTS, n_digits)
 
-def get_heading(pos1:tuple[float, float], pos2:tuple[float, float], n_digits = 0, method = 'spherical_azimuth') -> int: 
+def get_heading(pos1:tuple[float, float], pos2:tuple[float, float], n_digits = 0, method = 'spherical_azimuth') -> float: 
     """Calculate mean orthodromic heading between two positions
 
     Args:
