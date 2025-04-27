@@ -51,7 +51,7 @@ def convert_coord_to_degdec(coord: str) -> float :
 
     temp = coord.split('°')
     deg = int(float(temp[0]))
-    decimal = round(float(temp[1])/60,6)
+    decimal = float(temp[1])/60
     if deg<0 : 
         return deg-decimal
     else : 
@@ -73,7 +73,7 @@ def convert_coord_to_degdec2(coord: str) -> float :
     deg = int(coord)
     min = (coord - deg)*100
     decimal = min/60
-    coord = round(deg+decimal,2)
+    coord = deg+decimal
     if letter == 'N' or letter == 'E' : 
         return coord
     else : 
